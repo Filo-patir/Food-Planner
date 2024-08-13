@@ -24,7 +24,7 @@ public class MainActivity extends AppCompatActivity {
         window = getWindow();
         window.setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN, WindowManager.LayoutParams.FLAG_FULLSCREEN);
         window.getDecorView().setSystemUiVisibility(View.SYSTEM_UI_FLAG_LAYOUT_STABLE | View.SYSTEM_UI_FLAG_LAYOUT_FULLSCREEN  | View.SYSTEM_UI_FLAG_FULLSCREEN);
-        new Handler().postDelayed(() -> setContentView(R.layout.login_screen),5000);
+        new Handler().postDelayed(() -> setContentView(R.layout.sign_up),5000);
 
     }
 }
