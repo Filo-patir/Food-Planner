@@ -1,3 +1,19 @@
 <resources>
     <string name="app_name">Kersh Helper</string>
+    <string name="splash_screen_txt">\nKersh\nHelper</string>
+    <string name="welcomemsg">Welcome To\nKersh Helper</string>
+    <string name="slang">Your Belly Our Goal</string>
+    <string name="alreadyhaveacctxt">Already Have an Account?</string>
+    <string name="create_acc">Create an Account</string>
+    <string name="guest_login"><u>Continue as Guest</u></string>
+    <string name="logintxt"><u>Login</u></string>
+    <string name="namehint">Enter a Name to Display on the App</string>
+    <string name="email_hint">Enter your Email</string>
+    <string name="passwordhint">Enter Your Password</string>
+    <string name="confirm_pass_hint">Confirm Your Password</string>
+    <string name="usernametxt">Display Name</string>
+    <string name="emailtxt">Email</string>
+    <string name="passtxt">Password</string>
+    <string name="confirm_passtxt">Confirm Password</string>
+    <string name="signuptxt">Sign Up</string>
 </resources>

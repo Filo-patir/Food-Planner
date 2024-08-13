@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "149599402004",
+    "project_id": "kersh-helper",
+    "storage_bucket": "kersh-helper.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:149599402004:android:c310a7613016912f86cf01",
+        "android_client_info": {
+          "package_name": "filo.mamdouh.kershhelper"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyAUvsCWIimUR4q7JMDMmO6jbVc0lnUkbt8"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
