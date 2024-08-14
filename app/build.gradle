@@ -38,6 +38,8 @@ android {
 }
 
 dependencies {
+    implementation (libs.glide)
+    implementation libs.retrofit
     implementation platform(libs.firebase.bom)
     implementation libs.lottie
     implementation libs.appcompat
