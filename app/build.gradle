@@ -38,6 +38,8 @@ android {
 }
 
 dependencies {
+    implementation libs.firebase.auth
+    implementation libs.play.services.auth
     implementation (libs.glide)
     implementation libs.retrofit
     implementation platform(libs.firebase.bom)
