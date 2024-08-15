@@ -1,4 +1,4 @@
-package filo.mamdouh.kershhelper.welcomescreenfragments;
+package filo.mamdouh.kershhelper.views.welcomescreenfragments;
 
 import android.os.Bundle;
 
@@ -9,27 +9,32 @@ import androidx.fragment.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
 
 import filo.mamdouh.kershhelper.R;
+import filo.mamdouh.kershhelper.databinding.FragmentLoginBinding;
+import filo.mamdouh.kershhelper.databinding.FragmentWelcomeScreenBinding;
 
-public class SplashFragment extends Fragment {
-
+public class LoginFragment extends Fragment {
+    FragmentLoginBinding binding;
     @Override
-    public void onCreate(@Nullable Bundle savedInstanceState) {
+    public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
     }
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-        // Inflate the layout for this fragment
-
-        return inflater.inflate(R.layout.splash_screen, container, false);
+        binding = FragmentLoginBinding.inflate(inflater, container, false);
+        return binding.getRoot();
     }
 
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
-       // new Handler(Looper.getMainLooper()).postDelayed(()-> Navigation.findNavController(view).navigate(R.id.action_splashFragment_to_welcomeFragment),3000);
+        Button loginbtn = binding.loginBtn;
+        loginbtn.setOnClickListener(v -> {
+
+        });
     }
 }

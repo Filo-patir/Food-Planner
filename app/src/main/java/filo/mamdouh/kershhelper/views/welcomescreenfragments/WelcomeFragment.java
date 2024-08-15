@@ -1,4 +1,4 @@
-package filo.mamdouh.kershhelper.welcomescreenfragments;
+package filo.mamdouh.kershhelper.views.welcomescreenfragments;
 
 import android.os.Bundle;
 
@@ -14,6 +14,8 @@ import android.widget.Button;
 import android.widget.ImageButton;
 import android.widget.TextView;
 
+import filo.mamdouh.kershhelper.HomeActivity;
+import filo.mamdouh.kershhelper.Navigator;
 import filo.mamdouh.kershhelper.R;
 import filo.mamdouh.kershhelper.databinding.FragmentWelcomeScreenBinding;
 
@@ -41,8 +43,8 @@ public class WelcomeFragment extends Fragment {
         super.onViewCreated(view, savedInstanceState);
         googleLogin = binding.googlebtn;
         facebookLogin = binding.facebookbtn;
-        signupBtn = binding.signupWelcomeScreenBtn;
-        loginbtn = binding.loginWelcomeBtn;
+        signupBtn = binding.welcomeSignup;
+        loginbtn = binding.welcomeLoginBtn;
         guestBtn = binding.continueAsGuest;
         signupBtn.setOnClickListener(l->{
             Navigation.findNavController(view).navigate(R.id.action_welcomeFragment_to_signUpFragment);
@@ -53,6 +55,10 @@ public class WelcomeFragment extends Fragment {
         });
         facebookLogin.setOnClickListener(l->{
 
+        });
+        guestBtn.setOnClickListener(l->{
+            Navigator.toActivity(getContext(), HomeActivity.class);
+            getActivity().finish();
         });
     }
 }

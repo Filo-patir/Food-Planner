@@ -38,9 +38,10 @@ android {
 }
 
 dependencies {
+    implementation "com.squareup.retrofit2:converter-gson:2.11.0"
     implementation libs.firebase.auth
     implementation libs.play.services.auth
-    implementation (libs.glide)
+    implementation libs.glide
     implementation libs.retrofit
     implementation platform(libs.firebase.bom)
     implementation libs.lottie

@@ -6,9 +6,9 @@
     app:startDestination="@id/welcomeFragment">
     <fragment
         android:id="@+id/welcomeFragment"
-        android:name="filo.mamdouh.kershhelper.welcomescreenfragments.WelcomeFragment"
+        android:name="filo.mamdouh.kershhelper.views.welcomescreenfragments.WelcomeFragment"
         android:label="fragment_welcome_screen"
-        tools:layout="@layout/fragment_welcome_screen" >
+        tools:layout="@layout/fragment_welcome_screen">
         <action
             android:id="@+id/action_welcomeFragment_to_loginFragment"
             app:destination="@id/loginFragment" />
@@ -18,9 +18,9 @@
     </fragment>
     <fragment
         android:id="@+id/loginFragment"
-        android:name="filo.mamdouh.kershhelper.welcomescreenfragments.LoginFragment"
+        android:name="filo.mamdouh.kershhelper.views.welcomescreenfragments.LoginFragment"
         android:label="fragment_login"
-        tools:layout="@layout/fragment_login" >
+        tools:layout="@layout/fragment_login">
         <action
             android:id="@+id/action_loginFragment_to_signUpFragment"
             app:destination="@id/signUpFragment"
@@ -28,9 +28,9 @@
     </fragment>
     <fragment
         android:id="@+id/signUpFragment"
-        android:name="filo.mamdouh.kershhelper.welcomescreenfragments.SignUpFragment"
+        android:name="filo.mamdouh.kershhelper.views.welcomescreenfragments.SignUpFragment"
         android:label="fragment_sign_up"
-        tools:layout="@layout/fragment_sign_up" >
+        tools:layout="@layout/fragment_sign_up">
         <action
             android:id="@+id/action_signUpFragment_to_loginFragment"
             app:destination="@id/loginFragment"

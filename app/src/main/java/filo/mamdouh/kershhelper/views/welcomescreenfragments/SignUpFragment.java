@@ -1,4 +1,4 @@
-package filo.mamdouh.kershhelper.welcomescreenfragments;
+package filo.mamdouh.kershhelper.views.welcomescreenfragments;
 
 import android.os.Bundle;
 

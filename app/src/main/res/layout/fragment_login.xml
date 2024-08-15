@@ -5,14 +5,14 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@drawable/login_page_background"
-    tools:context=".welcomescreenfragments.LoginFragment">
+    tools:context=".views.welcomescreenfragments.LoginFragment">
 
     <androidx.constraintlayout.widget.Group
         android:id="@+id/group3"
         android:layout_width="match_parent"
         android:layout_height="0dp"
         android:background="@drawable/group_background"
-        app:constraint_referenced_ids="textView7,sign_up_email,textView9,sign_up_password,signupWelcomeScreenBtn,googlebtn,facebookbtn,textView4,loginWelcomeBtn"
+        app:constraint_referenced_ids="textView7,sign_up_email,textView9,sign_up_password,loginBtn,googlebtn,facebookbtn,textView4,signupBtn"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
@@ -84,7 +84,7 @@
         app:layout_constraintTop_toBottomOf="@+id/textView9" />
 
     <Button
-        android:id="@+id/signupWelcomeScreenBtn"
+        android:id="@+id/loginBtn"
         android:layout_width="299dp"
         android:layout_height="47dp"
         android:layout_marginTop="20dp"
@@ -106,7 +106,7 @@
         app:layout_constraintEnd_toStartOf="@+id/facebookbtn"
         app:layout_constraintHorizontal_bias="0.5"
         app:layout_constraintStart_toEndOf="@+id/group3"
-        app:layout_constraintTop_toBottomOf="@+id/signupWelcomeScreenBtn"
+        app:layout_constraintTop_toBottomOf="@+id/loginBtn"
         app:srcCompat="@drawable/google_logo" />
 
     <ImageButton
@@ -135,7 +135,7 @@
         app:layout_constraintTop_toBottomOf="@+id/googlebtn" />
 
     <TextView
-        android:id="@+id/loginWelcomeBtn"
+        android:id="@+id/signupBtn"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="10dp"
