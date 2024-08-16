@@ -60,5 +60,6 @@ public class WelcomeFragment extends Fragment {
             Navigator.toActivity(getContext(), HomeActivity.class);
             getActivity().finish();
         });
+        signupBtn.setOnClickListener(l-> Navigation.findNavController(view).navigate(R.id.action_welcomeFragment_to_signUpFragment));
     }
 }

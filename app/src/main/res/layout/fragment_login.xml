@@ -12,7 +12,7 @@
         android:layout_width="match_parent"
         android:layout_height="0dp"
         android:background="@drawable/group_background"
-        app:constraint_referenced_ids="textView7,sign_up_email,textView9,sign_up_password,loginBtn,googlebtn,facebookbtn,textView4,signupBtn"
+        app:constraint_referenced_ids="textView7,loginEmail,textView9,loginPassword,loginBtn,loginGooglebtn,loginFacebookBtn,textView4,loginSignupBtn"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
@@ -34,7 +34,7 @@
         app:layout_constraintStart_toStartOf="parent" />
 
     <EditText
-        android:id="@+id/sign_up_email"
+        android:id="@+id/loginEmail"
         android:layout_width="279dp"
         android:layout_height="55dp"
         android:layout_marginTop="20dp"
@@ -63,10 +63,10 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.5"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/sign_up_email" />
+        app:layout_constraintTop_toBottomOf="@+id/loginEmail" />
 
     <EditText
-        android:id="@+id/sign_up_password"
+        android:id="@+id/loginPassword"
         android:layout_width="279dp"
         android:layout_height="55dp"
         android:layout_marginTop="20dp"
@@ -95,30 +95,30 @@
         app:layout_constraintEnd_toStartOf="@+id/group3"
         app:layout_constraintHorizontal_bias="0.5"
         app:layout_constraintStart_toEndOf="@+id/group3"
-        app:layout_constraintTop_toBottomOf="@+id/sign_up_password" />
+        app:layout_constraintTop_toBottomOf="@+id/loginPassword" />
 
     <ImageButton
-        android:id="@+id/googlebtn"
+        android:id="@+id/loginGooglebtn"
         android:layout_width="115dp"
         android:layout_height="42dp"
         android:layout_marginTop="10dp"
         android:background="@drawable/login_with_google"
-        app:layout_constraintEnd_toStartOf="@+id/facebookbtn"
+        app:layout_constraintEnd_toStartOf="@+id/loginFacebookBtn"
         app:layout_constraintHorizontal_bias="0.5"
         app:layout_constraintStart_toEndOf="@+id/group3"
         app:layout_constraintTop_toBottomOf="@+id/loginBtn"
         app:srcCompat="@drawable/google_logo" />
 
     <ImageButton
-        android:id="@+id/facebookbtn"
+        android:id="@+id/loginFacebookBtn"
         android:layout_width="115dp"
         android:layout_height="42dp"
         android:layout_marginStart="55dp"
         android:background="@drawable/login_with_facebook"
         app:layout_constraintEnd_toStartOf="@+id/group3"
         app:layout_constraintHorizontal_bias="0.5"
-        app:layout_constraintStart_toEndOf="@+id/googlebtn"
-        app:layout_constraintTop_toTopOf="@+id/googlebtn"
+        app:layout_constraintStart_toEndOf="@+id/loginGooglebtn"
+        app:layout_constraintTop_toTopOf="@+id/loginGooglebtn"
         app:srcCompat="@drawable/facebook_logo" />
 
     <TextView
@@ -132,10 +132,10 @@
         app:layout_constraintEnd_toStartOf="@+id/group3"
         app:layout_constraintHorizontal_bias="0.5"
         app:layout_constraintStart_toEndOf="@+id/group3"
-        app:layout_constraintTop_toBottomOf="@+id/googlebtn" />
+        app:layout_constraintTop_toBottomOf="@+id/loginGooglebtn" />
 
     <TextView
-        android:id="@+id/signupBtn"
+        android:id="@+id/loginSignupBtn"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="10dp"
