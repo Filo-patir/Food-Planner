@@ -77,4 +77,8 @@
     <string name="meals">Meals</string>
     <string name="calendar">Calendar</string>
     <string name="cart">Cart</string>
+    <string name="version">version 0.1.1</string>
+    <string name="edit_your_profile"><u>Edit Your Profile</u></string>
+    <string name="log_out">Log Out</string>
+    <string name="about_us">About Us</string>
 </resources>

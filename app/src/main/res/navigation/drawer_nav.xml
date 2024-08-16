@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="utf-8"?>
+<navigation xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/drawer_nav"
+    app:startDestination="@id/drawerHomeFragment">
+
+    <fragment
+        android:id="@+id/drawerHomeFragment"
+        android:name="filo.mamdouh.kershhelper.DrawerHomeFragment"
+        android:label="fragment_drawer_home"
+        tools:layout="@layout/fragment_drawer_home" >
+        <action
+            android:id="@+id/action_drawerHomeFragment_to_editProfileFragment"
+            app:destination="@id/editProfileFragment" />
+        <action
+            android:id="@+id/action_drawerHomeFragment_to_aboutUsFragment"
+            app:destination="@id/aboutUsFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/editProfileFragment"
+        android:name="filo.mamdouh.kershhelper.EditProfileFragment"
+        android:label="fragment_edit_profile"
+        tools:layout="@layout/fragment_edit_profile" />
+    <fragment
+        android:id="@+id/aboutUsFragment"
+        android:name="filo.mamdouh.kershhelper.AboutUsFragment"
+        android:label="fragment_about_us"
+        tools:layout="@layout/fragment_about_us" />
+</navigation>

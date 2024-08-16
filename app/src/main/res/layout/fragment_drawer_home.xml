@@ -1,0 +1,91 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".DrawerHomeFragment">
+
+    <de.hdodenhof.circleimageview.CircleImageView
+        android:id="@+id/circleImageView"
+        android:layout_width="100dp"
+        android:layout_height="100dp"
+        android:layout_marginTop="10dp"
+        app:civ_border_color="@color/secondary_color"
+        app:civ_border_width="2dp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.5"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        tools:src="@drawable/profile_icon" />
+
+    <TextView
+        android:id="@+id/drawerUserName"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="20dp"
+        android:fontFamily="@font/roboto"
+        android:textColor="@color/primary_color"
+        android:textSize="24dp"
+        android:textStyle="bold"
+        app:layout_constraintEnd_toEndOf="@+id/circleImageView"
+        app:layout_constraintStart_toStartOf="@+id/circleImageView"
+        app:layout_constraintTop_toBottomOf="@+id/circleImageView"
+        tools:text="Filo Mamdouh" />
+
+    <TextView
+        android:id="@+id/drawerEditProfileBtn"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="10dp"
+        android:fontFamily="@font/roboto"
+        android:text="@string/edit_your_profile"
+        android:textColor="@color/secondary_color"
+        android:textSize="14dp"
+        app:layout_constraintEnd_toEndOf="@+id/drawerUserName"
+        app:layout_constraintStart_toStartOf="@+id/drawerUserName"
+        app:layout_constraintTop_toBottomOf="@+id/drawerUserName" />
+
+    <TextView
+        android:id="@+id/drawerAboutUs"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="50dp"
+        android:fontFamily="@font/roboto"
+        android:text="@string/about_us"
+        android:textColor="@color/primary_color"
+        android:textFontWeight="600"
+        android:textSize="20dp"
+        app:layout_constraintEnd_toEndOf="@+id/drawerEditProfileBtn"
+        app:layout_constraintStart_toStartOf="@+id/drawerEditProfileBtn"
+        app:layout_constraintTop_toBottomOf="@+id/drawerEditProfileBtn" />
+
+    <TextView
+        android:id="@+id/logOut"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="20dp"
+        android:fontFamily="@font/roboto"
+        android:text="@string/log_out"
+        android:textColor="@color/red_button_color"
+        android:textFontWeight="600"
+        android:textSize="20dp"
+        app:layout_constraintEnd_toEndOf="@+id/drawerAboutUs"
+        app:layout_constraintStart_toStartOf="@+id/drawerAboutUs"
+        app:layout_constraintTop_toBottomOf="@+id/drawerAboutUs" />
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="8dp"
+        android:fontFamily="@font/roboto"
+        android:text="@string/version"
+        android:textColor="@color/secondary_color"
+        android:textFontWeight="900"
+        android:textSize="14dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="@+id/logOut"
+        app:layout_constraintStart_toStartOf="@+id/logOut" />
+
+
+</androidx.constraintlayout.widget.ConstraintLayout>
