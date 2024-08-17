@@ -11,6 +11,7 @@
     <color name="btn_secondary_color">#CC4E616D</color>
     <color name="card_background_color">#994E616D</color>
     <color name="primary_variant">#2944A1</color>
-    <color name="red_button_color">#90F62222</color>
+    <color name="red_button_color">#99F62222</color>
     <color name="surface_varient_0op">#DDE3EA</color>
+    <color name="surfacevariant50op">#AADDE3EA</color>
 </resources>
