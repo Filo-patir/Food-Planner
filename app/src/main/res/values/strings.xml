@@ -96,4 +96,8 @@
     <string name="lets_go_shopping">Lets go Shopping</string>
     <string name="how_to_make_it">How to Make it?</string>
     <string name="save_to_bookmarks">Save to Bookmarks</string>
+    <string name="search_by_ingredients">Search By Ingredients</string>
+    <string name="see_more"><u>See More</u></string>
+    <string name="search_by_category">Search By Category</string>
+    <string name="search_for_meals">Search For Meals</string>
 </resources>

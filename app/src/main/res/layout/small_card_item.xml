@@ -38,7 +38,7 @@
                 android:layout_height="0dp"
                 android:background="@drawable/card_text_background"
                 android:textAlignment="center"
-                app:constraint_referenced_ids="textView14,textView15"
+                app:constraint_referenced_ids="textView14,textView15,imageView5"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
@@ -49,6 +49,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_gravity="bottom"
+                android:layout_marginStart="8dp"
                 android:layout_marginBottom="10dp"
                 android:fontFamily="@font/roboto"
                 android:paddingTop="5dp"
@@ -60,9 +61,7 @@
                 android:textSize="16dp"
                 android:textStyle="bold"
                 app:layout_constraintBottom_toTopOf="@+id/textView15"
-                app:layout_constraintEnd_toStartOf="@+id/group5"
-                app:layout_constraintHorizontal_bias="0.5"
-                app:layout_constraintStart_toEndOf="@+id/group5"
+                app:layout_constraintStart_toStartOf="parent"
                 tools:text="@string/card_food_title" />
 
             <TextView
@@ -75,12 +74,22 @@
                 android:shadowRadius="2.0"
                 android:textAlignment="center"
                 android:textColor="@color/primary_variant"
-                android:textSize="14sp"
+                android:textSize="14dp"
                 app:layout_constraintBottom_toBottomOf="parent"
-                app:layout_constraintEnd_toStartOf="@+id/group5"
+                app:layout_constraintEnd_toEndOf="@+id/textView14"
                 app:layout_constraintHorizontal_bias="0.5"
-                app:layout_constraintStart_toEndOf="@+id/group5"
+                app:layout_constraintStart_toStartOf="@+id/textView14"
                 tools:text="@string/ingredients_number" />
+
+            <ImageView
+                android:id="@+id/imageView5"
+                android:layout_width="25dp"
+                android:layout_height="25dp"
+                android:layout_marginEnd="8dp"
+                app:layout_constraintBottom_toBottomOf="@+id/textView14"
+                app:layout_constraintEnd_toEndOf="@+id/group5"
+                app:layout_constraintTop_toTopOf="@+id/textView14"
+                app:srcCompat="@drawable/unknown_flag_icon" />
 
         </androidx.constraintlayout.widget.ConstraintLayout>
 
