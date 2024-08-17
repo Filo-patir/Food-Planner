@@ -24,8 +24,6 @@
     <string name="ingredients_number">7 Ingredients</string>
     <string name="add_to_calendar">Add To Calendar</string>
     <string name="daily_meals">Daily Inspiration</string>
-    <!-- TODO: Remove or change this placeholder text -->
-    <string name="hello_blank_fragment">Hello blank fragment</string>
     <string name="title_activity_main2">MainActivity2</string>
     <string name="title_home">Home</string>
     <string name="title_dashboard">Dashboard</string>
@@ -81,4 +79,9 @@
     <string name="edit_your_profile"><u>Edit Your Profile</u></string>
     <string name="log_out">Log Out</string>
     <string name="about_us">About Us</string>
+    <string name="lorem_ipsum_2p">Lorem ipsum dolor sit amet, consectetur adipiscing elit. Aliquam elementum mollis dui in pellentesque. Curabitur nec ligula ut quam pulvinar efficitur non quis ipsum. Nullam ante dolor, interdum sit amet ultrices et, interdum nec dolor. Nulla fringilla velit a lectus faucibus, vitae facilisis neque tempus. Vestibulum scelerisque iaculis leo at tristique. Aliquam faucibus vel nisl eu pellentesque. Ut efficitur augue lacus, imperdiet gravida mi viverra at. Nullam in vestibulum mauris. Etiam porta est ut ligula aliquet, in interdum nisl mollis.\n\nUt ac massa et diam ultricies sollicitudin eget eu arcu. Fusce tincidunt metus augue, eget imperdiet enim hendrerit finibus. Integer ac nisi id ex tincidunt blandit. Duis pulvinar turpis nec mi condimentum dictum. Proin mauris ex, varius id nibh consequat, interdum elementum libero. Vivamus ultrices libero quam, nec auctor lacus fringilla id. Praesent at egestas nulla. Sed a lectus purus. Ut a mauris ut lectus rhoncus lacinia. Praesent facilisis semper convallis. Duis scelerisque dapibus turpis. Nullam risus nibh, pulvinar et eros at, mattis eleifend eros. Aliquam aliquet consequat purus, at facilisis dolor. Cras ornare pretium pulvinar. Etiam vel metus molestie, feugiat neque eget, placerat mauris.</string>
+    <string name="old_passwordtxt">Old Password</string>
+    <string name="confirm">Confirm</string>
+    <!-- TODO: Remove or change this placeholder text -->
+    <string name="hello_blank_fragment">Hello blank fragment</string>
 </resources>
