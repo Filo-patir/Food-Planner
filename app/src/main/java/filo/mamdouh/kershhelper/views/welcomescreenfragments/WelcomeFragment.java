@@ -17,18 +17,22 @@ import android.widget.TextView;
 import filo.mamdouh.kershhelper.HomeActivity;
 import filo.mamdouh.kershhelper.Navigator;
 import filo.mamdouh.kershhelper.R;
+import filo.mamdouh.kershhelper.contracts.AuthContract;
 import filo.mamdouh.kershhelper.databinding.FragmentWelcomeScreenBinding;
+import filo.mamdouh.kershhelper.presenters.AuthPresenter;
 
 
-public class WelcomeFragment extends Fragment {
+public class WelcomeFragment extends Fragment implements AuthContract.View{
     FragmentWelcomeScreenBinding binding;
     ImageButton googleLogin,facebookLogin;
     Button signupBtn;
     TextView loginbtn,guestBtn;
-
+    AuthPresenter presenter;
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        presenter = new AuthPresenter(this);
+
     }
 
     @Override
@@ -51,15 +55,25 @@ public class WelcomeFragment extends Fragment {
         });
         loginbtn.setOnClickListener(l-> Navigation.findNavController(view).navigate(R.id.action_welcomeFragment_to_loginFragment));
         googleLogin.setOnClickListener(l->{
-
+            presenter.googleLogin();
         });
         facebookLogin.setOnClickListener(l->{
-
+            presenter.facebookLogin();
         });
         guestBtn.setOnClickListener(l->{
             Navigator.toActivity(getContext(), HomeActivity.class);
             getActivity().finish();
         });
         signupBtn.setOnClickListener(l-> Navigation.findNavController(view).navigate(R.id.action_welcomeFragment_to_signUpFragment));
+    }
+
+    @Override
+    public void onFailed(String message) {
+
+    }
+
+    @Override
+    public void onSucess() {
+
     }
 }

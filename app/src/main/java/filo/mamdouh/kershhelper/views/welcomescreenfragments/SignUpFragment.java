@@ -13,19 +13,25 @@ import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import filo.mamdouh.kershhelper.R;
+import filo.mamdouh.kershhelper.contracts.AuthContract;
 import filo.mamdouh.kershhelper.databinding.FragmentSignUpBinding;
 import filo.mamdouh.kershhelper.databinding.FragmentWelcomeScreenBinding;
+import filo.mamdouh.kershhelper.presenters.AuthPresenter;
 
-public class SignUpFragment extends Fragment {
+public class SignUpFragment extends Fragment implements AuthContract.View {
     FragmentSignUpBinding binding;
+    View view;
     EditText displayname,email,password,confirmpassword;
     Button signupBtn;
     TextView loginBtn;
+    AuthPresenter presenter;
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        presenter = new AuthPresenter(this);
     }
 
     @Override
@@ -38,6 +44,7 @@ public class SignUpFragment extends Fragment {
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
+        this.view = view;
         displayname = binding.signUpName;
         email = binding.signUpEmail;
         password = binding.signUpPassword;
@@ -45,6 +52,20 @@ public class SignUpFragment extends Fragment {
         signupBtn = binding.signupbtn;
         loginBtn = binding.signupLoginBtn;
         loginBtn.setOnClickListener(l-> Navigation.findNavController(view).navigate(R.id.action_signUpFragment_to_loginFragment));
+        signupBtn.setOnClickListener(l->{
+            presenter.onSignup(email.getText().toString(),password.getText().toString());
+        });
 
+    }
+
+    @Override
+    public void onFailed(String message) {
+        Toast.makeText(getContext(), message, Toast.LENGTH_SHORT).show();
+    }
+
+    @Override
+    public void onSucess() {
+        Toast.makeText(getContext(), "Sign Up Succesfuly", Toast.LENGTH_SHORT).show();
+        Navigation.findNavController(view).navigate(R.id.action_signUpFragment_to_loginFragment);
     }
 }

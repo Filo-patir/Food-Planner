@@ -2,8 +2,11 @@
 agp = "8.5.2"
 circleimageview = "3.1.0"
 converterGson = "2.11.0"
+credentials = "1.2.2"
+firebaseAdmin = "1.32.0"
 firebaseBom = "33.1.2"
 glide = "4.16.0"
+googleid = "1.1.1"
 junit = "4.13.2"
 junitVersion = "1.2.1"
 espressoCore = "3.6.1"
@@ -16,15 +19,17 @@ lifecycleLivedataKtx = "2.8.4"
 lifecycleViewmodelKtx = "2.8.4"
 playServicesAuth = "21.2.0"
 retrofit = "2.11.0"
-lombok = "1.18.30"
+lombok = "1.18.34"
 navigationFragment = "2.7.7"
 
 [libraries]
 circleimageview = { module = "de.hdodenhof:circleimageview", version.ref = "circleimageview" }
 converter-gson = { module = "com.squareup.retrofit2:converter-gson", version.ref = "converterGson" }
+firebase-admin = { module = "com.google.firebase:firebase-admin", version.ref = "firebaseAdmin" }
 firebase-auth = { module = "com.google.firebase:firebase-auth" }
 firebase-bom = { module = "com.google.firebase:firebase-bom", version.ref = "firebaseBom" }
 glide = { module = "com.github.bumptech.glide:glide", version.ref = "glide" }
+googleid = { module = "com.google.android.libraries.identity.googleid:googleid", version.ref = "googleid" }
 retrofit = { module = "com.squareup.retrofit2:retrofit", version.ref = "retrofit" }
 junit = { group = "junit", name = "junit", version.ref = "junit" }
 ext-junit = { group = "androidx.test.ext", name = "junit", version.ref = "junitVersion" }

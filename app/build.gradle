@@ -38,13 +38,15 @@ android {
 }
 
 dependencies {
+    implementation libs.firebase.admin
+    implementation libs.googleid
     implementation libs.circleimageview
     implementation libs.converter.gson
     implementation libs.firebase.auth
+    implementation platform(libs.firebase.bom)
     implementation libs.play.services.auth
     implementation libs.glide
     implementation libs.retrofit
-    implementation platform(libs.firebase.bom)
     implementation libs.lottie
     implementation libs.appcompat
     implementation libs.material

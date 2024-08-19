@@ -16,22 +16,12 @@ public class User {
     private String uid;
     private String username;
     private String email;
-    private Bitmap img;
+    private String img;
 
-    public User(String uid, String username, String email, String imgurl) {
+    public User(String uid, String username, String email, String img) {
         this.uid = uid;
         this.username = username;
         this.email = email;
-        OkHttpClient client = new OkHttpClient();
-        Request request = new Request.Builder().url(imgurl).build();
-
-        try (Response response = client.newCall(request).execute()) {
-            if (response.isSuccessful()) {
-                InputStream inputStream = response.body().byteStream();
-                img = BitmapFactory.decodeStream(inputStream);
-            }
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
+        this.img = img;
     }
 }

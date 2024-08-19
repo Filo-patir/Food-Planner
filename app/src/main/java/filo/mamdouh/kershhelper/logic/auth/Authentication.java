@@ -1,23 +1,24 @@
-package filo.mamdouh.kershhelper.auth;
+package filo.mamdouh.kershhelper.logic.auth;
 
 import android.util.Log;
-
 import androidx.annotation.NonNull;
-
-import com.google.android.gms.auth.api.identity.BeginSignInRequest;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 
+import filo.mamdouh.kershhelper.contracts.AuthContract;
 import filo.mamdouh.kershhelper.models.User;
 
 public class Authentication {
     private FirebaseAuth auth;
-    public Authentication(){
+    private AuthContract.Presenter presenter;
+    public Authentication(AuthContract.Presenter presenter){
         auth = FirebaseAuth.getInstance();
+        this.presenter = presenter;
     }
+
     public User getAccount(){
         User user = null;
         FirebaseUser currentUser = auth.getCurrentUser();
@@ -32,31 +33,44 @@ public class Authentication {
             @Override
             public void onComplete(@NonNull Task<AuthResult> task) {
                 if (task.isSuccessful()){
-                    User user = toUser(auth.getCurrentUser());
+                    presenter.onSuccessSignup();
                 }
                 else {
-                    Log.d("FAILED TO SIGN UP", "onComplete: FAilED");
+                    presenter.onFailSignup(task.getException().getMessage());
                 }
             }
         });
     }
+
     public void loginAuth(String email,String password){
         auth.signInWithEmailAndPassword(email,password).addOnCompleteListener(task -> {
            if(task.isComplete()){
                User user = toUser(auth.getCurrentUser());
+               presenter.onSucessLogin(user);
            }
            else {
-               Log.d("FAILED TO LOGIN", "loginAuth: LOGIN FAILED");
+               presenter.onFailLogin(task.getException().getMessage());
            }
         });
     }
 
     public void loginWithGmail(){
+        try {
+
+
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
     }
     public void loginWithFacebook(){
+    }
+
+    public void signOut(){
+        auth.signOut();
     }
 
     private User toUser(FirebaseUser user){
         return  new User(user.getUid(),user.getDisplayName(),user.getEmail(),String.valueOf(user.getPhotoUrl()));
     }
+
 }
