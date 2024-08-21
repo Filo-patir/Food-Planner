@@ -1,74 +1,78 @@
 package filo.mamdouh.kershhelper.network;
 
-import filo.mamdouh.kershhelper.models.Categories;
-import filo.mamdouh.kershhelper.models.Meals;
-import io.reactivex.rxjava3.core.Observable;
+import filo.mamdouh.kershhelper.contracts.NetworkContract;
+import io.reactivex.rxjava3.schedulers.Schedulers;
 import retrofit2.Retrofit;
 import retrofit2.adapter.rxjava3.RxJava3CallAdapterFactory;
 import retrofit2.converter.gson.GsonConverterFactory;
 
-public class RetrofitClient implements NetworkDataSource{
+public class RetrofitClient implements NetworkContract.Requests{
     private static final String BASE_URL = "https://www.themealdb.com";
-    private static Retrofit retrofit = null;
+    private final Retrofit retrofit;
+    private APIService apiService;
+    private static RetrofitClient instance = null;
 
-    public static Retrofit getClient() {
-        if(retrofit == null) {
-            retrofit = new Retrofit.Builder()
-                    .baseUrl(BASE_URL).
-                    addConverterFactory(GsonConverterFactory.create())
-                    .addCallAdapterFactory(RxJava3CallAdapterFactory.create())
-                    .build();
+    private RetrofitClient(){
+        retrofit = new Retrofit.Builder()
+                .baseUrl(BASE_URL).
+                addConverterFactory(GsonConverterFactory.create())
+                .addCallAdapterFactory(RxJava3CallAdapterFactory.create())
+                .build();
+    }
+    public static RetrofitClient getInstance() {
+        if(instance == null) {
+            instance = new RetrofitClient();
         }
-        return retrofit;
+        return instance;
     }
 
     @Override
-    public Observable<Meals> getMealByID(String id) {
-        return null;
+    public void getMealByID(String id, NetworkContract.Callbacks callBack) {
     }
 
     @Override
-    public Observable<Meals> getMealByName(String name) {
-        return null;
+    public void getMealByName(String name, NetworkContract.Callbacks callBack) {
+        
     }
 
     @Override
-    public Observable<Meals> getMealByLetter(String letter) {
-        return null;
+    public void getMealByLetter(String letter, NetworkContract.Callbacks callBack) {
+        
     }
 
     @Override
-    public Observable<Meals> getRandomMeal() {
-        return null;
+    public void getRandomMeal(NetworkContract.Callbacks callBack) {
+        apiService = retrofit.create(APIService.class);
+        apiService.getRandomMeal().subscribeOn(Schedulers.io()).subscribe(callBack::onRandomMealSuccess, onError -> callBack.onRandomMealFailure(onError.getMessage())).dispose();
     }
 
     @Override
-    public Observable<Meals> getMealByCategory(String category) {
-        return null;
+    public void getMealByCategory(String category, NetworkContract.Callbacks callBack) {
+        
     }
 
     @Override
-    public Observable<Meals> getMealByIngredient(String ingredient) {
-        return null;
+    public void getMealByIngredient(String ingredient, NetworkContract.Callbacks callBack) {
+        
     }
 
     @Override
-    public Observable<Meals> getMealByArea(String area) {
-        return null;
+    public void getMealByArea(String area, NetworkContract.Callbacks callBack) {
+        
     }
 
     @Override
-    public Observable<Meals> getAreas() {
-        return null;
+    public void getAreas(NetworkContract.Callbacks callBack) {
+        
     }
 
     @Override
-    public Observable<Meals> getIngredients() {
-        return null;
+    public void getIngredients(NetworkContract.Callbacks callBack) {
+        
     }
 
     @Override
-    public Observable<Categories> getCategories() {
-        return null;
+    public void getCategories(NetworkContract.Callbacks callBack) {
+        
     }
 }
