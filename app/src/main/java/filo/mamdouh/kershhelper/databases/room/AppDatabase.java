@@ -1,7 +1,22 @@
 package filo.mamdouh.kershhelper.databases.room;
 
+import android.content.Context;
+
 import androidx.room.Database;
+import androidx.room.Room;
 import androidx.room.RoomDatabase;
-@Database(entities = Meals.class,version = 1)
+
+import filo.mamdouh.kershhelper.models.Meals;
+import filo.mamdouh.kershhelper.models.MealsItem;
+
+@Database(entities = MealsItem.class,version = 1)
 public abstract class AppDatabase extends RoomDatabase {
+    private static AppDatabase appDatabase = null;
+    public abstract MealDAO getMealDAO();
+    public static synchronized AppDatabase getInstance(Context context){
+        if(appDatabase == null){
+            appDatabase = Room.databaseBuilder(context.getApplicationContext(), AppDatabase.class,"filodb").build();
+        }
+        return appDatabase;
+    }
 }

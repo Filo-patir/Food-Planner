@@ -58,6 +58,7 @@
                 android:layout_height="wrap_content"
                 android:layout_gravity="bottom"
                 android:layout_marginStart="5dp"
+                android:layout_marginEnd="5dp"
                 android:layout_marginBottom="30dp"
                 android:fontFamily="@font/roboto"
                 android:paddingTop="5dp"
@@ -69,6 +70,7 @@
                 android:textSize="20dp"
                 android:textStyle="bold"
                 app:layout_constraintBottom_toBottomOf="@+id/cardIngredient"
+                app:layout_constraintEnd_toStartOf="@+id/cardAreaFlag"
                 app:layout_constraintStart_toStartOf="parent"
                 tools:text="@string/card_food_title" />
 
@@ -79,7 +81,9 @@
                 android:layout_marginBottom="56dp"
                 android:fontFamily="@font/roboto"
                 android:shadowColor="@color/surface"
-                android:shadowRadius="2.0"
+                android:shadowDx="3"
+                android:shadowDy="3"
+                android:shadowRadius="1"
                 android:textColor="@color/primary_variant"
                 android:textSize="16dp"
                 app:layout_constraintBottom_toBottomOf="parent"

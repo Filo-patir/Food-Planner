@@ -1,5 +1,6 @@
 [versions]
 adapterRxjava3 = "2.9.0"
+roomRxjava3 = "2.6.1"
 rxandroid = "3.0.2"
 rxjava = "3.1.9"
 agp = "8.5.2"
@@ -29,6 +30,7 @@ roomRuntime = "2.6.1"
 
 [libraries]
 adapter-rxjava3 = { module = "com.squareup.retrofit2:adapter-rxjava3", version.ref = "adapterRxjava3" }
+room-rxjava3 = { module = "androidx.room:room-rxjava3", version.ref = "roomRxjava3" }
 rxandroid = { module = "io.reactivex.rxjava3:rxandroid", version.ref = "rxandroid" }
 rxjava = { module = "io.reactivex.rxjava3:rxjava", version.ref = "rxjava" }
 circleimageview = { module = "de.hdodenhof:circleimageview", version.ref = "circleimageview" }

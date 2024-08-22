@@ -38,7 +38,8 @@ android {
 }
 
 dependencies {
-    annotationProcessor 'org.projectlombok:lombok:1.18.34'
+    implementation libs.room.rxjava3
+    annotationProcessor libs.lombok
     implementation libs.rxandroid
     implementation (libs.room.runtime)
     annotationProcessor (libs.room.compiler)
