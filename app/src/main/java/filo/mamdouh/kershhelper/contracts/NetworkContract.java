@@ -1,70 +1,31 @@
 package filo.mamdouh.kershhelper.contracts;
 
 
+import java.util.List;
+
 import filo.mamdouh.kershhelper.models.Categories;
+import filo.mamdouh.kershhelper.models.HomeFragmentRowData;
 import filo.mamdouh.kershhelper.models.Meals;
+import io.reactivex.rxjava3.core.Observable;
 
 public interface NetworkContract {
-    interface Requests{
-        void getMealByID(String id, NetworkContract.Callbacks callBack);
+    Observable<Meals> getMealByID(String id);
 
-        void getMealByName(String name, NetworkContract.Callbacks callBack);
+    Observable<Meals> getMealByName(String name);
 
-        void getMealByLetter(String letter, NetworkContract.Callbacks callBack);
+    Observable<Meals> getMealByLetter(String letter);
 
-        void getRandomMeal(NetworkContract.Callbacks callBack);
+    Observable<List<HomeFragmentRowData.ItemData>> getRandomMeal();
 
-        void getMealByCategory(String category, NetworkContract.Callbacks callBack);
+    Observable<Meals> getMealByCategory(String category);
 
-        void getMealByIngredient(String ingredient, NetworkContract.Callbacks callBack);
+    Observable<Meals> getMealByIngredient(String ingredient);
 
-        void getMealByArea(String area, NetworkContract.Callbacks callBack);
+    Observable<Meals> getMealByArea(String area);
 
-        void getAreas(NetworkContract.Callbacks callBack);
+    Observable<Meals> getAreas();
 
-        void getIngredients(NetworkContract.Callbacks callBack);
+    Observable<Meals> getIngredients();
 
-        void getCategories(NetworkContract.Callbacks callBack);
-    }
-    interface Callbacks {
-        void onRandomMealSuccess(Meals meals);
-
-        void onRandomMealFailure(String error);
-
-        void onMealIDSuccess(Meals meals);
-
-        void onMealIDFailure(String error);
-
-        void onMealNameSuccess(Meals meals);
-
-        void onMealNameFailure(String error);
-
-        void onMealByLetterSuccess(Meals meals);
-
-        void onMealByLetterFailure(String error);
-
-        void onMealByCategorySuccess(Meals meals);
-
-        void onMealByCategoryFailure(String error);
-
-        void onMealByIngredientSuccess(Meals meals);
-
-        void onMeaByIngredientFailure(String error);
-
-        void onMealByAreaSuccess(Meals meals);
-
-        void onMealByAreaFailure(String error);
-
-        void onAreaSuccess(Meals meals);
-
-        void onAreaFailure(String error);
-
-        void onIngredientsSuccess(Meals meals);
-
-        void onIngredientsFailure(String error);
-
-        void onCategoriesSuccess(Categories meals);
-
-        void onCategoriesFailure(String error);
-    }
+    Observable<Meals> getCategories();
 }

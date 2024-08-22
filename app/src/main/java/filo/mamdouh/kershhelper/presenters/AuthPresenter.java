@@ -4,7 +4,6 @@ import filo.mamdouh.kershhelper.contracts.AuthContract;
 import filo.mamdouh.kershhelper.logic.auth.Authentication;
 import filo.mamdouh.kershhelper.models.Repostiry;
 import filo.mamdouh.kershhelper.models.User;
-import filo.mamdouh.kershhelper.views.welcomescreenfragments.WelcomeFragment;
 
 public class AuthPresenter implements AuthContract.Presenter {
     private final AuthContract.View view;

@@ -1,5 +1,7 @@
 package filo.mamdouh.kershhelper.models;
 
+import android.util.Log;
+
 import com.google.gson.annotations.SerializedName;
 import java.lang.reflect.Field;
 import java.util.ArrayList;
@@ -60,19 +62,40 @@ public class MealsItem {
 	public ArrayList<String> getIngredients() {
 		ArrayList<String> ingredients = new ArrayList<>();
 		Field[] fields = this.getClass().getDeclaredFields();
+
 		for (Field field : fields) {
-			if (field.getName().startsWith("ingredient")) {
+			if (field.getName().startsWith("strIngredient")) {
 				try {
 					field.setAccessible(true);
 					String value = (String) field.get(this);
-					if (!value.isEmpty()) {
+					if (value != null && !value.isEmpty()) {
 						ingredients.add(value);
 					}
 				} catch (IllegalAccessException e) {
-					e.printStackTrace();
+					Log.d("Reflect Error", "getIngredients: " + e.getMessage());
 				}
 			}
 		}
 		return ingredients;
+	}
+
+	public ArrayList<String> getMeasures() {
+		ArrayList<String> measures = new ArrayList<>();
+		Field[] fields = this.getClass().getDeclaredFields();
+
+		for (Field field : fields) {
+			if (field.getName().startsWith("strMeasure")) {
+				try {
+					field.setAccessible(true);
+					String value = (String) field.get(this);
+					if (value != null && !value.isEmpty()) {
+						measures.add(value);
+					}
+				} catch (IllegalAccessException e) {
+					Log.d("Reflect Error", "getIngredients: " + e.getMessage());
+				}
+			}
+		}
+		return measures;
 	}
 }

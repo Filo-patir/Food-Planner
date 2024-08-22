@@ -20,6 +20,15 @@
             android:layout_height="match_parent"
             android:background="@drawable/food_photo">
 
+            <ImageView
+                android:id="@+id/cardBackgroundImg"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:scaleType="fitXY"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent"
+                tools:srcCompat="@drawable/ic_launcher_background" />
+
             <ImageButton
                 android:id="@+id/card_save_btn2"
                 android:layout_width="wrap_content"

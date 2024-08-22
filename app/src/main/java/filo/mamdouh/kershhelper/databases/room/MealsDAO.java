@@ -8,16 +8,19 @@ import androidx.room.Query;
 
 import java.util.List;
 
+import io.reactivex.rxjava3.core.Completable;
+import io.reactivex.rxjava3.core.Flowable;
+
 public interface MealsDAO {
     @Insert(onConflict = OnConflictStrategy.REPLACE)
-    void insertMeal(Meals meal);
+    Completable insertMeal(Meals meal);
 
     @Query("SELECT * FROM meals")
-    Observable<List<Meals>> getMeals();
+    Flowable<List<Meals>> getMeals();
 
     @Query("Select * from meals WHERE isSaved = true")
-    Observable<List<Meals>> getSavedMeals();
+    Flowable<List<Meals>> getSavedMeals();
 
     @Query("Select * from meals WHERE week is not null")
-    Observable<List<Meals>> getCalendar();
+    Flowable<List<Meals>> getCalendar();
 }
