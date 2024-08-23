@@ -9,5 +9,52 @@
         android:id="@+id/homeScreenFragment"
         android:name="filo.mamdouh.kershhelper.features.mainappfeatures.home.HomeScreenFragment"
         android:label="fragment_home_screen"
-        tools:layout="@layout/fragment_home_screen" />
+        tools:layout="@layout/fragment_home_screen" >
+        <action
+            android:id="@+id/action_homeScreenFragment_to_mealDetailsFragment"
+            app:destination="@id/mealDetailsFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/bookmarkFragment"
+        android:name="filo.mamdouh.kershhelper.features.mainappfeatures.bookmarkfragments.BookmarkFragment"
+        android:label="fragment_bookmark"
+        tools:layout="@layout/fragment_bookmark" >
+        <action
+            android:id="@+id/action_bookmarkFragment_to_mealDetailsFragment"
+            app:destination="@id/mealDetailsFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/calendarFragment"
+        android:name="filo.mamdouh.kershhelper.features.mainappfeatures.calendarfragment.CalendarFragment"
+        android:label="fragment_calendar"
+        tools:layout="@layout/fragment_calendar" >
+        <action
+            android:id="@+id/action_calendarFragment_to_mealDetailsFragment"
+            app:destination="@id/mealDetailsFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/cartFragment"
+        android:name="filo.mamdouh.kershhelper.features.mainappfeatures.cartfragment.CartFragment"
+        android:label="fragment_cart"
+        tools:layout="@layout/fragment_cart" />
+    <fragment
+        android:id="@+id/mealDetailsFragment"
+        android:name="filo.mamdouh.kershhelper.features.mainappfeatures.mealsfragment.MealDetailsFragment"
+        android:label="fragment_meal_details"
+        tools:layout="@layout/fragment_meal_details" />
+    <action
+        android:id="@+id/action_global_bookmarkFragment"
+        app:destination="@id/bookmarkFragment"
+        app:popUpTo="@id/main_app_nav"
+        app:popUpToInclusive="false" />
+    <fragment
+        android:id="@+id/searchMainFragment"
+        android:name="filo.mamdouh.kershhelper.features.mainappfeatures.searchfragment.SearchMainFragment"
+        android:label="fragment_search_main"
+        tools:layout="@layout/fragment_search_main" />
+    <fragment
+        android:id="@+id/searchItemsFragment"
+        android:name="filo.mamdouh.kershhelper.features.mainappfeatures.searchfragment.SearchItemsFragment"
+        android:label="fragment_search_items"
+        tools:layout="@layout/fragment_search_items" />
 </navigation>

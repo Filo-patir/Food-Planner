@@ -7,15 +7,19 @@
             android:icon="@drawable/home"
             android:title="@string/home" />
         <item
+            android:id="@+id/searchMainFragment"
             android:icon="@drawable/search"
             android:title="@string/search" />
         <item
+            android:id="@+id/bookmarkFragment"
             android:icon="@drawable/meals"
             android:title="@string/meals" />
         <item
+            android:id="@+id/calendarFragment"
             android:icon="@drawable/calendar"
             android:title="@string/calendar" />
         <item
+            android:id="@+id/cartFragment"
             android:icon="@drawable/cart"
             android:title="@string/cart" />
     </group>

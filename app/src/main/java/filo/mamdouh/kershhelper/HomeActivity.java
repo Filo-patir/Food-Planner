@@ -3,7 +3,6 @@ package filo.mamdouh.kershhelper;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Looper;
-import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.Button;
 import android.widget.ImageButton;
@@ -14,22 +13,33 @@ import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.view.GravityCompat;
 import androidx.drawerlayout.widget.DrawerLayout;
+import androidx.navigation.NavController;
 import androidx.navigation.Navigation;
+import androidx.navigation.ui.NavigationUI;
 
-import com.google.android.material.navigation.NavigationView;
+import com.google.android.material.bottomnavigation.BottomNavigationView;
 
-public class HomeActivity extends AppCompatActivity {
+import filo.mamdouh.kershhelper.contracts.HomeContract;
+import filo.mamdouh.kershhelper.datastorage.local.FileHandler;
+import filo.mamdouh.kershhelper.datastorage.room.SavedMealsDataSourceImpl;
+import filo.mamdouh.kershhelper.models.Repostiry;
+import filo.mamdouh.kershhelper.presenters.HomeActivityPresenter;
+
+public class HomeActivity extends AppCompatActivity implements HomeContract.ToolBar {
     private static int savedNumber;
     private ImageButton drawer;
     private Button bookMarkBtn;
     private DrawerLayout mDrawerLayout;
-    AppCompatActivity homeActivity;
     private OnBackPressedCallback callback;
+    private HomeActivityPresenter presenter;
+    BottomNavigationView navigationView;
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        homeActivity = this;
         setContentView(R.layout.activity_home);
+        presenter = new HomeActivityPresenter(this, Repostiry.getInstance(FileHandler.getInstance(this), SavedMealsDataSourceImpl.getInstance(this)));
+        presenter.getSavedIems();
+        navigationView = findViewById(R.id.bottomNavigationView);
         mDrawerLayout =findViewById(R.id.HomeActivityLayout);
         drawer = findViewById(R.id.profileButton);
         bookMarkBtn = findViewById(R.id.toolbarSavedBtn);
@@ -55,5 +65,15 @@ public class HomeActivity extends AppCompatActivity {
             }
         };
         getOnBackPressedDispatcher().addCallback(this,callback);
+        bookMarkBtn.setOnClickListener(l->{
+            Navigation.findNavController(this,R.id.homeFragmentHost).navigate(R.id.action_global_bookmarkFragment);
+        });
+        NavController navController = Navigation.findNavController(this, R.id.homeFragmentHost);
+        NavigationUI.setupWithNavController(navigationView, navController);
+    }
+
+    @Override
+    public void updateUI(int n) {
+        bookMarkBtn.setText(String.valueOf(n));
     }
 }

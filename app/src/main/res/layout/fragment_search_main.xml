@@ -77,8 +77,7 @@
         android:fontFamily="@font/roboto"
         android:text="@string/see_more"
         android:textColor="@color/primary_color"
-        android:textFontWeight="1200"
-
+        android:textStyle="bold"
         android:textSize="14dp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/ingredientsRecylcerView" />

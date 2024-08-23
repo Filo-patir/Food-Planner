@@ -1,4 +1,4 @@
-package filo.mamdouh.kershhelper.databases.room;
+package filo.mamdouh.kershhelper.datastorage.room;
 
 import androidx.room.Dao;
 import androidx.room.Delete;
@@ -15,8 +15,10 @@ import io.reactivex.rxjava3.core.Flowable;
 @Dao
 public interface MealDAO {
     @Query("SELECT * FROM meals")
+    Flowable<List<MealsItem>> getAllMeals();
+    @Query("SELECT * FROM meals WHERE isSaved = true")
     Flowable<List<MealsItem>> getSaved();
-    @Insert(onConflict = OnConflictStrategy.IGNORE)
+    @Insert(onConflict = OnConflictStrategy.REPLACE)
     Completable insertProduct(MealsItem meal);
     @Delete
     Completable delete(MealsItem meal);

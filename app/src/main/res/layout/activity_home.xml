@@ -36,6 +36,7 @@
             android:paddingTop="0dp"
             android:paddingRight="10dp"
             android:paddingBottom="0dp"
+            android:textColor="@color/surface"
             android:textSize="20sp"
             app:icon="@drawable/save_icon"
             app:iconSize="26dp"
@@ -45,7 +46,7 @@
             tools:text="@string/tools_saved_number" />
 
         <fragment
-            android:id="@+id/fragmentContainerView"
+            android:id="@+id/homeFragmentHost"
             android:name="androidx.navigation.fragment.NavHostFragment"
             android:layout_width="match_parent"
             android:layout_height="0dp"

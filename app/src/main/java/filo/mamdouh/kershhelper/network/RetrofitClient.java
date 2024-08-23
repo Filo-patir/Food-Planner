@@ -10,6 +10,7 @@ import filo.mamdouh.kershhelper.models.HomeFragmentRowData;
 import filo.mamdouh.kershhelper.models.Meals;
 import filo.mamdouh.kershhelper.models.MealsItem;
 import io.reactivex.rxjava3.core.Observable;
+import io.reactivex.rxjava3.core.Single;
 import io.reactivex.rxjava3.schedulers.Schedulers;
 import retrofit2.Retrofit;
 import retrofit2.adapter.rxjava3.RxJava3CallAdapterFactory;
@@ -52,16 +53,16 @@ public class RetrofitClient implements NetworkContract{
     }
 
     @Override
-    public Observable<List<HomeFragmentRowData.ItemData>> getRandomMeal() {
-        apiService.getRandomMeal().doOnNext(meals -> Log.d("TAG", "getRandomMeal: "+ meals.getMeals().get(0).getStrMeal()));
-        return apiService.getRandomMeal().map(meals -> {
-            ArrayList<HomeFragmentRowData.ItemData> list = new ArrayList<>();
-            for (int i = 0; i<meals.getMeals().size();i++){
-                MealsItem item = meals.getMeals().get(i);
-                list.add(new HomeFragmentRowData.ItemData(item.getIdMeal(),item.getStrMeal(),item.getIngredients().size(), item.getStrArea(),item.getStrMealThumb()));
-            }
+    public Single<ArrayList<MealsItem>> getDailyInspiration() {
+        return getRandomMeal().repeat(5).scan(new ArrayList<MealsItem>(), (list,value)->{
+            list.add(value);
             return list;
-        });
+        }).last(new ArrayList<>(List.of(new MealsItem())));
+    }
+
+
+    private Observable<MealsItem> getRandomMeal() {
+        return apiService.getRandomMeal().map(meals -> meals.getMeals().get(0));
     }
 
     @Override

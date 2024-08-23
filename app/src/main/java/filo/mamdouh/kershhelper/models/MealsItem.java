@@ -65,7 +65,7 @@ public class MealsItem {
 	private String strMeasure19;
 	private String strMeasure20;
 	private String strSource;
-	private boolean isSaved;
+	private boolean isSaved = false;
 
 	public ArrayList<String> getIngredients() {
 		ArrayList<String> ingredients = new ArrayList<>();

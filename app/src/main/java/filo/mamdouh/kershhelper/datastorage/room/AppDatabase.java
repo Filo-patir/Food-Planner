@@ -1,4 +1,4 @@
-package filo.mamdouh.kershhelper.databases.room;
+package filo.mamdouh.kershhelper.datastorage.room;
 
 import android.content.Context;
 
@@ -6,7 +6,6 @@ import androidx.room.Database;
 import androidx.room.Room;
 import androidx.room.RoomDatabase;
 
-import filo.mamdouh.kershhelper.models.Meals;
 import filo.mamdouh.kershhelper.models.MealsItem;
 
 @Database(entities = MealsItem.class,version = 1)

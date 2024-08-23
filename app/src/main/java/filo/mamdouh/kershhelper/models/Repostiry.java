@@ -1,12 +1,21 @@
 package filo.mamdouh.kershhelper.models;
 
+import android.content.Context;
+
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 
 import filo.mamdouh.kershhelper.contracts.NetworkContract;
+import filo.mamdouh.kershhelper.datastorage.local.FileHandler;
+import filo.mamdouh.kershhelper.datastorage.room.SavedMealsDataSource;
+import filo.mamdouh.kershhelper.datastorage.room.SavedMealsDataSourceImpl;
 import filo.mamdouh.kershhelper.network.APIService;
 import filo.mamdouh.kershhelper.network.RetrofitClient;
+import io.reactivex.rxjava3.core.Completable;
+import io.reactivex.rxjava3.core.Flowable;
 import io.reactivex.rxjava3.core.Observable;
+import io.reactivex.rxjava3.core.Single;
 import lombok.Getter;
 import lombok.Setter;
 
@@ -15,6 +24,10 @@ public class Repostiry {
     @Setter
     private User user;
     private final NetworkContract api;
+    private final FileHandler fileHandler;
+    private final SavedMealsDataSource savedMealsDataSource;
+    @Getter
+    private Flowable<List<MealsItem>> savedMeals;
     @Getter
     private static final HashMap<String,String> COUNTERIES = new HashMap<>();
     private static Repostiry repostiry = null;
@@ -48,16 +61,25 @@ public class Repostiry {
         COUNTERIES.put("Ukrainian" , "https://www.worldometers.info/img/flags/up-flag.gif");
         COUNTERIES.put("Vietnamese" , "https://www.worldometers.info/img/flags/vm-flag.gif");
     }
-    private Repostiry(){
+    private Repostiry(FileHandler fileHandler, SavedMealsDataSource savedMealsDataSource){
         api = RetrofitClient.getInstance();
+        this.fileHandler = fileHandler;
+        this.savedMealsDataSource = savedMealsDataSource;
+        savedMeals = savedMealsDataSource.getSavedMeals();
     }
 
-    public static Repostiry getInstance() {
-        if(repostiry==null) repostiry = new Repostiry();
+    public static Repostiry getInstance(FileHandler fileHandler, SavedMealsDataSource savedMealsDataSource) {
+        if(repostiry==null) repostiry = new Repostiry(fileHandler, savedMealsDataSource);
         return repostiry;
     }
-    public Observable<List<HomeFragmentRowData.ItemData>> getRandomMeal(){
-        return api.getRandomMeal();
+    public Single<ArrayList<MealsItem>> getDailyInspiration(){
+
+        return api.getDailyInspiration();
     }
+
+    public Completable saveMeal(MealsItem meal){
+        return savedMealsDataSource.insertMeal(meal);
+    }
+
 
 }

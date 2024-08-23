@@ -38,6 +38,7 @@ android {
 }
 
 dependencies {
+    implementation libs.navigation.ui
     implementation libs.room.rxjava3
     annotationProcessor libs.lombok
     implementation libs.rxandroid

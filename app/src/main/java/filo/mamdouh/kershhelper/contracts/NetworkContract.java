@@ -1,12 +1,15 @@
 package filo.mamdouh.kershhelper.contracts;
 
 
+import java.util.ArrayList;
 import java.util.List;
 
 import filo.mamdouh.kershhelper.models.Categories;
 import filo.mamdouh.kershhelper.models.HomeFragmentRowData;
 import filo.mamdouh.kershhelper.models.Meals;
+import filo.mamdouh.kershhelper.models.MealsItem;
 import io.reactivex.rxjava3.core.Observable;
+import io.reactivex.rxjava3.core.Single;
 
 public interface NetworkContract {
     Observable<Meals> getMealByID(String id);
@@ -15,7 +18,7 @@ public interface NetworkContract {
 
     Observable<Meals> getMealByLetter(String letter);
 
-    Observable<List<HomeFragmentRowData.ItemData>> getRandomMeal();
+    Single<ArrayList<MealsItem>> getDailyInspiration();
 
     Observable<Meals> getMealByCategory(String category);
 

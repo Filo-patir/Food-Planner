@@ -13,7 +13,6 @@ public class AuthPresenter implements AuthContract.Presenter {
 
     public AuthPresenter(AuthContract.View view){
         this.view = view;
-        repo = Repostiry.getInstance();
     }
 
     public void onSignup(String email,String password){
@@ -34,7 +33,6 @@ public class AuthPresenter implements AuthContract.Presenter {
 
     @Override
     public void onSucessLogin(User user) {
-        repo.setUser(user);
         view.onSucess();
     }
 

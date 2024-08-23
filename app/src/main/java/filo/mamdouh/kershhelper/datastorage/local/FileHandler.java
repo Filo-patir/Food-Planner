@@ -1,4 +1,4 @@
-package filo.mamdouh.kershhelper.databases.local;
+package filo.mamdouh.kershhelper.datastorage.local;
 
 import android.content.Context;
 
@@ -47,7 +47,7 @@ public class FileHandler {
                 PrintStream fos = new PrintStream(context.openFileOutput(name,Context.MODE_PRIVATE));
                 String[] formatted = data.split("\n");
                 for (String s : formatted) {
-                    fos.println(s);
+                    fos.append(s+"\n");
                 }
                 return null;
             } catch (IOException e) {
