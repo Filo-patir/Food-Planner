@@ -77,7 +77,7 @@ public class Repostiry {
         return api.getDailyInspiration();
     }
 
-    public Observable<ArrayList<Integer>> getLocalDailyInspiration(){
+    public Observable<String> getLocalDailyInspiration(){
         return fileHandler.readFile("Daily Inspiration");
     }
     public void saveLocalDailyInspiration(String data){
@@ -101,7 +101,11 @@ public class Repostiry {
         return api.getMore();
     }
 
-    public Single<ArrayList<MealsItem>> recentlyViewed() {
+    public Observable<String> recentlyViewed() {
         return fileHandler.readFile("Recently Viewed");
+    }
+
+    public Observable<MealsItem> getMealByID(String ids) {
+        return api.getMealByID(ids);
     }
 }

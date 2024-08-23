@@ -6,12 +6,10 @@ import java.util.ArrayList;
 import java.util.List;
 
 import filo.mamdouh.kershhelper.contracts.NetworkContract;
-import filo.mamdouh.kershhelper.models.HomeFragmentRowData;
 import filo.mamdouh.kershhelper.models.Meals;
 import filo.mamdouh.kershhelper.models.MealsItem;
 import io.reactivex.rxjava3.core.Observable;
 import io.reactivex.rxjava3.core.Single;
-import io.reactivex.rxjava3.schedulers.Schedulers;
 import retrofit2.Retrofit;
 import retrofit2.adapter.rxjava3.RxJava3CallAdapterFactory;
 import retrofit2.converter.gson.GsonConverterFactory;
@@ -38,17 +36,17 @@ public class RetrofitClient implements NetworkContract{
     }
 
     @Override
-    public Observable<Meals> getMealByID(String id) {
+    public  Observable<MealsItem> getMealByID(String id) {
+        return apiService.getMealByID(id).map(meals -> meals.getMeals().get(0));
+    }
+
+    @Override
+    public Observable<MealsItem> getMealByName(String name) {
         return null;
     }
 
     @Override
-    public Observable<Meals> getMealByName(String name) {
-        return null;
-    }
-
-    @Override
-    public Observable<Meals> getMealByLetter(String letter) {
+    public Observable<MealsItem> getMealByLetter(String letter) {
         return null;
     }
 
@@ -71,12 +69,12 @@ public class RetrofitClient implements NetworkContract{
     }
 
     @Override
-    public Observable<Meals> getMealByIngredient(String ingredient) {
+    public Observable<MealsItem> getMealByIngredient(String ingredient) {
         return null;
     }
 
     @Override
-    public Observable<Meals> getMealByArea(String area) {
+    public Observable<MealsItem> getMealByArea(String area) {
         return null;
     }
 
@@ -111,4 +109,5 @@ public class RetrofitClient implements NetworkContract{
             return list;
         }).distinct().last(new ArrayList<>(List.of(new MealsItem())));
     }
+
 }

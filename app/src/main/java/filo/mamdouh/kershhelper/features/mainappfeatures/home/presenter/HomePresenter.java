@@ -72,12 +72,14 @@ public class HomePresenter {
     }
 
     public void getDailyInspiration(){
-        List<ArrayList<Integer>> ids = repo.getLocalDailyInspiration().subscribeOn(Schedulers.io()).toList().blockingGet();
-        if(ids != null){
-            repo.getArrayofMealsByID();
-        }
-        else {
-
-        }
+        Observable.fromCallable(() -> {
+            ArrayList<String> ids = new ArrayList<>();
+            repo.getLocalDailyInspiration().subscribeOn(Schedulers.io()).subscribe(
+                    id -> ids.add(id)
+            );
+        });
+        repo.getLocalDailyInspiration().subscribeOn(Schedulers.io()).flatMap(id ->
+            return repo.getMealByID(id);
+        });
     }
 }

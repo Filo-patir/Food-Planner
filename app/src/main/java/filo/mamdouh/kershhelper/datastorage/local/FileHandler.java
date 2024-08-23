@@ -9,7 +9,10 @@ import java.io.InputStreamReader;
 import java.io.PrintStream;
 import java.util.ArrayList;
 
+import io.reactivex.rxjava3.annotations.NonNull;
 import io.reactivex.rxjava3.core.Observable;
+import io.reactivex.rxjava3.core.ObservableEmitter;
+import io.reactivex.rxjava3.core.ObservableOnSubscribe;
 import io.reactivex.rxjava3.core.Single;
 import io.reactivex.rxjava3.schedulers.Schedulers;
 
@@ -25,21 +28,30 @@ public class FileHandler {
         return instance;
     }
 
-    public Observable<ArrayList<Integer>> readFile(String name) {
-        return Observable.fromCallable(() -> {
-            try {
+    public Observable<String> readFile(String name) {
+        return Observable.create(new ObservableOnSubscribe<String>() {
+            @Override
+            public void subscribe(@NonNull ObservableEmitter<String> emitter) throws Throwable {
                 FileInputStream fis = context.openFileInput(name);
                 BufferedReader reader = new BufferedReader(new InputStreamReader(fis));
-                ArrayList<Integer> result = new ArrayList<>();
-                String line;
-                while ((line=reader.readLine())!=null){
-                    result.add(Integer.valueOf(line));
+                try
+                {
+                    String line;
+                    while ((line = reader.readLine()) != null) {
+                        try {
+                            emitter.onNext(line); // Emit each integer line
+                        } catch (NumberFormatException e) {
+                            // Handle lines that cannot be parsed as integers
+                            emitter.onError(new Exception("Error parsing line: " + line, e));
+                        }
+                    }
+                    emitter.onComplete(); // Signal completion after reading all lines
+                } catch (IOException e) {
+                    emitter.onError(new RuntimeException(e)); // Emit error if file cannot be opened
                 }
-                return result;
-            } catch (IOException e) {
-                throw new RuntimeException(e);
+                    reader.close();
             }
-        }).subscribeOn(Schedulers.io());
+        });
     }
 
     public Single<Object> writeFile(String name, String data) {
