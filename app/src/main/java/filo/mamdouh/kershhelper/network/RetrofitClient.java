@@ -66,8 +66,8 @@ public class RetrofitClient implements NetworkContract{
     }
 
     @Override
-    public Observable<Meals> getMealByCategory(String category) {
-        return null;
+    public Observable<List<MealsItem>> getMealByCategory(String category) {
+        return apiService.getMealByCategory(category).map(Meals::getMeals);
     }
 
     @Override
@@ -93,5 +93,22 @@ public class RetrofitClient implements NetworkContract{
     @Override
     public Observable<Meals> getCategories() {
         return null;
+    }
+
+    @Override
+    public Single<ArrayList<MealsItem>> getRanomMeals() {
+        return getRandomMeal().repeat(5).scan(new ArrayList<MealsItem>(), (list,value)->{
+            list.add(value);
+            return list;
+        }).last(new ArrayList<>(List.of(new MealsItem())));
+    }
+
+    @Override
+    public Single<ArrayList<MealsItem>> getMore() {
+        Log.d("Small list", "getMore: ");
+        return getRandomMeal().repeat(20).scan(new ArrayList<MealsItem>(), (list,value)->{
+            list.add(value);
+            return list;
+        }).distinct().last(new ArrayList<>(List.of(new MealsItem())));
     }
 }

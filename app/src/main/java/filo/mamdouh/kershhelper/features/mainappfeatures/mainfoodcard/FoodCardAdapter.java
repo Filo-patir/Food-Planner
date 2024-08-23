@@ -1,6 +1,7 @@
 package filo.mamdouh.kershhelper.features.mainappfeatures.mainfoodcard;
 
 import android.content.Context;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.ViewGroup;
 
@@ -8,6 +9,8 @@ import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.bumptech.glide.Glide;
+
+import java.util.ArrayList;
 import java.util.List;
 
 import filo.mamdouh.kershhelper.R;
@@ -23,7 +26,8 @@ public class FoodCardAdapter extends RecyclerView.Adapter<FoodCardHolder> implem
     private Context context;
     private OnItemClickListener listener;
     public FoodCardAdapter(List<MealsItem> items,Context context,OnItemClickListener listener) {
-        this.items = items;
+        if(items == null) this.items = new ArrayList<>();
+        else this.items = items;
         this.context = context;
         this.listener = listener;
     }

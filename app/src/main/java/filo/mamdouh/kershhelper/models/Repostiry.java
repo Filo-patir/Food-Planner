@@ -77,9 +77,31 @@ public class Repostiry {
         return api.getDailyInspiration();
     }
 
+    public Observable<ArrayList<Integer>> getLocalDailyInspiration(){
+        return fileHandler.readFile("Daily Inspiration");
+    }
+    public void saveLocalDailyInspiration(String data){
+        fileHandler.writeFile("Daily Inspiration",data);
+    }
+
     public Completable saveMeal(MealsItem meal){
         return savedMealsDataSource.insertMeal(meal);
     }
 
 
+    public Observable<List<MealsItem>> getDesserts() {
+        return api.getMealByCategory("Dessert");
+    }
+
+    public Single<ArrayList<MealsItem>> getRandomMeals() {
+        return api.getRanomMeals();
+    }
+
+    public Single<ArrayList<MealsItem>> getMore() {
+        return api.getMore();
+    }
+
+    public Single<ArrayList<MealsItem>> recentlyViewed() {
+        return fileHandler.readFile("Recently Viewed");
+    }
 }

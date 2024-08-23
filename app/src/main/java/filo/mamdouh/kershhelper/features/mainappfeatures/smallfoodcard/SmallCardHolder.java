@@ -1,4 +1,4 @@
-package filo.mamdouh.kershhelper.features.smallfoodcard;
+package filo.mamdouh.kershhelper.features.mainappfeatures.smallfoodcard;
 
 import android.view.View;
 import android.widget.ImageButton;

@@ -5,6 +5,7 @@ import filo.mamdouh.kershhelper.models.Meals;
 import io.reactivex.rxjava3.core.Observable;
 import retrofit2.http.GET;
 import retrofit2.http.Path;
+import retrofit2.http.Query;
 
 public interface APIService {
     @GET("/api/json/v1/1/lookup.php?i={id}")
@@ -16,11 +17,11 @@ public interface APIService {
     @GET("/api/json/v1/1/search.php?f={letter}")
     Observable<Meals> getMealByLetter(@Path("letter") String letter);
 
-    @GET("/api/json/v1/1/random.php")
+    @GET("random.php")
     Observable<Meals> getRandomMeal();
 
-    @GET("/api/json/v1/1/filter.php?c={category}")
-    Observable<Meals> getMealByCategory(@Path("category") String category);
+    @GET("filter.php")
+    Observable<Meals> getMealByCategory(@Query("c") String category);
 
     @GET("/api/json/v1/1/filter.php?i={ingredient}")
     Observable<Meals> getMealByIngredient(@Path("ingredient") String ingredient);

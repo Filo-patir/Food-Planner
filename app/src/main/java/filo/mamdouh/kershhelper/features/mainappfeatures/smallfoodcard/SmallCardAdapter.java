@@ -1,6 +1,7 @@
-package filo.mamdouh.kershhelper.features.smallfoodcard;
+package filo.mamdouh.kershhelper.features.mainappfeatures.smallfoodcard;
 
 import android.content.Context;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.ViewGroup;
 
@@ -14,7 +15,6 @@ import java.util.List;
 import filo.mamdouh.kershhelper.R;
 import filo.mamdouh.kershhelper.features.communicators.OnItemClickListener;
 import filo.mamdouh.kershhelper.features.mainappfeatures.home.Updater;
-import filo.mamdouh.kershhelper.models.HomeFragmentRowData;
 import filo.mamdouh.kershhelper.models.MealsItem;
 import filo.mamdouh.kershhelper.models.Repostiry;
 
@@ -33,6 +33,9 @@ public class SmallCardAdapter extends RecyclerView.Adapter<SmallCardHolder> impl
     @NonNull
     @Override
     public SmallCardHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
+        SmallCardHolder smallCardHolder = new SmallCardHolder(LayoutInflater.from(parent.getContext()).inflate(R.layout.small_card_item,
+                parent, false));
+        Log.d("Small List holder", "onBindViewHolder: "+smallCardHolder.getAdapterPosition());
         return new SmallCardHolder(LayoutInflater.from(parent.getContext()).inflate(R.layout.small_card_item,
                 parent, false));
     }
@@ -41,6 +44,7 @@ public class SmallCardAdapter extends RecyclerView.Adapter<SmallCardHolder> impl
     @Override
     public void onBindViewHolder(@NonNull SmallCardHolder holder, int position)
     {
+        Log.d("Small List", "onBindViewHolder: "+position);
         MealsItem item = items.get(position);
         holder.mealName.setText(item.getStrMeal());
         holder.ingredientsNumber.setText(item.getIngredients().size() + " Ingredients");

@@ -20,7 +20,7 @@ public interface NetworkContract {
 
     Single<ArrayList<MealsItem>> getDailyInspiration();
 
-    Observable<Meals> getMealByCategory(String category);
+    Observable<List<MealsItem>> getMealByCategory(String category);
 
     Observable<Meals> getMealByIngredient(String ingredient);
 
@@ -31,4 +31,8 @@ public interface NetworkContract {
     Observable<Meals> getIngredients();
 
     Observable<Meals> getCategories();
+
+    Single<ArrayList<MealsItem>> getRanomMeals();
+
+    Single<ArrayList<MealsItem>> getMore();
 }

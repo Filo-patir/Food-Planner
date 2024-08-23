@@ -10,14 +10,13 @@ import android.widget.TextView;
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
-import androidx.recyclerview.widget.StaggeredGridLayoutManager;
 
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 
 import filo.mamdouh.kershhelper.R;
-import filo.mamdouh.kershhelper.features.smallfoodcard.SmallCardAdapter;
+import filo.mamdouh.kershhelper.features.mainappfeatures.smallfoodcard.SmallCardAdapter;
 import filo.mamdouh.kershhelper.models.HomeFragmentRowData;
 import filo.mamdouh.kershhelper.features.mainappfeatures.mainfoodcard.FoodCardAdapter;
 import filo.mamdouh.kershhelper.features.communicators.OnItemClickListener;
@@ -48,7 +47,7 @@ public class BaseRecyclerViewAdapter extends RecyclerView.Adapter<BaseRecyclerVi
 
     @Override
     public void onBindViewHolder(@NonNull BaseRecyclerViewHolder holder, int position) {
-        Log.d("TAG", "onBindViewHolder: Bind");
+        Log.d("TAG", "onBindViewHolder: Bind"+position);
         RecyclerView.RecycledViewPool viewPool = new RecyclerView.RecycledViewPool();
         holder.cardRecyclerView.setRecycledViewPool(viewPool);
         if (position<4) {

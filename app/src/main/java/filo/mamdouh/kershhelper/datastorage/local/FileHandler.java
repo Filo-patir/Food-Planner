@@ -10,6 +10,7 @@ import java.io.PrintStream;
 import java.util.ArrayList;
 
 import io.reactivex.rxjava3.core.Observable;
+import io.reactivex.rxjava3.core.Single;
 import io.reactivex.rxjava3.schedulers.Schedulers;
 
 public class FileHandler {
@@ -41,11 +42,12 @@ public class FileHandler {
         }).subscribeOn(Schedulers.io());
     }
 
-    public Observable<Object> writeFile(String name, String data) {
-        return Observable.fromCallable(() -> {
+    public Single<Object> writeFile(String name, String data) {
+        return Single.fromCallable(() -> {
             try {
                 PrintStream fos = new PrintStream(context.openFileOutput(name,Context.MODE_PRIVATE));
-                String[] formatted = data.split("\n");
+                fos.println();
+                String[] formatted = data.split("\\n");
                 for (String s : formatted) {
                     fos.append(s+"\n");
                 }
