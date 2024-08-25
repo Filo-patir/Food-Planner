@@ -9,6 +9,6 @@ import io.reactivex.rxjava3.core.Observable;
 public interface CalendarDataSource {
     Completable insertMeal(Calendar meal);
     Completable deleteMeal(Calendar meal);
-    Flowable<List<Calendar>> getCalendars();
+    Flowable<Calendar> getCalendars();
     Flowable<List<Boolean>> getMealPlan(String id);
 }

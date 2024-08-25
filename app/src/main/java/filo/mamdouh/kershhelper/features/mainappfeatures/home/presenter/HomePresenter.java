@@ -36,18 +36,11 @@ public class HomePresenter {
                         }, e-> Log.d("TAG", "getHomeItems: "+e.getMessage())
                 ));
         getDesserts();
-//        compositeDisposable.add(repo.getDesserts().subscribeOn(Schedulers.io()).observeOn(AndroidSchedulers.mainThread())
-//                .subscribe(
-//                        meals -> {
-//                            view.updateUI(new HomeFragmentRowData("Desserts",meals));
-//                        }, e-> Log.d("TAG", "getHomeItems: "+e.getMessage())
-//                ));
         getRecentlyViewed();
         compositeDisposable.add(repo.getMore().subscribeOn(Schedulers.io()).observeOn(AndroidSchedulers.mainThread())
                 .subscribe(
                         meals -> {
                             view.updateUI(new HomeFragmentRowData("More You Might Like",meals));
-                            compositeDisposable.dispose();
                         }, e-> Log.d("TAG", "getHomeItems: "+e.getMessage())
                 ));
     }
@@ -144,6 +137,6 @@ public class HomePresenter {
     }
 
     public void onDestroy(){
-        compositeDisposable.dispose();
+//        compositeDisposable.dispose();
     }
 }

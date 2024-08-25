@@ -17,6 +17,7 @@ import io.reactivex.rxjava3.core.Completable;
 import io.reactivex.rxjava3.core.Flowable;
 import io.reactivex.rxjava3.core.Observable;
 import io.reactivex.rxjava3.core.Single;
+import io.reactivex.rxjava3.disposables.Disposable;
 import lombok.Getter;
 import lombok.Setter;
 
@@ -151,5 +152,9 @@ public class Repostiry {
     }
     public Observable<String> getRecentlyViewed(){
         return fileHandler.readFile("Recently_Viewed");
+    }
+
+    public Flowable<Calendar> getCalendar() {
+        return calendarDataSource.getCalendars();
     }
 }

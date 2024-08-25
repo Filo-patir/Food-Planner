@@ -20,7 +20,10 @@ public interface CalendarDao {
     Flowable<Calendar> getCalendar(String id);
 
     @Query("SELECT * FROM calendar")
-    Flowable<List<Calendar>> getCalendars();
+    Flowable<Calendar> getCalendars();
+
+    @Query("DELETE FROM calendar WHERE mealID =:id")
+    Completable delete(String id);
 
     @Delete
     Completable delete(Calendar calendar);

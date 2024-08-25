@@ -37,7 +37,8 @@ public class CalendarDataSourceImpl implements CalendarDataSource {
     }
 
     @Override
-    public Flowable<List<Calendar>> getCalendars() {
+    public Flowable<Calendar> getCalendars() {
+        dao.getCalendars().subscribeOn(Schedulers.io()).subscribe(onNext-> Log.d("Filo", "getCalendars: "+onNext.getMealID()));
         return dao.getCalendars();
     }
 

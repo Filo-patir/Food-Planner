@@ -25,7 +25,7 @@
     </fragment>
     <fragment
         android:id="@+id/calendarFragment"
-        android:name="filo.mamdouh.kershhelper.features.mainappfeatures.calendarfragment.CalendarFragment"
+        android:name="filo.mamdouh.kershhelper.features.mainappfeatures.calendar.CalendarFragment"
         android:label="fragment_calendar"
         tools:layout="@layout/fragment_calendar" >
         <action

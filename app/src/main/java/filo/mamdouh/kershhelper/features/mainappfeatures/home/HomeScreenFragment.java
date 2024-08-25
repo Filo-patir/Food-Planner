@@ -20,7 +20,6 @@ import filo.mamdouh.kershhelper.databinding.FragmentHomeScreenBinding;
 import filo.mamdouh.kershhelper.datastorage.local.FileHandler;
 import filo.mamdouh.kershhelper.datastorage.room.calendar.CalendarDataSourceImpl;
 import filo.mamdouh.kershhelper.datastorage.room.savedmeals.SavedMealsDataSourceImpl;
-import filo.mamdouh.kershhelper.features.mainappfeatures.BaseRecyclerViewAdapter;
 import filo.mamdouh.kershhelper.features.mainappfeatures.addtocalendardialog.PlanDialog;
 import filo.mamdouh.kershhelper.features.mainappfeatures.home.presenter.HomePresenter;
 import filo.mamdouh.kershhelper.features.communicators.OnItemClickListener;
