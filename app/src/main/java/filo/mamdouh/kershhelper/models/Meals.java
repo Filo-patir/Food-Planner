@@ -9,7 +9,6 @@ import lombok.Data;
 @Data
 public class Meals {
     private List<MealsItem> meals;
-
     public List<MealsItem> getMeals(){
         return meals;
     }

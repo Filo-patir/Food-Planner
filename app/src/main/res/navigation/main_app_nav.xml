@@ -16,7 +16,7 @@
     </fragment>
     <fragment
         android:id="@+id/bookmarkFragment"
-        android:name="filo.mamdouh.kershhelper.features.mainappfeatures.bookmarkfragments.BookmarkFragment"
+        android:name="filo.mamdouh.kershhelper.features.mainappfeatures.savedmeals.BookmarkFragment"
         android:label="fragment_bookmark"
         tools:layout="@layout/fragment_bookmark" >
         <action
@@ -49,12 +49,23 @@
         app:popUpToInclusive="false" />
     <fragment
         android:id="@+id/searchMainFragment"
-        android:name="filo.mamdouh.kershhelper.features.mainappfeatures.searchfragment.SearchMainFragment"
+        android:name="filo.mamdouh.kershhelper.features.mainappfeatures.search.SearchMainFragment"
         android:label="fragment_search_main"
-        tools:layout="@layout/fragment_search_main" />
+        tools:layout="@layout/fragment_search_main" >
+        <action
+            android:id="@+id/action_searchMainFragment_to_searchItemsFragment"
+            app:destination="@id/searchItemsFragment"
+            app:popUpTo="@id/searchMainFragment"
+            app:popUpToInclusive="true" />
+    </fragment>
     <fragment
         android:id="@+id/searchItemsFragment"
-        android:name="filo.mamdouh.kershhelper.features.mainappfeatures.searchfragment.SearchItemsFragment"
+        android:name="filo.mamdouh.kershhelper.features.mainappfeatures.search.SearchItemsFragment"
         android:label="fragment_search_items"
-        tools:layout="@layout/fragment_search_items" />
+        tools:layout="@layout/fragment_search_items" >
+        <action
+            android:id="@+id/action_searchItemsFragment_to_searchMainFragment"
+            app:destination="@id/searchMainFragment"
+            app:popUpTo="@id/main_app_nav" />
+    </fragment>
 </navigation>

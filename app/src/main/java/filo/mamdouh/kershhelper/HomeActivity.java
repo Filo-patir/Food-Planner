@@ -19,14 +19,18 @@ import androidx.navigation.ui.NavigationUI;
 
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 
+import java.util.ArrayList;
+
 import filo.mamdouh.kershhelper.contracts.HomeContract;
+import filo.mamdouh.kershhelper.contracts.WeekSetter;
 import filo.mamdouh.kershhelper.datastorage.local.FileHandler;
-import filo.mamdouh.kershhelper.datastorage.room.SavedMealsDataSourceImpl;
+import filo.mamdouh.kershhelper.datastorage.room.calendar.CalendarDataSourceImpl;
+import filo.mamdouh.kershhelper.datastorage.room.savedmeals.SavedMealsDataSourceImpl;
+import filo.mamdouh.kershhelper.features.communicators.Planner;
 import filo.mamdouh.kershhelper.models.Repostiry;
 import filo.mamdouh.kershhelper.presenters.HomeActivityPresenter;
 
-public class HomeActivity extends AppCompatActivity implements HomeContract.ToolBar {
-    private static int savedNumber;
+public class HomeActivity extends AppCompatActivity implements HomeContract.ToolBar , Planner {
     private ImageButton drawer;
     private Button bookMarkBtn;
     private DrawerLayout mDrawerLayout;
@@ -37,7 +41,7 @@ public class HomeActivity extends AppCompatActivity implements HomeContract.Tool
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_home);
-        presenter = new HomeActivityPresenter(this, Repostiry.getInstance(FileHandler.getInstance(this), SavedMealsDataSourceImpl.getInstance(this)));
+        presenter = new HomeActivityPresenter(this, Repostiry.getInstance(FileHandler.getInstance(this), SavedMealsDataSourceImpl.getInstance(this), CalendarDataSourceImpl.getInstance(this)));
         presenter.getSavedIems();
         navigationView = findViewById(R.id.bottomNavigationView);
         mDrawerLayout =findViewById(R.id.HomeActivityLayout);
@@ -73,7 +77,28 @@ public class HomeActivity extends AppCompatActivity implements HomeContract.Tool
     }
 
     @Override
-    public void updateUI(int n) {
+    public void updateSavedNumberI(int n) {
         bookMarkBtn.setText(String.valueOf(n));
+    }
+
+    @Override
+    public void updateToolBarStatus(int n) {
+        bookMarkBtn.setVisibility(n);
+        drawer.setVisibility(n);
+    }
+
+    @Override
+    public void addToCalendar(String id, ArrayList<String> data) {
+        presenter.addToCalendar(id,data);
+    }
+
+    @Override
+    public void showToast(String text) {
+        Toast.makeText(this, text, Toast.LENGTH_SHORT).show();
+    }
+
+    @Override
+    public void getSavedWeek(String id, WeekSetter setter) {
+        presenter.getSavedItemByID(id,setter);
     }
 }

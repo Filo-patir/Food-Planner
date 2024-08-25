@@ -100,4 +100,12 @@
     <string name="see_more"><u>See More</u></string>
     <string name="search_by_category">Search By Category</string>
     <string name="search_for_meals">Search For Meals</string>
+    <string name="saturday">Saturday</string>
+    <string name="sunday">Sunday</string>
+    <string name="monday">Monday</string>
+    <string name="tuesday">Tuesday</string>
+    <string name="wednessday">Wednesday</string>
+    <string name="thursday">Thursday</string>
+    <string name="friday">Friday</string>
+    <string name="cancel">Cancel</string>
 </resources>

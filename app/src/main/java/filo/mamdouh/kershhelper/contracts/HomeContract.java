@@ -10,6 +10,7 @@ public interface HomeContract {
         void onSave(String toast);
     }
     interface ToolBar{
-        void updateUI(int n);
+        void updateSavedNumberI(int n);
+        void updateToolBarStatus(int n);
     }
 }

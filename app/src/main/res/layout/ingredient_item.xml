@@ -8,28 +8,30 @@
     android:padding="10dp">
 
     <androidx.cardview.widget.CardView
-        android:layout_width="match_parent"
+        android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         app:cardBackgroundColor="@color/secondary_color"
         app:cardCornerRadius="50dp">
 
         <LinearLayout
+            android:id="@+id/totalItem"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:orientation="vertical">
 
             <ImageView
-                android:id="@+id/imageView6"
+                android:id="@+id/ingredientImg"
                 android:layout_width="75dp"
                 android:layout_height="75dp"
                 tools:srcCompat="@drawable/ic_launcher_foreground" />
 
             <TextView
-                android:id="@+id/textView20"
+                android:id="@+id/ingredientItemName"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:background="@color/surface_variant"
                 android:fontFamily="@font/roboto"
+                android:maxLines="2"
                 android:paddingBottom="8dp"
                 android:textAlignment="center"
                 android:textColor="@color/primary_color"

@@ -2,24 +2,25 @@
 <FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
-    android:layout_width="wrap_content"
+    android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:padding="10dp">
 
     <androidx.cardview.widget.CardView
-        android:layout_width="wrap_content"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
         app:cardBackgroundColor="#00FFFFFF"
         app:cardCornerRadius="50dp">
 
         <LinearLayout
+            android:id="@+id/categoryItem"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:background="@color/secondary_color"
             android:orientation="vertical">
 
             <TextView
-                android:id="@+id/textView21"
+                android:id="@+id/categoryItemName"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:fontFamily="@font/roboto"
@@ -31,8 +32,8 @@
                 tools:text="Chicken" />
 
             <ImageView
-                android:id="@+id/imageView7"
-                android:layout_width="150dp"
+                android:id="@+id/categoryItemImg"
+                android:layout_width="match_parent"
                 android:layout_height="100dp"
                 android:background="@color/surface_variant"
                 tools:srcCompat="@drawable/ic_launcher_foreground" />

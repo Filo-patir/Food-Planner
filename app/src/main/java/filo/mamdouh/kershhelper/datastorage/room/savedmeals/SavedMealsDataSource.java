@@ -1,4 +1,4 @@
-package filo.mamdouh.kershhelper.datastorage.room;
+package filo.mamdouh.kershhelper.datastorage.room.savedmeals;
 
 import java.util.List;
 

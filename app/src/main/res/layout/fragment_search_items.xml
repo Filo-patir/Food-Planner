@@ -5,21 +5,21 @@
     android:id="@+id/frameLayout2"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".features.mainappfeatures.searchfragment.SearchItemsFragment">
+    tools:context=".features.mainappfeatures.search.SearchItemsFragment">
 
     <ImageView
-        android:id="@+id/imageView8"
+        android:id="@+id/searchBackButton"
         android:layout_width="40dp"
         android:layout_height="wrap_content"
         android:layout_marginStart="16dp"
         android:src="@drawable/baseline_arrow_back_24"
-        android:tint="@color/primary_color"
-        app:layout_constraintBottom_toBottomOf="@+id/editTextText"
+        app:tint="@color/primary_color"
+        app:layout_constraintBottom_toBottomOf="@+id/searchMealsEditText"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="@+id/editTextText" />
+        app:layout_constraintTop_toTopOf="@+id/searchMealsEditText" />
 
     <EditText
-        android:id="@+id/editTextText"
+        android:id="@+id/searchMealsEditText"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_marginStart="16dp"
@@ -34,16 +34,17 @@
         android:textColor="@color/surface"
         android:textColorHint="@color/surface_variant"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toEndOf="@+id/imageView8"
+        app:layout_constraintStart_toEndOf="@+id/searchBackButton"
         app:layout_constraintTop_toTopOf="parent" />
 
     <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/searchRecyclerView"
         android:layout_width="match_parent"
         android:layout_height="0dp"
         android:layout_marginStart="8dp"
         android:layout_marginTop="16dp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/editTextText" />
+        app:layout_constraintTop_toBottomOf="@+id/searchMealsEditText" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

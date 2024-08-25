@@ -46,7 +46,7 @@ public class FoodCardAdapter extends RecyclerView.Adapter<FoodCardHolder> implem
         String imgUrl = Repostiry.getCOUNTERIES().get(item.getStrArea());
         Glide.with(context).load(imgUrl).placeholder(R.drawable.unknown_flag_icon).into(holder.areaFlag);
         Glide.with(context).load(item.getStrMealThumb()).placeholder(R.drawable.ic_launcher_background).into(holder.backgroundImg);
-        holder.addToCalendarBtn.setOnClickListener(l-> listener.addToCalendarListener());
+        holder.addToCalendarBtn.setOnClickListener(l-> listener.addToCalendarListener(item.getIdMeal(),item.getStrMeal()));
         holder.saveBtn.setOnClickListener(l->listener.saveItemListener(item,this));
         if(item.isSaved()) holder.saveBtn.setImageResource(R.drawable.baseline_bookmark_24);
         else holder.saveBtn.setImageResource(R.drawable.save_icon);

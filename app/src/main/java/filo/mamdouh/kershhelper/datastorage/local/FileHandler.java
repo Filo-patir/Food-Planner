@@ -1,6 +1,7 @@
 package filo.mamdouh.kershhelper.datastorage.local;
 
 import android.content.Context;
+import android.util.Log;
 
 import java.io.BufferedReader;
 import java.io.FileInputStream;
@@ -54,20 +55,23 @@ public class FileHandler {
         });
     }
 
-    public Single<Object> writeFile(String name, String data) {
-        return Single.fromCallable(() -> {
-            try {
-                PrintStream fos = new PrintStream(context.openFileOutput(name,Context.MODE_PRIVATE));
-                fos.println();
-                String[] formatted = data.split("\\n");
-                for (String s : formatted) {
-                    fos.append(s+"\n");
-                }
-                return null;
-            } catch (IOException e) {
-                throw new RuntimeException(e);
-            }
-        }).subscribeOn(Schedulers.io());
+    public Observable<Object> writeFile(String name, ArrayList<String> data) {
+        return Observable.fromCallable(() -> {
+            PrintStream fos = new PrintStream(context.openFileOutput(name,Context.MODE_APPEND),true);
+            Log.d("Filo", "writeFile: "+data);
+            for (String item : data)  fos.append(item+"\n");
+            fos.close();
+            return null;
+        });
+    }
+    public void removeFile(String name) {
+        Observable.fromCallable(() -> {
+            PrintStream fos = new PrintStream(context.openFileOutput(name,Context.MODE_PRIVATE));
+            Log.d("Filo", "removefile: ");
+            fos.print("");
+            fos.close();
+            return null;
+        });
     }
 
 }

@@ -10,9 +10,11 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.bumptech.glide.Glide;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import filo.mamdouh.kershhelper.R;
+import filo.mamdouh.kershhelper.contracts.SearchItemContract;
 import filo.mamdouh.kershhelper.features.communicators.OnItemClickListener;
 import filo.mamdouh.kershhelper.features.mainappfeatures.home.Updater;
 import filo.mamdouh.kershhelper.models.MealsItem;
@@ -23,11 +25,17 @@ public class SmallCardAdapter extends RecyclerView.Adapter<SmallCardHolder> impl
     private List<MealsItem> items;
     private Context context;
     private OnItemClickListener listener;
+    private SearchItemContract.Listener searchListener;
 
     public SmallCardAdapter(List<MealsItem> items, Context context, OnItemClickListener listener) {
         this.items = items;
         this.context = context;
         this.listener = listener;
+    }
+    public SmallCardAdapter(Context context, SearchItemContract.Listener listener) {
+        items = new ArrayList<>();
+        this.context = context;
+        this.searchListener = listener;
     }
 
     @NonNull
@@ -62,6 +70,15 @@ public class SmallCardAdapter extends RecyclerView.Adapter<SmallCardHolder> impl
 
     @Override
     public void updateUI() {
+        notifyDataSetChanged();
+    }
+
+    public void updateUI(MealsItem mealsItem) {
+        items.add(mealsItem);
+        notifyDataSetChanged();
+    }
+    public void removeList(){
+        items = new ArrayList<>();
         notifyDataSetChanged();
     }
 }

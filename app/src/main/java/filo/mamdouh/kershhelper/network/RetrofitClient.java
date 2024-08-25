@@ -1,15 +1,22 @@
 package filo.mamdouh.kershhelper.network;
 
+import android.annotation.SuppressLint;
 import android.util.Log;
 
 import java.util.ArrayList;
 import java.util.List;
 
 import filo.mamdouh.kershhelper.contracts.NetworkContract;
+import filo.mamdouh.kershhelper.models.Categories;
+import filo.mamdouh.kershhelper.models.IngredientsRoot;
 import filo.mamdouh.kershhelper.models.Meals;
 import filo.mamdouh.kershhelper.models.MealsItem;
+import io.reactivex.rxjava3.annotations.NonNull;
 import io.reactivex.rxjava3.core.Observable;
+import io.reactivex.rxjava3.core.ObservableEmitter;
+import io.reactivex.rxjava3.core.ObservableOnSubscribe;
 import io.reactivex.rxjava3.core.Single;
+import io.reactivex.rxjava3.schedulers.Schedulers;
 import retrofit2.Retrofit;
 import retrofit2.adapter.rxjava3.RxJava3CallAdapterFactory;
 import retrofit2.converter.gson.GsonConverterFactory;
@@ -42,7 +49,12 @@ public class RetrofitClient implements NetworkContract{
 
     @Override
     public Observable<MealsItem> getMealByName(String name) {
-        return null;
+        return Observable.create(emitter -> apiService.getMealByName(name).map(Meals::getMeals).subscribeOn(Schedulers.io()).subscribe(
+                                onNext -> {
+                                    for (MealsItem meal : onNext)
+                                        emitter.onNext(meal);
+                                }, emitter::onError
+        ));
     }
 
     @Override
@@ -70,7 +82,19 @@ public class RetrofitClient implements NetworkContract{
 
     @Override
     public Observable<MealsItem> getMealByIngredient(String ingredient) {
-        return null;
+        return Observable.create(new ObservableOnSubscribe<MealsItem>() {
+            @Override
+            public void subscribe(@NonNull ObservableEmitter<MealsItem> emitter) {
+                apiService.getMealByIngredient(ingredient).subscribeOn(Schedulers.io()).map(Meals::getMeals).subscribe(
+                        mealsItems -> {
+                            for (MealsItem meal : mealsItems)
+                                apiService.getMealByID(meal.getIdMeal()).map(Meals::getMeals).subscribeOn(Schedulers.io()).subscribe(
+                                        onNext -> emitter.onNext(onNext.get(0)), emitter::onError
+                                );
+                        }
+                );
+            }
+        });
     }
 
     @Override
@@ -84,13 +108,13 @@ public class RetrofitClient implements NetworkContract{
     }
 
     @Override
-    public Observable<Meals> getIngredients() {
-        return null;
+    public Observable<List<IngredientsRoot.Ingredient>> getIngredients() {
+        return apiService.getIngredients().map(IngredientsRoot::getMeals);
     }
 
     @Override
-    public Observable<Meals> getCategories() {
-        return null;
+    public Observable<List<Categories.Category>> getCategories() {
+        return apiService.getCategories().map(Categories::getCategoryList);
     }
 
     @Override

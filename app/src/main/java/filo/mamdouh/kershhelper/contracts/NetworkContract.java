@@ -4,6 +4,8 @@ package filo.mamdouh.kershhelper.contracts;
 import java.util.ArrayList;
 import java.util.List;
 
+import filo.mamdouh.kershhelper.models.Categories;
+import filo.mamdouh.kershhelper.models.IngredientsRoot;
 import filo.mamdouh.kershhelper.models.Meals;
 import filo.mamdouh.kershhelper.models.MealsItem;
 import io.reactivex.rxjava3.core.Observable;
@@ -24,9 +26,9 @@ public interface NetworkContract {
 
     Observable<Meals> getAreas();
 
-    Observable<Meals> getIngredients();
+    Observable<List<IngredientsRoot.Ingredient>> getIngredients();
 
-    Observable<Meals> getCategories();
+    Observable<List<Categories.Category>> getCategories();
 
     Single<ArrayList<MealsItem>> getRanomMeals();
 

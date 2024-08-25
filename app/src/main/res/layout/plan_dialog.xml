@@ -1,0 +1,120 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:background="@color/surfacevariant50op"
+    android:orientation="vertical">
+
+    <TextView
+        android:id="@+id/dialogMealName"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:fontFamily="@font/roboto"
+        android:padding="20dp"
+        android:textAlignment="center"
+        android:textColor="@color/primary_color"
+        android:textColorLink="@color/primary_color"
+        android:textSize="24dp"
+        android:textStyle="bold"
+        tools:text="FOOOD BADB" />
+
+    <CheckBox
+        android:id="@+id/saturdaycb"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center_horizontal"
+        android:fontFamily="@font/roboto"
+        android:text="@string/saturday"
+        android:textColor="@color/secondary_color"
+        android:textSize="18dp" />
+
+    <CheckBox
+        android:id="@+id/sundayCB"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center_horizontal"
+        android:fontFamily="@font/roboto"
+        android:text="@string/sunday"
+        android:textColor="@color/secondary_color"
+        android:textSize="18dp" />
+
+    <CheckBox
+        android:id="@+id/mondayCB"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center_horizontal"
+        android:fontFamily="@font/roboto"
+        android:text="@string/monday"
+        android:textColor="@color/secondary_color"
+        android:textSize="18dp" />
+
+    <CheckBox
+        android:id="@+id/tuesdayCB"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center_horizontal"
+        android:fontFamily="@font/roboto"
+        android:text="@string/tuesday"
+        android:textColor="@color/secondary_color"
+        android:textSize="18dp" />
+
+    <CheckBox
+        android:id="@+id/wednesdayCB"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center_horizontal"
+        android:fontFamily="@font/roboto"
+        android:text="@string/wednessday"
+        android:textColor="@color/secondary_color"
+        android:textSize="18dp" />
+
+    <CheckBox
+        android:id="@+id/thursdayCB"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center_horizontal"
+        android:fontFamily="@font/roboto"
+        android:text="@string/thursday"
+        android:textColor="@color/secondary_color"
+        android:textSize="18dp" />
+
+    <CheckBox
+        android:id="@+id/fridayCB"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center_horizontal"
+        android:fontFamily="@font/roboto"
+        android:text="@string/friday"
+        android:textColor="@color/secondary_color"
+        android:textSize="18dp" />
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="horizontal">
+
+        <Button
+            android:id="@+id/dialogCancelBtn"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_margin="20dp"
+            android:layout_weight="1"
+            android:backgroundTint="@color/red_button_color"
+            android:text="@string/cancel"
+            android:textColor="@color/surface"
+            android:textColorLink="@color/surface" />
+
+        <Button
+            android:id="@+id/dialogAddToCalendarBtn"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_margin="20dp"
+            android:layout_weight="1"
+            android:backgroundTint="@color/btn_secondary_color"
+            android:text="@string/add_to_calendar"
+            android:textColor="@color/surface"
+            android:textColorLink="@color/surface" />
+    </LinearLayout>
+
+</LinearLayout>

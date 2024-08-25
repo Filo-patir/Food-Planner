@@ -4,7 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".features.mainappfeatures.searchfragment.SearchMainFragment" >
+    tools:context=".features.mainappfeatures.search.SearchMainFragment" >
 
     <TextView
         android:id="@+id/textView16"
@@ -33,6 +33,7 @@
         android:layout_marginEnd="25dp"
         android:backgroundTint="@color/secondary_color"
         app:icon="@drawable/search"
+        app:iconTint="@color/surface"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/textView16" />
@@ -103,11 +104,12 @@
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/categoryRecyclerView"
         android:layout_width="409dp"
-        android:layout_height="328dp"
+        android:layout_height="0dp"
         android:layout_marginTop="8dp"
+        app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/textView22"
-        tools:listitem="@layout/category_item"/>
+        tools:listitem="@layout/category_item" />
 
 
 </androidx.constraintlayout.widget.ConstraintLayout>

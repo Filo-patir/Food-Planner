@@ -4,6 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
+    android:layout_margin="10dp"
     android:background="@drawable/food_photo">
 
     <androidx.constraintlayout.widget.Group
@@ -11,13 +12,13 @@
         android:layout_width="match_parent"
         android:layout_height="0dp"
         android:background="@color/surfacevariant50op"
-        app:constraint_referenced_ids="textView23,cartCheckBt"
+        app:constraint_referenced_ids="CartItemName,cartCheckBt"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
     <TextView
-        android:id="@+id/textView23"
+        android:id="@+id/CartItemName"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:fontFamily="@font/roboto"
@@ -45,6 +46,6 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginTop="8dp"
-        app:layout_constraintTop_toBottomOf="@+id/textView23" />
+        app:layout_constraintTop_toBottomOf="@+id/CartItemName" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>
