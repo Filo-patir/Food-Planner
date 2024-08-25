@@ -145,4 +145,11 @@ public class Repostiry {
     public Flowable<MealsItem> getSavedMealByID(String id) {
         return savedMealsDataSource.getMealByID(id);
     }
+
+    public Observable<Object> saveRecentlyViewed(String id) {
+        return fileHandler.writeFile("Recently_Viewed",id);
+    }
+    public Observable<String> getRecentlyViewed(){
+        return fileHandler.readFile("Recently_Viewed");
+    }
 }

@@ -1,4 +1,4 @@
-package filo.mamdouh.kershhelper.features.mainappfeatures.drawerfragments;
+package filo.mamdouh.kershhelper.features.mainappfeatures.drawer;
 
 import android.os.Bundle;
 

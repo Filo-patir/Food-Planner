@@ -39,7 +39,7 @@
         tools:layout="@layout/fragment_cart" />
     <fragment
         android:id="@+id/mealDetailsFragment"
-        android:name="filo.mamdouh.kershhelper.features.mainappfeatures.mealsfragment.MealDetailsFragment"
+        android:name="filo.mamdouh.kershhelper.features.mainappfeatures.mealdetails.MealDetailsFragment"
         android:label="fragment_meal_details"
         tools:layout="@layout/fragment_meal_details" />
     <action

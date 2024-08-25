@@ -5,7 +5,7 @@
     android:id="@+id/frameLayout"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".features.mainappfeatures.mealsfragment.MealDetailsFragment">
+    tools:context=".features.mainappfeatures.mealdetails.MealDetailsFragment">
 
     <ScrollView
         android:layout_width="match_parent"

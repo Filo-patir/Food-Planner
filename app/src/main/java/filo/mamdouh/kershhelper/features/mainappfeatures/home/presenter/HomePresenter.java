@@ -35,18 +35,14 @@ public class HomePresenter {
                             view.updateUI(new HomeFragmentRowData("Saved Meals",meals));
                         }, e-> Log.d("TAG", "getHomeItems: "+e.getMessage())
                 ));
-        compositeDisposable.add(repo.getDesserts().subscribeOn(Schedulers.io()).observeOn(AndroidSchedulers.mainThread())
-                .subscribe(
-                        meals -> {
-                            view.updateUI(new HomeFragmentRowData("Desserts",meals));
-                        }, e-> Log.d("TAG", "getHomeItems: "+e.getMessage())
-                ));
-        compositeDisposable.add(repo.getRandomMeals().subscribeOn(Schedulers.io()).observeOn(AndroidSchedulers.mainThread())
-                .subscribe(
-                        meals -> {
-                            view.updateUI(new HomeFragmentRowData("Recently Viewed",null));
-                        }, e-> Log.d("TAG", "getHomeItems: "+e.getMessage())
-                ));
+        getDesserts();
+//        compositeDisposable.add(repo.getDesserts().subscribeOn(Schedulers.io()).observeOn(AndroidSchedulers.mainThread())
+//                .subscribe(
+//                        meals -> {
+//                            view.updateUI(new HomeFragmentRowData("Desserts",meals));
+//                        }, e-> Log.d("TAG", "getHomeItems: "+e.getMessage())
+//                ));
+        getRecentlyViewed();
         compositeDisposable.add(repo.getMore().subscribeOn(Schedulers.io()).observeOn(AndroidSchedulers.mainThread())
                 .subscribe(
                         meals -> {
@@ -68,7 +64,7 @@ public class HomePresenter {
         }
     }
 
-    public void getDailyInspiration(){
+    private void getDailyInspiration(){
         compositeDisposable.add(Observable.fromCallable(() -> {
             ArrayList<String> ids = new ArrayList<>();
             repo.getLocalDailyInspiration().subscribeOn(Schedulers.io()).subscribe(
@@ -118,6 +114,35 @@ public class HomePresenter {
                             }, e -> Log.d("TAG", "getHomeItems: " + e.getMessage())
                     );}));
     }
+
+    private void getRecentlyViewed(){
+        compositeDisposable.add(Observable.fromCallable(() -> {
+            ArrayList<MealsItem> mealsItems = new ArrayList<>();
+            repo.getRecentlyViewed().subscribeOn(Schedulers.io()).subscribe(
+                    id -> repo.getMealByID(id).subscribeOn(Schedulers.io()).subscribe(
+                            mealsItems::add,e -> Log.d("Filo", "getRecentlyViewed: "+e.getMessage())
+                    ),throwable -> Log.d("Filo", "getRecentlyViewed: "+throwable.getMessage()));
+            return mealsItems;
+        }).observeOn(AndroidSchedulers.mainThread()).subscribe( mealsItems -> view.updateUI(new HomeFragmentRowData("Recently Viewed",mealsItems)),e -> Log.d("TAG", "getRecentlyViewed:"+e.getMessage()))
+        );
+    }
+
+    private void getDesserts(){
+        compositeDisposable.add(Observable.fromCallable(() -> {
+                    ArrayList<MealsItem> mealsItems = new ArrayList<>();
+            repo.getDesserts().subscribeOn(Schedulers.io()).observeOn(AndroidSchedulers.mainThread()).subscribe(
+                            id -> {
+                                for (MealsItem item : id){
+                                    repo.getMealByID(item.getIdMeal()).subscribeOn(Schedulers.io()).subscribe(
+                                            mealsItems::add,e -> Log.d("Filo", "getRecentlyViewed: "+e.getMessage())
+                                    );
+                                }
+                            },throwable -> Log.d("Filo", "getRecentlyViewed: "+throwable.getMessage()));
+                    return mealsItems;
+                }).observeOn(AndroidSchedulers.mainThread()).subscribe( mealsItems -> view.updateUI(new HomeFragmentRowData("Desserts",mealsItems)),e -> Log.d("TAG", "getRecentlyViewed:"+e.getMessage()))
+        );
+    }
+
     public void onDestroy(){
         compositeDisposable.dispose();
     }

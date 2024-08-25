@@ -1,4 +1,4 @@
-package filo.mamdouh.kershhelper.features.mainappfeatures.mealsfragment;
+package filo.mamdouh.kershhelper.features.mainappfeatures.mealdetails;
 
 import android.content.Intent;
 import android.net.Uri;
@@ -27,7 +27,7 @@ import filo.mamdouh.kershhelper.datastorage.local.FileHandler;
 import filo.mamdouh.kershhelper.datastorage.room.calendar.CalendarDataSourceImpl;
 import filo.mamdouh.kershhelper.datastorage.room.savedmeals.SavedMealsDataSourceImpl;
 import filo.mamdouh.kershhelper.features.mainappfeatures.addtocalendardialog.PlanDialog;
-import filo.mamdouh.kershhelper.features.mainappfeatures.mealsfragment.presenter.MealDetailsPressenter;
+import filo.mamdouh.kershhelper.features.mainappfeatures.mealdetails.presenter.MealDetailsPressenter;
 import filo.mamdouh.kershhelper.models.MealsItem;
 import filo.mamdouh.kershhelper.models.Repostiry;
 
@@ -70,6 +70,7 @@ public class MealDetailsFragment extends Fragment implements MealDetailsContract
         backBtn = binding.detailsBackBtn;
         Bundle bundle = getArguments();
         mealID = bundle.getString("mealID");
+        pressenter.onViewCreated(mealID);
         if (bundle.getBoolean("isSaved")){
             pressenter.getSavedItem(mealID);
         }
@@ -115,5 +116,6 @@ public class MealDetailsFragment extends Fragment implements MealDetailsContract
     public void onDestroy() {
         super.onDestroy();
         toolBar.updateToolBarStatus(View.VISIBLE);
+        pressenter.onDestroy();
     }
 }

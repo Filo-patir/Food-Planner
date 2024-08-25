@@ -1,4 +1,4 @@
-package filo.mamdouh.kershhelper.features.mainappfeatures.mealsfragment.presenter;
+package filo.mamdouh.kershhelper.features.mainappfeatures.mealdetails.presenter;
 
 import android.util.Log;
 
@@ -20,31 +20,38 @@ public class MealDetailsPressenter {
         compositeDisposable = new CompositeDisposable();
     }
 
+    public void onViewCreated(String id){
+        compositeDisposable.add(repo.saveRecentlyViewed(id).subscribeOn(Schedulers.io()).subscribe(o -> {},throwable -> Log.d("Filo", "onViewCreated: "+throwable.getMessage())));
+    }
     public void getSavedItem(String id){
-        repo.getSavedMealByID(id).subscribeOn(Schedulers.io()).observeOn(AndroidSchedulers.mainThread()).subscribe(
+        compositeDisposable.add( repo.getSavedMealByID(id).subscribeOn(Schedulers.io()).observeOn(AndroidSchedulers.mainThread()).subscribe(
                 item-> view.updateUI(item),e-> Log.d("Filo", "getSavedItem: "+ e.getMessage())
-        );
+        ));
     }
 
     public void getMealByID(String mealID) {
-        repo.getMealByID(mealID).subscribeOn(Schedulers.io()).observeOn(AndroidSchedulers.mainThread()).subscribe(
+        compositeDisposable.add(repo.getMealByID(mealID).subscribeOn(Schedulers.io()).observeOn(AndroidSchedulers.mainThread()).subscribe(
                 item-> view.updateUI(item),e-> Log.d("Filo", "getMealByID: "+ e.getMessage())
-        );
+        ));
     }
 
     public void onSaveButtonClick(MealsItem meal) {
         if(meal.isSaved()){
             meal.setSaved(false);
-            repo.saveMeal(meal).subscribeOn(Schedulers.io()).observeOn(AndroidSchedulers.mainThread()).subscribe(
+            compositeDisposable.add(repo.saveMeal(meal).subscribeOn(Schedulers.io()).observeOn(AndroidSchedulers.mainThread()).subscribe(
                     ()-> view.updateSaveBtn(false),e-> Log.d("Filo", "onSaveButtonClick: "+ e.getMessage())
-            );
+            ));
         }
         else {
             meal.setSaved(true);
-            repo.saveMeal(meal).subscribeOn(Schedulers.io()).observeOn(AndroidSchedulers.mainThread()).subscribe(
+            compositeDisposable.add(repo.saveMeal(meal).subscribeOn(Schedulers.io()).observeOn(AndroidSchedulers.mainThread()).subscribe(
                     ()-> view.updateSaveBtn(true),e-> Log.d("Filo", "onSaveButtonClick: "+ e.getMessage())
-            );
+            ));
         }
+    }
+
+    public void onDestroy(){
+        compositeDisposable.dispose();
     }
 
 }

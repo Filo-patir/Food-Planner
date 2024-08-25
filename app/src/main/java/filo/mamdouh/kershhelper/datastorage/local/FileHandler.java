@@ -64,6 +64,15 @@ public class FileHandler {
             return null;
         });
     }
+    public Observable<Object> writeFile(String name, String data) {
+        return Observable.fromCallable(() -> {
+            PrintStream fos = new PrintStream(context.openFileOutput(name,Context.MODE_APPEND),true);
+            Log.d("Filo", "writeFile: "+data);
+            fos.append(data+"\n");
+            fos.close();
+            return null;
+        });
+    }
     public void removeFile(String name) {
         Observable.fromCallable(() -> {
             PrintStream fos = new PrintStream(context.openFileOutput(name,Context.MODE_PRIVATE));
