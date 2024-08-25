@@ -5,6 +5,7 @@ import android.os.Bundle;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
+import androidx.navigation.Navigation;
 import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
@@ -32,6 +33,7 @@ public class BookmarkFragment extends Fragment implements BookmarkContract.View 
     RecyclerView bookmarkRV;
     BookmarkPresenter presenter;
     SavedMealsAdapter adapter;
+    View view;
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -48,6 +50,7 @@ public class BookmarkFragment extends Fragment implements BookmarkContract.View 
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
+        this.view = view;
         bookmarkRV = view.findViewById(R.id.bookmarkRV);
         presenter.getSavedMeals();
         adapter = new SavedMealsAdapter(getContext(),this);
@@ -76,6 +79,14 @@ public class BookmarkFragment extends Fragment implements BookmarkContract.View 
     @Override
     public void saveItemListener(MealsItem mealsItem, Updater updater) {
         presenter.deleteMeal(mealsItem);
+    }
+
+    @Override
+    public void onItemClick(String mealID, boolean isSaved) {
+        Bundle bundle = new Bundle();
+        bundle.putString("mealID",mealID);
+        bundle.putBoolean("isSaved",isSaved);
+        Navigation.findNavController(view).navigate(R.id.action_bookmarkFragment_to_mealDetailsFragment,bundle);
     }
 
     @Override

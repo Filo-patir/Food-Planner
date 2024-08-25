@@ -50,6 +50,7 @@ public class FoodCardAdapter extends RecyclerView.Adapter<FoodCardHolder> implem
         holder.saveBtn.setOnClickListener(l->listener.saveItemListener(item,this));
         if(item.isSaved()) holder.saveBtn.setImageResource(R.drawable.baseline_bookmark_24);
         else holder.saveBtn.setImageResource(R.drawable.save_icon);
+        holder.itemView.setOnClickListener(l-> listener.onItemClick(item.getIdMeal(),item.isSaved()));
     }
 
     @Override

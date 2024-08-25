@@ -5,6 +5,7 @@ import android.os.Bundle;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
+import androidx.navigation.Navigation;
 import androidx.recyclerview.widget.RecyclerView;
 
 import android.util.Log;
@@ -13,6 +14,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Toast;
 
+import filo.mamdouh.kershhelper.R;
 import filo.mamdouh.kershhelper.contracts.HomeContract;
 import filo.mamdouh.kershhelper.databinding.FragmentHomeScreenBinding;
 import filo.mamdouh.kershhelper.datastorage.local.FileHandler;
@@ -32,6 +34,7 @@ public class HomeScreenFragment extends Fragment implements HomeContract.View , 
     FragmentHomeScreenBinding binding;
     BaseRecyclerViewAdapter adapter;
     HomePresenter presenter;
+    View view;
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -48,6 +51,7 @@ public class HomeScreenFragment extends Fragment implements HomeContract.View , 
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
+        this.view = view;
         presenter = new HomePresenter(this,Repostiry.getInstance(FileHandler.getInstance(getContext()), SavedMealsDataSourceImpl.getInstance(getContext()), CalendarDataSourceImpl.getInstance(getContext())));
         presenter.getHomeItems();
         homeRecyclerView = binding.homeScreenRecycleView;
@@ -76,6 +80,14 @@ public class HomeScreenFragment extends Fragment implements HomeContract.View , 
     public void saveItemListener(MealsItem meal,Updater updater) {
         Log.d("TAG", "saveItemListener: HERE");
         presenter.saveMeal(meal,updater);
+    }
+
+    @Override
+    public void onItemClick(String mealID, boolean isSaved) {
+        Bundle bundle = new Bundle();
+        bundle.putString("mealID",mealID);
+        bundle.putBoolean("isSaved",isSaved);
+        Navigation.findNavController(view).navigate(R.id.action_homeScreenFragment_to_mealDetailsFragment,bundle);
     }
 
     @Override

@@ -141,4 +141,8 @@ public class Repostiry {
     public Flowable<List<Boolean>> getMealPlan(String id) {
         return calendarDataSource.getMealPlan(id);
     }
+
+    public Flowable<MealsItem> getSavedMealByID(String id) {
+        return savedMealsDataSource.getMealByID(id);
+    }
 }

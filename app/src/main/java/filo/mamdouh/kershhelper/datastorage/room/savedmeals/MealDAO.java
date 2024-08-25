@@ -22,4 +22,6 @@ public interface MealDAO {
     Completable insertProduct(MealsItem meal);
     @Delete
     Completable delete(MealsItem meal);
+    @Query("SELECT * FROM meals WHERE idMeal =:id")
+    Flowable<MealsItem> getMealByID(String id);
 }

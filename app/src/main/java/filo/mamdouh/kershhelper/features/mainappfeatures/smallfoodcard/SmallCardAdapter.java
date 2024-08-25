@@ -61,6 +61,7 @@ public class SmallCardAdapter extends RecyclerView.Adapter<SmallCardHolder> impl
         Glide.with(context).load(item.getStrMealThumb()).placeholder(R.drawable.ic_launcher_background).into(holder.mealImage);
         holder.saveBtn.setOnClickListener(l->listener.saveItemListener(item,this));
         if(item.isSaved()) holder.saveBtn.setImageResource(R.drawable.baseline_bookmark_24);
+        holder.itemView.setOnClickListener(l-> listener.onItemClick(item.getIdMeal(),item.isSaved()));
     }
 
     @Override

@@ -38,7 +38,7 @@
             <ImageView
                 android:id="@+id/detalisMainImage"
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
+                android:layout_height="300dp"
                 android:scaleType="fitXY"
                 android:src="@drawable/food_photo"
                 app:layout_constraintStart_toStartOf="parent"
@@ -57,7 +57,7 @@
                 app:layout_constraintStart_toStartOf="@+id/detalisMainImage" />
 
             <ImageButton
-                android:id="@+id/imageButton5"
+                android:id="@+id/detailsAddToCalendarBtn"
                 android:layout_width="50dp"
                 android:layout_height="50dp"
                 android:layout_marginEnd="8dp"
@@ -73,7 +73,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="0dp"
                 android:background="@color/surfacevariant50op"
-                app:constraint_referenced_ids="detailsMealName,detailsBackBtn,imageButton3"
+                app:constraint_referenced_ids="detailsMealName,detailsBackBtn,detailsSrcBtn"
                 app:layout_constraintBottom_toBottomOf="@+id/detailsMealName"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
@@ -92,7 +92,7 @@
                 app:tint="@color/primary_color" />
 
             <ImageButton
-                android:id="@+id/imageButton3"
+                android:id="@+id/detailsSrcBtn"
                 android:layout_width="40dp"
                 android:layout_height="40dp"
                 android:layout_marginEnd="8dp"
@@ -135,7 +135,7 @@
                 app:layout_constraintTop_toBottomOf="@+id/detalisMainImage" />
 
             <ImageView
-                android:id="@+id/imageView4"
+                android:id="@+id/detailsFlag"
                 android:layout_width="50dp"
                 android:layout_height="50dp"
                 android:layout_marginEnd="8dp"

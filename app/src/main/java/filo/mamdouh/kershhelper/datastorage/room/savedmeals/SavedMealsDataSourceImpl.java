@@ -37,4 +37,9 @@ public class SavedMealsDataSourceImpl implements SavedMealsDataSource{
     public Flowable<List<MealsItem>> getSavedMeals() {
         return dao.getSaved();
     }
+
+    @Override
+    public Flowable<MealsItem> getMealByID(String id) {
+        return dao.getMealByID(id);
+    }
 }
