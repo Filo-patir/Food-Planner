@@ -1,5 +1,6 @@
 [versions]
 adapterRxjava3 = "2.9.0"
+credentialsVersion = "1.5.0-alpha04"
 navigationUi = "2.7.7"
 roomRxjava3 = "2.6.1"
 rxandroid = "3.0.2"
@@ -31,6 +32,8 @@ roomRuntime = "2.6.1"
 
 [libraries]
 adapter-rxjava3 = { module = "com.squareup.retrofit2:adapter-rxjava3", version.ref = "adapterRxjava3" }
+credentials = { module = "androidx.credentials:credentials", version.ref = "credentialsVersion" }
+credentials-play-services-auth = { module = "androidx.credentials:credentials-play-services-auth", version.ref = "credentialsVersion" }
 navigation-ui = { module = "androidx.navigation:navigation-ui", version.ref = "navigationUi" }
 room-rxjava3 = { module = "androidx.room:room-rxjava3", version.ref = "roomRxjava3" }
 rxandroid = { module = "io.reactivex.rxjava3:rxandroid", version.ref = "rxandroid" }

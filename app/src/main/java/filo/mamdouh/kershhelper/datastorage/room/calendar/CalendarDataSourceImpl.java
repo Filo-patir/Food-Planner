@@ -3,14 +3,12 @@ package filo.mamdouh.kershhelper.datastorage.room.calendar;
 import android.content.Context;
 import android.util.Log;
 
-import java.util.ArrayList;
 import java.util.List;
 
 import filo.mamdouh.kershhelper.datastorage.room.AppDatabase;
-import filo.mamdouh.kershhelper.models.MealsItem;
 import io.reactivex.rxjava3.core.Completable;
 import io.reactivex.rxjava3.core.Flowable;
-import io.reactivex.rxjava3.core.Observable;
+import io.reactivex.rxjava3.core.Single;
 import io.reactivex.rxjava3.schedulers.Schedulers;
 
 public class CalendarDataSourceImpl implements CalendarDataSource {
@@ -46,5 +44,10 @@ public class CalendarDataSourceImpl implements CalendarDataSource {
     public Flowable<List<Boolean>> getMealPlan(String id) {
         Log.d("Filo", "getMealPlan: ");
         return dao.getCalendar(id).subscribeOn(Schedulers.io()).map(Calendar::getWeek);
+    }
+
+    @Override
+    public Flowable<Calendar> getCalendarByID(String id) {
+        return dao.getCalendar(id);
     }
 }

@@ -1,6 +1,7 @@
 package filo.mamdouh.kershhelper.datastorage.room.calendar;
 
 import androidx.annotation.NonNull;
+import androidx.room.ColumnInfo;
 import androidx.room.Entity;
 import androidx.room.PrimaryKey;
 
@@ -16,6 +17,7 @@ import lombok.Data;
 public class Calendar {
     @PrimaryKey @NonNull
     private String mealID;
+    @ColumnInfo(name = "saturday")
     private boolean saturday = false;
     private boolean sunday= false;
     private boolean monday= false;

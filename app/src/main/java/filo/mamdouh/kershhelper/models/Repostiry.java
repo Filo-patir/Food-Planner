@@ -157,4 +157,8 @@ public class Repostiry {
     public Flowable<Calendar> getCalendar() {
         return calendarDataSource.getCalendars();
     }
+
+    public Flowable<Calendar> getCalendarByITD(String id) {
+        return calendarDataSource.getCalendarByID(id);
+    }
 }

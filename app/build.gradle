@@ -5,7 +5,7 @@ plugins {
 
 android {
     namespace 'filo.mamdouh.kershhelper'
-    compileSdk 34
+    compileSdk 35
 
     defaultConfig {
         applicationId "filo.mamdouh.kershhelper"
@@ -38,6 +38,9 @@ android {
 }
 
 dependencies {
+    implementation libs.credentials
+    implementation libs.credentials.play.services.auth
+    implementation libs.googleid
     implementation libs.navigation.ui
     implementation libs.room.rxjava3
     annotationProcessor libs.lombok

@@ -1,5 +1,9 @@
 package filo.mamdouh.kershhelper.features.welcomescreenfragments;
 
+import android.credentials.CredentialManager;
+import android.credentials.CredentialOption;
+import android.credentials.GetCredentialRequest;
+import android.credentials.GetCredentialResponse;
 import android.os.Bundle;
 
 import androidx.annotation.NonNull;
@@ -7,12 +11,15 @@ import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 import androidx.navigation.Navigation;
 
+
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.ImageButton;
 import android.widget.TextView;
+
+import com.google.android.libraries.identity.googleid.GetGoogleIdOption;
 
 import filo.mamdouh.kershhelper.HomeActivity;
 import filo.mamdouh.kershhelper.Navigator;
@@ -55,7 +62,19 @@ public class WelcomeFragment extends Fragment implements AuthContract.View{
         });
         loginbtn.setOnClickListener(l-> Navigation.findNavController(view).navigate(R.id.action_welcomeFragment_to_loginFragment));
         googleLogin.setOnClickListener(l->{
-            presenter.googleLogin();
+            // * Deprecated & Dont know how to use the new Method
+//            if (android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.UPSIDE_DOWN_CAKE) {
+//                CredentialManager manager =  CredentialManager.;
+//                GetGoogleIdOption googleIdOption = new GetGoogleIdOption.Builder()
+//                        .setFilterByAuthorizedAccounts(true)
+//                        .setServerClientId("149599402004-97u8vv25errhlgja9li7vvrsh41vd6uq.apps.googleusercontent.com").build();
+//                Bundle data = new Bundle();
+//                GetCredentialRequest request = new GetCredentialRequest.Builder(googleIdOption.getRequestData())
+//                        .addCredentialOption(new CredentialOption.Builder("GMAIL",googleIdOption.getRequestData(), googleIdOption.getCandidateQueryData()).build())
+//                        .build();
+//                GetCredentialResponse response = ;
+//            }
+
         });
         facebookLogin.setOnClickListener(l->{
             presenter.facebookLogin();

@@ -22,12 +22,14 @@ import filo.mamdouh.kershhelper.models.MealsItem;
 
 public class ChildCalendarAdapter extends RecyclerView.Adapter<ChildCalendarAdapter.ChildCalendarHolder> {
     private List<MealsItem> mealsItemList;
+    private final String DAY ;
     private Context context;
     private CalendarContract.Listner listener;
 
-    public ChildCalendarAdapter(List<MealsItem> mealsItemList,Context context,CalendarContract.Listner listener) {
+    public ChildCalendarAdapter(List<MealsItem> mealsItemList,String day,Context context,CalendarContract.Listner listener) {
         this.context = context;
         this.listener = listener;
+        DAY = day;
         if(mealsItemList == null) this.mealsItemList = new ArrayList<>();
         else this.mealsItemList = mealsItemList;
     }
@@ -35,7 +37,7 @@ public class ChildCalendarAdapter extends RecyclerView.Adapter<ChildCalendarAdap
     @NonNull
     @Override
     public ChildCalendarHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
-        return new ChildCalendarHolder(LayoutInflater.from(context).inflate(R.layout.category_item,parent,false));
+        return new ChildCalendarHolder(LayoutInflater.from(context).inflate(R.layout.calendarcarditem,parent,false));
     }
 
     @Override
@@ -43,7 +45,7 @@ public class ChildCalendarAdapter extends RecyclerView.Adapter<ChildCalendarAdap
         holder.calendarItemName.setText(mealsItemList.get(position).getStrMeal());
         holder.calendarItemIngredients.setText(mealsItemList.get(position).getIngredients().size() + " Ingredients");
         Glide.with(context).load(mealsItemList.get(position).getStrMealThumb()).placeholder(R.drawable.ic_launcher_background).into(holder.mealImage);
-        holder.calendarRemoveBtn.setOnClickListener(l->listener.removeItemListener(mealsItemList.get(position)));
+        holder.calendarRemoveBtn.setOnClickListener(l->listener.removeItemListener(DAY,mealsItemList.get(position)));
         holder.itemView.setOnClickListener(l->listener.onClick(mealsItemList.get(position).getIdMeal(),mealsItemList.get(position).isSaved()));
     }
 

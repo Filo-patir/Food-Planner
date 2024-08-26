@@ -61,7 +61,7 @@ public class CalendarFragment extends Fragment implements CalendarContract.View 
     }
 
     @Override
-    public void removeItemListener(MealsItem mealsItem) {
-
+    public void removeItemListener(String day,MealsItem mealsItem) {
+        presenter.removeItem(day,mealsItem);
     }
 }

@@ -43,7 +43,7 @@ public class BaseCalendarAdapter extends RecyclerView.Adapter<BaseCalendarAdapte
     public void onBindViewHolder(@NonNull BaseCalendarHolder holder, int position) {
         Log.d("Filo", "onBindViewHolder: "+calendarRowArrayList.get(position));
             holder.title.setText(KEYS.get(position));
-            adapter = new ChildCalendarAdapter(calendarRowArrayList.get(KEYS.get(position)),context,listener);
+            adapter = new ChildCalendarAdapter(calendarRowArrayList.get(KEYS.get(position)),KEYS.get(position),context,listener);
             holder.childRecyclerView.setAdapter(adapter);
     }
 
