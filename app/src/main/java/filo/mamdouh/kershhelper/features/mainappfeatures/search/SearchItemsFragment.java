@@ -11,12 +11,15 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import android.text.Editable;
 import android.text.TextWatcher;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.inputmethod.InputMethodManager;
 import android.widget.EditText;
 import android.widget.ImageView;
+
+import java.time.LocalDateTime;
 
 import filo.mamdouh.kershhelper.R;
 import filo.mamdouh.kershhelper.contracts.HomeContract;
@@ -39,6 +42,7 @@ public class SearchItemsFragment extends Fragment implements SearchItemContract.
     SearchItemsPresenter presenter;
     EditText searchTxt;
     ImageView backBtn;
+    private LocalDateTime lastTime=LocalDateTime.now();
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -66,7 +70,7 @@ public class SearchItemsFragment extends Fragment implements SearchItemContract.
         searchRV.setLayoutManager(gridLayoutManager);
         Bundle bundle = getArguments();
         if(bundle!=null){
-        if(bundle.containsKey("category")) presenter.searchByIngredient(bundle.getString("category"));
+        if(bundle.containsKey("category")) presenter.searchByCategory(bundle.getString("category"));
         if(bundle.containsKey("ingredient")) presenter.searchByIngredient(bundle.getString("ingredient"));
         }
         else {
@@ -84,11 +88,17 @@ public class SearchItemsFragment extends Fragment implements SearchItemContract.
 
             @Override
             public void onTextChanged(CharSequence s, int start, int before, int count) {
+                Log.d("File", "afterTextChanged: " + lastTime +" ,,"+ LocalDateTime.now());
+                if(LocalDateTime.now().isAfter(lastTime.plusSeconds(2))) {
+                    lastTime = LocalDateTime.now();
+                    removeList();
+                    presenter.searchByArea(searchTxt.getText().toString());
+                    presenter.searchByMeal(searchTxt.getText().toString());
+                }
             }
 
             @Override
             public void afterTextChanged(Editable s) {
-                presenter.searchByMeal(searchTxt.getText().toString());
             }
         });
     }

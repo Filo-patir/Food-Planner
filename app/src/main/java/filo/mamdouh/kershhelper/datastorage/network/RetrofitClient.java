@@ -1,6 +1,5 @@
-package filo.mamdouh.kershhelper.network;
+package filo.mamdouh.kershhelper.datastorage.network;
 
-import android.annotation.SuppressLint;
 import android.util.Log;
 
 import java.util.ArrayList;
@@ -45,6 +44,18 @@ public class RetrofitClient implements NetworkContract{
     @Override
     public  Observable<MealsItem> getMealByID(String id) {
         return apiService.getMealByID(id).map(meals -> meals.getMeals().get(0));
+    }
+
+    @Override
+    public Observable<MealsItem> searchMealByCategory(String category) {
+        return Observable.create(emitter -> apiService.getMealByCategory(category).map(Meals::getMeals).subscribeOn(Schedulers.io()).subscribe(
+                onNext -> {
+                    for (MealsItem meal : onNext)
+                        apiService.getMealByID(meal.getIdMeal()).map(Meals::getMeals).subscribeOn(Schedulers.io()).subscribe(
+                                item -> emitter.onNext(item.get(0))
+                        );
+                }, emitter::onError
+        ));
     }
 
     @Override
@@ -99,13 +110,22 @@ public class RetrofitClient implements NetworkContract{
 
     @Override
     public Observable<MealsItem> getMealByArea(String area) {
-        return null;
+        return Observable.create(new ObservableOnSubscribe<MealsItem>() {
+            @Override
+            public void subscribe(@NonNull ObservableEmitter<MealsItem> emitter) {
+                apiService.getMealByArea(area).subscribeOn(Schedulers.io()).map(Meals::getMeals).subscribe(
+                        mealsItems -> {
+                            for (MealsItem meal : mealsItems)
+                                apiService.getMealByID(meal.getIdMeal()).map(Meals::getMeals).subscribeOn(Schedulers.io()).subscribe(
+                                        onNext -> emitter.onNext(onNext.get(0)), emitter::onError
+                                );
+                        }
+                );
+            }
+        });
     }
 
-    @Override
-    public Observable<Meals> getAreas() {
-        return null;
-    }
+
 
     @Override
     public Observable<List<IngredientsRoot.Ingredient>> getIngredients() {

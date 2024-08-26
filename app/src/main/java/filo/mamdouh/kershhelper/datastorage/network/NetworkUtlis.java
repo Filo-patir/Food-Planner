@@ -1,4 +1,4 @@
-package filo.mamdouh.kershhelper.network;
+package filo.mamdouh.kershhelper.datastorage.network;
 
 import android.content.Context;
 import android.net.ConnectivityManager;

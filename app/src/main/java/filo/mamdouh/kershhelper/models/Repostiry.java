@@ -10,14 +10,12 @@ import filo.mamdouh.kershhelper.contracts.NetworkContract;
 import filo.mamdouh.kershhelper.datastorage.local.FileHandler;
 import filo.mamdouh.kershhelper.datastorage.room.calendar.Calendar;
 import filo.mamdouh.kershhelper.datastorage.room.calendar.CalendarDataSource;
-import filo.mamdouh.kershhelper.datastorage.room.calendar.CalendarDataSourceImpl;
 import filo.mamdouh.kershhelper.datastorage.room.savedmeals.SavedMealsDataSource;
-import filo.mamdouh.kershhelper.network.RetrofitClient;
+import filo.mamdouh.kershhelper.datastorage.network.RetrofitClient;
 import io.reactivex.rxjava3.core.Completable;
 import io.reactivex.rxjava3.core.Flowable;
 import io.reactivex.rxjava3.core.Observable;
 import io.reactivex.rxjava3.core.Single;
-import io.reactivex.rxjava3.disposables.Disposable;
 import lombok.Getter;
 import lombok.Setter;
 
@@ -33,6 +31,9 @@ public class Repostiry {
     private Flowable<List<MealsItem>> savedMeals;
     @Getter
     private static final HashMap<String,String> COUNTERIES = new HashMap<>();
+    private static final ArrayList<String> AREA = new ArrayList<>(List.of("american" , "british" , "canadian" , "chinese" ,
+            "croatian" , "dutch" , "egyptian" , "filipino" , "french" , "greek" , "irish" , "italian" , "jamaican" , "japanese" , "kenyan" ,
+            "malaysian" , "mexican" , "moroccan" , "polish" , "portuguese" , "russian" , "spanish" ,"thai" , "tunisian" , "turkish" , "ukrainian" , "vietnamese" ));
     private static Repostiry repostiry = null;
     static {
         COUNTERIES.put("American" , "https://www.worldometers.info/img/flags/us-flag.gif");
@@ -70,6 +71,10 @@ public class Repostiry {
         this.savedMealsDataSource = savedMealsDataSource;
         this.calendarDataSource = calendarDataSource;
         savedMeals = savedMealsDataSource.getSavedMeals();
+    }
+
+    public static Observable<String> getAREA() {
+        return Observable.fromIterable(AREA);
     }
 
     public static Repostiry getInstance(FileHandler fileHandler, SavedMealsDataSource savedMealsDataSource, CalendarDataSource calendarDataSource) {
@@ -160,5 +165,13 @@ public class Repostiry {
 
     public Flowable<Calendar> getCalendarByITD(String id) {
         return calendarDataSource.getCalendarByID(id);
+    }
+
+    public Observable<MealsItem> searchByCategory(String category) {
+        return api.searchMealByCategory(category);
+    }
+
+    public Observable<MealsItem> searchByArea(String area) {
+        return api.getMealByArea(area);
     }
 }

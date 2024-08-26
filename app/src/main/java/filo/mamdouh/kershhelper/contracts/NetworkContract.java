@@ -24,8 +24,6 @@ public interface NetworkContract {
 
     Observable<MealsItem> getMealByArea(String area);
 
-    Observable<Meals> getAreas();
-
     Observable<List<IngredientsRoot.Ingredient>> getIngredients();
 
     Observable<List<Categories.Category>> getCategories();
@@ -35,4 +33,6 @@ public interface NetworkContract {
     Single<ArrayList<MealsItem>> getMore();
 
     Observable<MealsItem> getMealByID(String id);
+
+    Observable<MealsItem> searchMealByCategory(String category);
 }
