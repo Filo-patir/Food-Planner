@@ -18,6 +18,7 @@ import filo.mamdouh.kershhelper.R;
 import filo.mamdouh.kershhelper.contracts.HomeContract;
 import filo.mamdouh.kershhelper.databinding.FragmentHomeScreenBinding;
 import filo.mamdouh.kershhelper.datastorage.local.FileHandler;
+import filo.mamdouh.kershhelper.datastorage.network.RetrofitClient;
 import filo.mamdouh.kershhelper.datastorage.room.calendar.CalendarDataSourceImpl;
 import filo.mamdouh.kershhelper.datastorage.room.savedmeals.SavedMealsDataSourceImpl;
 import filo.mamdouh.kershhelper.features.mainappfeatures.addtocalendardialog.PlanDialog;
@@ -51,7 +52,7 @@ public class HomeScreenFragment extends Fragment implements HomeContract.View , 
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
         this.view = view;
-        presenter = new HomePresenter(this,Repostiry.getInstance(FileHandler.getInstance(getContext()), SavedMealsDataSourceImpl.getInstance(getContext()), CalendarDataSourceImpl.getInstance(getContext())));
+        presenter = new HomePresenter(this,Repostiry.getInstance(FileHandler.getInstance(getContext()), SavedMealsDataSourceImpl.getInstance(getContext()), CalendarDataSourceImpl.getInstance(getContext()), RetrofitClient.getInstance(getContext())));
         presenter.getHomeItems();
         homeRecyclerView = binding.homeScreenRecycleView;
         adapter = new BaseRecyclerViewAdapter(view.getContext(),this);

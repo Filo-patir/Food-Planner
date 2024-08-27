@@ -1,5 +1,6 @@
 package filo.mamdouh.kershhelper.datastorage.network;
 
+import android.content.Context;
 import android.util.Log;
 
 import java.util.ArrayList;
@@ -16,27 +17,33 @@ import io.reactivex.rxjava3.core.ObservableEmitter;
 import io.reactivex.rxjava3.core.ObservableOnSubscribe;
 import io.reactivex.rxjava3.core.Single;
 import io.reactivex.rxjava3.schedulers.Schedulers;
+import okhttp3.Cache;
+import okhttp3.OkHttpClient;
 import retrofit2.Retrofit;
 import retrofit2.adapter.rxjava3.RxJava3CallAdapterFactory;
 import retrofit2.converter.gson.GsonConverterFactory;
 
 public class RetrofitClient implements NetworkContract{
+    final int CACHESIZE = 5*1024*1024;
     private static final String BASE_URL = "https://www.themealdb.com/api/json/v1/1/";
     private final Retrofit retrofit;
     private APIService apiService;
     private static RetrofitClient instance = null;
 
-    private RetrofitClient(){
+    private RetrofitClient(Context context){
+        Cache cache = new Cache(context.getCacheDir(),CACHESIZE);
+        OkHttpClient okHttpClient = new OkHttpClient.Builder().cache(cache).build();
         retrofit = new Retrofit.Builder()
-                .baseUrl(BASE_URL).
-                addConverterFactory(GsonConverterFactory.create())
+                .baseUrl(BASE_URL)
+                .addConverterFactory(GsonConverterFactory.create())
+                .client(okHttpClient)
                 .addCallAdapterFactory(RxJava3CallAdapterFactory.create())
                 .build();
         apiService = retrofit.create(APIService.class);
     }
-    public static RetrofitClient getInstance() {
+    public static RetrofitClient getInstance(Context context) {
         if(instance == null) {
-            instance = new RetrofitClient();
+            instance = new RetrofitClient(context);
         }
         return instance;
     }

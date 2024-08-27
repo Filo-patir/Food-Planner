@@ -1,9 +1,8 @@
-package filo.mamdouh.kershhelper.datastorage.network;
+package filo.mamdouh.kershhelper.logic.network;
 
 import android.content.Context;
 import android.net.ConnectivityManager;
 import android.net.NetworkCapabilities;
-import android.net.NetworkInfo;
 
 
 public class NetworkUtlis {

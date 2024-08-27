@@ -17,6 +17,7 @@ import java.util.ArrayList;
 import filo.mamdouh.kershhelper.R;
 import filo.mamdouh.kershhelper.contracts.CalendarContract;
 import filo.mamdouh.kershhelper.datastorage.local.FileHandler;
+import filo.mamdouh.kershhelper.datastorage.network.RetrofitClient;
 import filo.mamdouh.kershhelper.datastorage.room.calendar.CalendarDataSourceImpl;
 import filo.mamdouh.kershhelper.datastorage.room.savedmeals.SavedMealsDataSourceImpl;
 import filo.mamdouh.kershhelper.features.mainappfeatures.calendar.presenter.CalendarPresenter;
@@ -31,7 +32,7 @@ public class CalendarFragment extends Fragment implements CalendarContract.View 
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         Log.d("TAG", "onCreate: Calendar");
-        presenter = new CalendarPresenter(Repostiry.getInstance(FileHandler.getInstance(getContext()), SavedMealsDataSourceImpl.getInstance(getContext()), CalendarDataSourceImpl.getInstance(getContext())),this);
+        presenter = new CalendarPresenter(Repostiry.getInstance(FileHandler.getInstance(getContext()), SavedMealsDataSourceImpl.getInstance(getContext()), CalendarDataSourceImpl.getInstance(getContext()), RetrofitClient.getInstance(getContext())),this);
     }
 
     @Override

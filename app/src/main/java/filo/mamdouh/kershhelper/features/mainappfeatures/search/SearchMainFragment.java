@@ -22,6 +22,7 @@ import filo.mamdouh.kershhelper.R;
 import filo.mamdouh.kershhelper.contracts.SearchContract;
 import filo.mamdouh.kershhelper.databinding.FragmentSearchMainBinding;
 import filo.mamdouh.kershhelper.datastorage.local.FileHandler;
+import filo.mamdouh.kershhelper.datastorage.network.RetrofitClient;
 import filo.mamdouh.kershhelper.datastorage.room.calendar.CalendarDataSourceImpl;
 import filo.mamdouh.kershhelper.datastorage.room.savedmeals.SavedMealsDataSourceImpl;
 import filo.mamdouh.kershhelper.features.mainappfeatures.search.presenter.SearchMainPressenter;
@@ -41,7 +42,7 @@ public class SearchMainFragment extends Fragment implements SearchContract.View,
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        searchMainPressenter = new SearchMainPressenter(this,Repostiry.getInstance(FileHandler.getInstance(getContext()), SavedMealsDataSourceImpl.getInstance(getContext()), CalendarDataSourceImpl.getInstance(getContext())));
+        searchMainPressenter = new SearchMainPressenter(this,Repostiry.getInstance(FileHandler.getInstance(getContext()), SavedMealsDataSourceImpl.getInstance(getContext()), CalendarDataSourceImpl.getInstance(getContext()), RetrofitClient.getInstance(getContext())));
         Log.d("TAG", "onCreate: Search");
     }
 

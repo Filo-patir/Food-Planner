@@ -65,8 +65,8 @@ public class Repostiry {
         COUNTERIES.put("Ukrainian" , "https://www.worldometers.info/img/flags/up-flag.gif");
         COUNTERIES.put("Vietnamese" , "https://www.worldometers.info/img/flags/vm-flag.gif");
     }
-    private Repostiry(FileHandler fileHandler, SavedMealsDataSource savedMealsDataSource, CalendarDataSource calendarDataSource){
-        api = RetrofitClient.getInstance();
+    private Repostiry(FileHandler fileHandler, SavedMealsDataSource savedMealsDataSource, CalendarDataSource calendarDataSource , NetworkContract api){
+        this.api = api;
         this.fileHandler = fileHandler;
         this.savedMealsDataSource = savedMealsDataSource;
         this.calendarDataSource = calendarDataSource;
@@ -77,8 +77,8 @@ public class Repostiry {
         return Observable.fromIterable(AREA);
     }
 
-    public static Repostiry getInstance(FileHandler fileHandler, SavedMealsDataSource savedMealsDataSource, CalendarDataSource calendarDataSource) {
-        if(repostiry==null) repostiry = new Repostiry(fileHandler, savedMealsDataSource,calendarDataSource);
+    public static Repostiry getInstance(FileHandler fileHandler, SavedMealsDataSource savedMealsDataSource, CalendarDataSource calendarDataSource,NetworkContract api) {
+        if(repostiry==null) repostiry = new Repostiry(fileHandler, savedMealsDataSource,calendarDataSource,api);
         return repostiry;
     }
     public Single<ArrayList<MealsItem>> getDailyInspiration(){
@@ -87,9 +87,11 @@ public class Repostiry {
     }
 
     public Observable<String> getLocalDailyInspiration(){
+        Log.d("Filo", "getLocalDailyInspiration: AAAAAAAy");
         return fileHandler.readFile("Daily_Inspiration");
     }
     public Observable<Object> saveLocalDailyInspiration(ArrayList<String> data){
+        Log.d("Filo", "saveLocalDailyInspiration: AAAAAAAy");
         Log.d("Filo", "saveLocalDailyInspiration: "+data);
         removeFile("Daily_Inspiration");
         return fileHandler.writeFile("Daily_Inspiration",data);
@@ -117,7 +119,7 @@ public class Repostiry {
     }
 
     public Observable<String> recentlyViewed() {
-        return fileHandler.readFile("Recently Viewed");
+        return fileHandler.readFile("Recently_Viewed");
     }
 
     public Observable<MealsItem> getMealByID(String ids) {
