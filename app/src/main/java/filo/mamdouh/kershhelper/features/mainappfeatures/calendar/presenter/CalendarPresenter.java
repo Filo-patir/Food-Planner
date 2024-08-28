@@ -5,15 +5,11 @@ import android.util.Log;
 import java.util.ArrayList;
 
 import filo.mamdouh.kershhelper.contracts.CalendarContract;
-import filo.mamdouh.kershhelper.datastorage.room.calendar.Calendar;
 import filo.mamdouh.kershhelper.features.mainappfeatures.calendar.BaseCalendarAdapter;
 import filo.mamdouh.kershhelper.models.MealsItem;
 import filo.mamdouh.kershhelper.models.Repostiry;
 import io.reactivex.rxjava3.android.schedulers.AndroidSchedulers;
-import io.reactivex.rxjava3.annotations.NonNull;
 import io.reactivex.rxjava3.core.Observable;
-import io.reactivex.rxjava3.core.ObservableEmitter;
-import io.reactivex.rxjava3.core.ObservableOnSubscribe;
 import io.reactivex.rxjava3.disposables.CompositeDisposable;
 import io.reactivex.rxjava3.schedulers.Schedulers;
 

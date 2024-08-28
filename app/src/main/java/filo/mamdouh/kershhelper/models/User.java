@@ -17,11 +17,16 @@ public class User {
     private String username;
     private String email;
     private String img;
-
-    public User(String uid, String username, String email, String img) {
+    private static  User user = null;
+    private User(String uid, String username, String email, String img) {
         this.uid = uid;
         this.username = username;
         this.email = email;
         this.img = img;
+    }
+    public static User getInstance(String uid, String username, String email, String img)
+    {
+        if(user == null) user = new User(uid, username, email, img);
+        return user;
     }
 }

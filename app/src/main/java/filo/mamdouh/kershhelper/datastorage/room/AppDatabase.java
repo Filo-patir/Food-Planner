@@ -6,7 +6,7 @@ import androidx.room.Database;
 import androidx.room.Room;
 import androidx.room.RoomDatabase;
 
-import filo.mamdouh.kershhelper.datastorage.room.calendar.Calendar;
+import filo.mamdouh.kershhelper.models.Calendar;
 import filo.mamdouh.kershhelper.datastorage.room.calendar.CalendarDao;
 import filo.mamdouh.kershhelper.datastorage.room.savedmeals.MealDAO;
 import filo.mamdouh.kershhelper.models.MealsItem;

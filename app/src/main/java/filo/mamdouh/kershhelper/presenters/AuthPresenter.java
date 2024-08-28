@@ -11,7 +11,8 @@ public class AuthPresenter implements AuthContract.Presenter {
 
     private final Authentication auth = new Authentication(this);
 
-    public AuthPresenter(AuthContract.View view){
+    public AuthPresenter(AuthContract.View view, Repostiry repo){
+        this.repo = repo;
         this.view = view;
     }
 

@@ -6,8 +6,7 @@ import java.util.ArrayList;
 
 import filo.mamdouh.kershhelper.contracts.HomeContract;
 import filo.mamdouh.kershhelper.contracts.WeekSetter;
-import filo.mamdouh.kershhelper.datastorage.room.calendar.Calendar;
-import filo.mamdouh.kershhelper.features.communicators.Planner;
+import filo.mamdouh.kershhelper.models.Calendar;
 import filo.mamdouh.kershhelper.models.Repostiry;
 import io.reactivex.rxjava3.android.schedulers.AndroidSchedulers;
 import io.reactivex.rxjava3.schedulers.Schedulers;

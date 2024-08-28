@@ -7,6 +7,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import filo.mamdouh.kershhelper.contracts.NetworkContract;
+import filo.mamdouh.kershhelper.logic.network.NetworkUtlis;
 import filo.mamdouh.kershhelper.models.Categories;
 import filo.mamdouh.kershhelper.models.IngredientsRoot;
 import filo.mamdouh.kershhelper.models.Meals;
@@ -19,6 +20,7 @@ import io.reactivex.rxjava3.core.Single;
 import io.reactivex.rxjava3.schedulers.Schedulers;
 import okhttp3.Cache;
 import okhttp3.OkHttpClient;
+import okhttp3.Request;
 import retrofit2.Retrofit;
 import retrofit2.adapter.rxjava3.RxJava3CallAdapterFactory;
 import retrofit2.converter.gson.GsonConverterFactory;
@@ -32,7 +34,16 @@ public class RetrofitClient implements NetworkContract{
 
     private RetrofitClient(Context context){
         Cache cache = new Cache(context.getCacheDir(),CACHESIZE);
-        OkHttpClient okHttpClient = new OkHttpClient.Builder().cache(cache).build();
+        OkHttpClient okHttpClient = new OkHttpClient.Builder().cache(cache).addInterceptor(chain ->
+                {
+                    NetworkUtlis networkUtlis = new NetworkUtlis();
+                    Request request = chain.request();
+                    if (networkUtlis.isNetworkAvailable(context))
+                     request = chain.request().newBuilder().header("Cache-Control","public, max-age"+5 ).build();
+                    else  request.newBuilder().header("Cache-Control", "public, only-if-cached, max-stale=" + 60 * 60 * 24 * 7).build();
+                    return chain.proceed(request);
+                })
+                .build();
         retrofit = new Retrofit.Builder()
                 .baseUrl(BASE_URL)
                 .addConverterFactory(GsonConverterFactory.create())

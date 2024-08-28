@@ -38,6 +38,8 @@ android {
 }
 
 dependencies {
+    implementation libs.compile.com.firebase.admin
+    implementation libs.firebase.firestore
     implementation libs.credentials
     implementation libs.credentials.play.services.auth
     implementation libs.googleid

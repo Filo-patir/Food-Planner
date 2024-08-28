@@ -14,6 +14,7 @@ import filo.mamdouh.kershhelper.models.User;
 public class Authentication {
     private FirebaseAuth auth;
     private AuthContract.Presenter presenter;
+
     public Authentication(AuthContract.Presenter presenter){
         auth = FirebaseAuth.getInstance();
         this.presenter = presenter;
@@ -70,7 +71,7 @@ public class Authentication {
     }
 
     private User toUser(FirebaseUser user){
-        return  new User(user.getUid(),user.getDisplayName(),user.getEmail(),String.valueOf(user.getPhotoUrl()));
+        return User.getInstance(user.getUid(),user.getDisplayName(),user.getEmail(),String.valueOf(user.getPhotoUrl()));
     }
 
 }

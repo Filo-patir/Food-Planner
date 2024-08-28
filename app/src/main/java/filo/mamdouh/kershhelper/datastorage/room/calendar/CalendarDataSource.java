@@ -2,9 +2,9 @@ package filo.mamdouh.kershhelper.datastorage.room.calendar;
 
 import java.util.List;
 
+import filo.mamdouh.kershhelper.models.Calendar;
 import io.reactivex.rxjava3.core.Completable;
 import io.reactivex.rxjava3.core.Flowable;
-import io.reactivex.rxjava3.core.Single;
 
 public interface CalendarDataSource {
     Completable insertMeal(Calendar meal);

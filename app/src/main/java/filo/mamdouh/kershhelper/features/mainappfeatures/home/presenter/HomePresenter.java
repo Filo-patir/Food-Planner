@@ -69,11 +69,11 @@ public class HomePresenter {
                     ArrayList<MealsItem> mealsItems = new ArrayList<>();
                     for (int i = 0 ; i<strings.size()-1 ; i++) {
                         compositeDisposable.add(
-                                repo.getMealByID(strings.get(i)).subscribe(mealsItems::add)
+                                repo.getMealByID(strings.get(i)).subscribe(mealsItems::add, e -> Log.d("Filo", "getHomeItems: "+e.getMessage()))
                         );
                     }
                     return mealsItems;
-                }).subscribe(this::updateUInSaveToFile)
+                }).subscribe(this::updateUInSaveToFile, e -> Log.d("Filo", "getHomeItems: "+e.getMessage()))
                 );
             }
             else{
@@ -98,9 +98,8 @@ public class HomePresenter {
         compositeDisposable.add(Observable.fromCallable(() -> {
             ArrayList<MealsItem> mealsItems = new ArrayList<>();
                     compositeDisposable.add(repo.getRecentlyViewed().subscribeOn(Schedulers.io()).subscribe(
-                    id -> repo.getMealByID(id).subscribeOn(Schedulers.io()).subscribe(
-                            mealsItems::add,e -> Log.d("Filo", "getRecentlyViewed: "+e.getMessage())
-                    ),throwable -> Log.d("Filo", "getRecentlyViewed: "+throwable.getMessage())));
+                    id -> compositeDisposable.add( repo.getMealByID(id).subscribeOn(Schedulers.io()).subscribe(mealsItems::add, e -> Log.d("Filo", "getRecentlyViewed: "+e.getMessage())
+                    )), throwable -> Log.d("Filo", "getRecentlyViewed: "+throwable.getMessage())));
             return mealsItems;
         }).observeOn(AndroidSchedulers.mainThread()).subscribe( mealsItems -> view.updateUI(new HomeFragmentRowData("Recently Viewed",mealsItems)),e -> Log.d("TAG", "getRecentlyViewed:"+e.getMessage()))
         );
@@ -123,7 +122,7 @@ public class HomePresenter {
     }
 
     public void onDestroy(){
-//        compositeDisposable.dispose();
+        //compositeDisposable.clear();
     }
 
     private void updateUInSaveToFile(ArrayList<MealsItem> meals){

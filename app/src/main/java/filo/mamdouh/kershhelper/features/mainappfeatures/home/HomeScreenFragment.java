@@ -93,6 +93,7 @@ public class HomeScreenFragment extends Fragment implements HomeContract.View , 
     @Override
     public void onDestroy() {
         super.onDestroy();
+        Log.d("Filo", "onDestroy: ");
         presenter.onDestroy();
     }
 }
