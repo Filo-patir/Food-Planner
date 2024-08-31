@@ -21,14 +21,6 @@ public class AuthPresenter implements AuthContract.Presenter {
         auth.signupAuth(email,password);
     }
 
-    public void onLogin(String email,String password){
-        auth.loginAuth(email,password);
-    }
-
-    public void googleLogin(){
-        auth.loginWithGmail();
-    }
-
     public void facebookLogin(){
         auth.loginWithFacebook();
     }

@@ -25,7 +25,7 @@ import filo.mamdouh.kershhelper.datastorage.network.RetrofitClient;
 import filo.mamdouh.kershhelper.datastorage.room.calendar.CalendarDataSourceImpl;
 import filo.mamdouh.kershhelper.datastorage.room.savedmeals.SavedMealsDataSourceImpl;
 import filo.mamdouh.kershhelper.features.communicators.OnItemClickListener;
-import filo.mamdouh.kershhelper.features.mainappfeatures.addtocalendardialog.PlanDialog;
+import filo.mamdouh.kershhelper.features.dialogs.addtocalendardialog.PlanDialog;
 import filo.mamdouh.kershhelper.features.mainappfeatures.home.Updater;
 import filo.mamdouh.kershhelper.features.mainappfeatures.savedmeals.presenter.BookmarkPresenter;
 import filo.mamdouh.kershhelper.models.MealsItem;

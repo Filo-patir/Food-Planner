@@ -36,7 +36,7 @@ public class SignUpFragment extends Fragment implements AuthContract.View {
     }
 
     @Override
-    public View onCreateView(LayoutInflater inflater, ViewGroup container,
+    public View onCreateView(@NonNull LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         binding = FragmentSignUpBinding.inflate(inflater, container, false);
         return binding.getRoot();
@@ -54,9 +54,7 @@ public class SignUpFragment extends Fragment implements AuthContract.View {
         signupBtn = binding.signupbtn;
         loginBtn = binding.signupLoginBtn;
         loginBtn.setOnClickListener(l-> Navigation.findNavController(view).navigate(R.id.action_signUpFragment_to_loginFragment));
-        signupBtn.setOnClickListener(l->{
-            presenter.onSignup(displayname.getText().toString(),email.getText().toString(),password.getText().toString());
-        });
+        signupBtn.setOnClickListener(l-> presenter.onSignup(displayname.getText().toString(),email.getText().toString(),password.getText().toString()));
     }
 
     @Override

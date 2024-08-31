@@ -108,4 +108,6 @@
     <string name="thursday">Thursday</string>
     <string name="friday">Friday</string>
     <string name="cancel">Cancel</string>
+    <string name="access_denied">Access Denied</string>
+    <string name="guest_dialog_msg">Enjoy the full experience! Log in to unlock this feature.</string>
 </resources>

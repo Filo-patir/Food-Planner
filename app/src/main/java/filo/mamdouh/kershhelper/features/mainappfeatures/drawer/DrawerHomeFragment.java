@@ -52,7 +52,9 @@ public class DrawerHomeFragment extends Fragment implements DrawerCommunicator, 
         editProfileBtn = binding.drawerEditProfileBtn;
         aboutUsBtn = binding.drawerAboutUs;
         logOutBtn = binding.logOut;
-        String name = Client.getInstance("",new User()).getUserName();
+        String name = null;
+        if (Client.getInstance(null, null).getUserName().isEmpty())
+             name = Client.getInstance("",new User()).getUserName();
         Log.d("Filo", "onViewCreated: " + name + " " + Client.getInstance("",new User()).getUserName());
         if(name == null || name.isEmpty()) name = "Guest";
         userName.setText(name);

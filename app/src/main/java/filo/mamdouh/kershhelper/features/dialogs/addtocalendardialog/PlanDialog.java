@@ -1,4 +1,4 @@
-package filo.mamdouh.kershhelper.features.mainappfeatures.addtocalendardialog;
+package filo.mamdouh.kershhelper.features.dialogs.addtocalendardialog;
 
 import android.app.Activity;
 import android.util.Log;
@@ -13,6 +13,7 @@ import androidx.appcompat.app.AlertDialog;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Objects;
 
 import filo.mamdouh.kershhelper.R;
 import filo.mamdouh.kershhelper.contracts.WeekSetter;
@@ -20,13 +21,10 @@ import filo.mamdouh.kershhelper.features.communicators.Planner;
 
 public class PlanDialog implements WeekSetter {
     private final Activity activity;
-    private Planner planner;
+    private final Planner planner;
     private AlertDialog alertDialog;
-    private Button confirmButton;
-    private Button cancelButton;
     private CheckBox saturdayCB,sundayCB,mondayCB,tuesdayCB,wednesdayCB,thursdayCB,fridayCB;
-    private String mealId,mealName;
-    private TextView mealNameView;
+    private final String mealId,mealName;
 
 
     public PlanDialog(Activity activity,String mealId,String mealName){
@@ -43,10 +41,10 @@ public class PlanDialog implements WeekSetter {
         View view = layoutInflater.inflate(R.layout.plan_dialog,null);
         builder.setView(view);
         alertDialog = builder.create();
-        alertDialog.getWindow().setLayout(WindowManager.LayoutParams.WRAP_CONTENT, WindowManager.LayoutParams.WRAP_CONTENT);
+        Objects.requireNonNull(alertDialog.getWindow()).setLayout(WindowManager.LayoutParams.WRAP_CONTENT, WindowManager.LayoutParams.WRAP_CONTENT);
         alertDialog.show();
-        confirmButton = view.findViewById(R.id.dialogAddToCalendarBtn);
-        cancelButton = view.findViewById(R.id.dialogCancelBtn);
+        Button confirmButton = view.findViewById(R.id.dialogAddToCalendarBtn);
+        Button cancelButton = view.findViewById(R.id.dialogCancelBtn);
         saturdayCB = view.findViewById(R.id.saturdaycb);
         sundayCB = view.findViewById(R.id.sundayCB);
         mondayCB = view.findViewById(R.id.mondayCB);
@@ -54,7 +52,7 @@ public class PlanDialog implements WeekSetter {
         wednesdayCB = view.findViewById(R.id.wednesdayCB);
         thursdayCB = view.findViewById(R.id.thursdayCB);
         fridayCB = view.findViewById(R.id.fridayCB);
-        mealNameView = view.findViewById(R.id.dialogMealName);
+        TextView mealNameView = view.findViewById(R.id.dialogMealName);
         mealNameView.setText(mealName);
 
         confirmButton.setOnClickListener(v -> {
@@ -82,6 +80,7 @@ public class PlanDialog implements WeekSetter {
                 fridayCB.isChecked() ? "Friday" : ""
         ));
     }
+
     @Override
     public void setData(List<Boolean> savedWeek){
         Log.d("Filo", "setData: "+savedWeek);

@@ -1,11 +1,6 @@
 package filo.mamdouh.kershhelper.logic.auth;
 
 import android.util.Log;
-
-import androidx.annotation.NonNull;
-import com.google.android.gms.tasks.OnCompleteListener;
-import com.google.android.gms.tasks.Task;
-import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 
@@ -17,7 +12,7 @@ import filo.mamdouh.kershhelper.contracts.SplashScreenContract;
 import filo.mamdouh.kershhelper.datastorage.firebase.FirebaseFireStoreDB;
 
 public class Authentication {
-    private FirebaseAuth auth;
+    private final FirebaseAuth auth;
     private AuthContract.Presenter presenter;
     private LoginContract.Presenter loginPresenter;
     private FirebaseFireStoreDB db;
@@ -45,15 +40,12 @@ public class Authentication {
     }
 
     public void signupAuth(String email,String password){
-        auth.createUserWithEmailAndPassword(email,password).addOnCompleteListener(new OnCompleteListener<AuthResult>() {
-            @Override
-            public void onComplete(@NonNull Task<AuthResult> task) {
-                if (task.isSuccessful()){
-                    presenter.onSuccessSignup(Objects.requireNonNull(task.getResult().getUser()).getUid());
-                }
-                else {
-                    presenter.onFailSignup(task.getException().getMessage());
-                }
+        auth.createUserWithEmailAndPassword(email,password).addOnCompleteListener(task -> {
+            if (task.isSuccessful()){
+                presenter.onSuccessSignup(Objects.requireNonNull(task.getResult().getUser()).getUid());
+            }
+            else {
+                presenter.onFailSignup(Objects.requireNonNull(task.getException()).getMessage());
             }
         });
     }
@@ -66,7 +58,7 @@ public class Authentication {
                loginPresenter.onSuccess(currentUser.getUid(),db.getUser(currentUser.getUid()));
            }
            else {
-               loginPresenter.onFailure(task.getException().getMessage());
+               loginPresenter.onFailure(Objects.requireNonNull(task.getException()).getMessage());
            }
         });
     }

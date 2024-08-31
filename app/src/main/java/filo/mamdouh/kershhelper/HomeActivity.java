@@ -3,6 +3,8 @@ package filo.mamdouh.kershhelper;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Looper;
+import android.util.Log;
+import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
 import android.widget.ImageButton;
@@ -29,6 +31,8 @@ import filo.mamdouh.kershhelper.datastorage.network.RetrofitClient;
 import filo.mamdouh.kershhelper.datastorage.room.calendar.CalendarDataSourceImpl;
 import filo.mamdouh.kershhelper.datastorage.room.savedmeals.SavedMealsDataSourceImpl;
 import filo.mamdouh.kershhelper.features.communicators.Planner;
+import filo.mamdouh.kershhelper.features.dialogs.guestdialog.GuestDialog;
+import filo.mamdouh.kershhelper.models.Client;
 import filo.mamdouh.kershhelper.models.Repostiry;
 import filo.mamdouh.kershhelper.presenters.HomeActivityPresenter;
 
@@ -54,6 +58,7 @@ public class HomeActivity extends AppCompatActivity implements HomeContract.Tool
         drawer.setOnClickListener(l->
             mDrawerLayout.openDrawer(GravityCompat.START)
         );
+        checkLoginStatus();
         mDrawerLayout.addDrawerListener(new DrawerLayout.SimpleDrawerListener() {
             @Override
             public void onDrawerClosed(View drawerView){
@@ -104,5 +109,27 @@ public class HomeActivity extends AppCompatActivity implements HomeContract.Tool
     @Override
     public void getSavedWeek(String id, WeekSetter setter) {
         presenter.getSavedItemByID(id,setter);
+    }
+
+    public void checkLoginStatus(){
+        Log.d("Filo", "checkLoginStatus: " + Client.getInstance(null,null));
+        if (Client.getInstance(null,null).getUserName().isEmpty()){
+            // Find the button you want to modify
+            MenuItem bookmarkBtn = navigationView.getMenu().findItem(R.id.bookmarkFragment);
+            MenuItem calendarBtn = navigationView.getMenu().findItem(R.id.calendarFragment);
+            MenuItem cartBtn = navigationView.getMenu().findItem(R.id.cartFragment);
+            bookmarkBtn.setOnMenuItemClickListener(item -> {
+                new GuestDialog(this).showDialog();
+                return true;
+            });
+            calendarBtn.setOnMenuItemClickListener(item -> {
+                new GuestDialog(this).showDialog();
+                return true;
+            });
+            cartBtn.setOnMenuItemClickListener(item -> {
+                new GuestDialog(this).showDialog();
+                return true;
+            });
+        }
     }
 }

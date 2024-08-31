@@ -19,6 +19,8 @@ import filo.mamdouh.kershhelper.Navigator;
 import filo.mamdouh.kershhelper.R;
 import filo.mamdouh.kershhelper.contracts.AuthContract;
 import filo.mamdouh.kershhelper.databinding.FragmentWelcomeScreenBinding;
+import filo.mamdouh.kershhelper.models.Client;
+import filo.mamdouh.kershhelper.models.User;
 import filo.mamdouh.kershhelper.presenters.AuthPresenter;
 
 
@@ -67,7 +69,8 @@ public class WelcomeFragment extends Fragment implements AuthContract.View{
 
         });
         facebookLogin.setOnClickListener(l-> presenter.facebookLogin());
-        guestBtn.setOnClickListener(l->{
+        guestBtn.setOnClickListener(l-> {
+            Client.getInstance("",new User("","",""));
             Navigator.toActivity(getContext(), new HomeActivity());
         });
         signupBtn.setOnClickListener(l-> Navigation.findNavController(view).navigate(R.id.action_welcomeFragment_to_signUpFragment));
