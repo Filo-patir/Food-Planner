@@ -8,6 +8,7 @@ import java.util.List;
 
 import filo.mamdouh.kershhelper.contracts.NetworkContract;
 import filo.mamdouh.kershhelper.datastorage.local.FileHandler;
+import filo.mamdouh.kershhelper.datastorage.local.SharedPrefrenceHandler;
 import filo.mamdouh.kershhelper.datastorage.room.calendar.CalendarDataSource;
 import filo.mamdouh.kershhelper.datastorage.room.savedmeals.SavedMealsDataSource;
 import io.reactivex.rxjava3.core.Completable;
@@ -25,6 +26,7 @@ public class Repostiry {
     private final FileHandler fileHandler;
     private final SavedMealsDataSource savedMealsDataSource;
     private final CalendarDataSource calendarDataSource;
+    private final SharedPrefrenceHandler prefs;
     @Getter
     private Flowable<List<MealsItem>> savedMeals;
     @Getter
@@ -63,7 +65,8 @@ public class Repostiry {
         COUNTERIES.put("Ukrainian" , "https://www.worldometers.info/img/flags/up-flag.gif");
         COUNTERIES.put("Vietnamese" , "https://www.worldometers.info/img/flags/vm-flag.gif");
     }
-    private Repostiry(FileHandler fileHandler, SavedMealsDataSource savedMealsDataSource, CalendarDataSource calendarDataSource , NetworkContract api){
+    private Repostiry(FileHandler fileHandler, SavedMealsDataSource savedMealsDataSource, CalendarDataSource calendarDataSource , NetworkContract api, SharedPrefrenceHandler prefs){
+        this.prefs = prefs;
         this.api = api;
         this.fileHandler = fileHandler;
         this.savedMealsDataSource = savedMealsDataSource;
@@ -75,8 +78,8 @@ public class Repostiry {
         return Observable.fromIterable(AREA);
     }
 
-    public static Repostiry getInstance(FileHandler fileHandler, SavedMealsDataSource savedMealsDataSource, CalendarDataSource calendarDataSource,NetworkContract api) {
-        if(repostiry==null) repostiry = new Repostiry(fileHandler, savedMealsDataSource,calendarDataSource,api);
+    public static Repostiry getInstance(FileHandler fileHandler, SavedMealsDataSource savedMealsDataSource, CalendarDataSource calendarDataSource,NetworkContract api , SharedPrefrenceHandler prefs) {
+        if(repostiry==null) repostiry = new Repostiry(fileHandler, savedMealsDataSource,calendarDataSource,api,prefs);
         return repostiry;
     }
     public Single<ArrayList<MealsItem>> getDailyInspiration(){
@@ -90,14 +93,13 @@ public class Repostiry {
     }
 
     public Observable<Object> saveLocalDailyInspiration(ArrayList<String> data){
-        Log.d("Filo", "saveLocalDailyInspiration: AAAAAAAy");
+        Log.d("Filo", "saveLocalDailyInspiration: 96");
         Log.d("Filo", "saveLocalDailyInspiration: "+data);
-        removeFile("Daily_Inspiration");
         return fileHandler.writeFile("Daily_Inspiration",data);
     }
 
-    private void removeFile(String name){
-        fileHandler.removeFile(name);
+    public Observable removeFile(String name){
+        return fileHandler.removeFile(name);
     }
 
     public Completable saveMeal(MealsItem meal){
@@ -174,5 +176,15 @@ public class Repostiry {
 
     public Observable<MealsItem> searchByArea(String area) {
         return api.getMealByArea(area);
+    }
+
+    public Observable<String> getLoginStatus(){
+        return prefs.get("uid");
+    }
+    public void saveLogin(String uid){
+        prefs.save("uid",uid);
+    }
+    public void logout(){
+        prefs.clear();
     }
 }

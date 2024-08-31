@@ -1,6 +1,7 @@
 package filo.mamdouh.kershhelper.logic.auth;
 
 import android.util.Log;
+
 import androidx.annotation.NonNull;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
@@ -8,25 +9,39 @@ import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 
+import java.util.Objects;
+
 import filo.mamdouh.kershhelper.contracts.AuthContract;
-import filo.mamdouh.kershhelper.models.User;
+import filo.mamdouh.kershhelper.contracts.LoginContract;
+import filo.mamdouh.kershhelper.contracts.SplashScreenContract;
+import filo.mamdouh.kershhelper.datastorage.firebase.FirebaseFireStoreDB;
 
 public class Authentication {
     private FirebaseAuth auth;
     private AuthContract.Presenter presenter;
+    private LoginContract.Presenter loginPresenter;
+    private FirebaseFireStoreDB db;
 
+    public Authentication(){
+        auth = FirebaseAuth.getInstance();
+        db = FirebaseFireStoreDB.getInnstance();
+    }
     public Authentication(AuthContract.Presenter presenter){
         auth = FirebaseAuth.getInstance();
         this.presenter = presenter;
     }
+    public Authentication(LoginContract.Presenter presenter){
+        auth = FirebaseAuth.getInstance();
+        this.loginPresenter = presenter;
+        db = FirebaseFireStoreDB.getInnstance();
+    }
 
-    public User getAccount(){
-        User user = null;
+    public void getAccount(SplashScreenContract.Presenter listener){
         FirebaseUser currentUser = auth.getCurrentUser();
         if (currentUser != null){
-            user = toUser(currentUser);
+            Log.d("Filo", "getAccount: " + currentUser.getUid());
+            listener.onSuccess(currentUser.getUid(),db.getUser(currentUser.getUid()));
         }
-        return user;
     }
 
     public void signupAuth(String email,String password){
@@ -34,7 +49,7 @@ public class Authentication {
             @Override
             public void onComplete(@NonNull Task<AuthResult> task) {
                 if (task.isSuccessful()){
-                    presenter.onSuccessSignup();
+                    presenter.onSuccessSignup(Objects.requireNonNull(task.getResult().getUser()).getUid());
                 }
                 else {
                     presenter.onFailSignup(task.getException().getMessage());
@@ -46,32 +61,23 @@ public class Authentication {
     public void loginAuth(String email,String password){
         auth.signInWithEmailAndPassword(email,password).addOnCompleteListener(task -> {
            if(task.isComplete()){
-               User user = toUser(auth.getCurrentUser());
-               presenter.onSucessLogin(user);
+               FirebaseUser currentUser = auth.getCurrentUser();
+               assert currentUser != null;
+               loginPresenter.onSuccess(currentUser.getUid(),db.getUser(currentUser.getUid()));
            }
            else {
-               presenter.onFailLogin(task.getException().getMessage());
+               loginPresenter.onFailure(task.getException().getMessage());
            }
         });
     }
 
     public void loginWithGmail(){
-        try {
-
-
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
     }
     public void loginWithFacebook(){
     }
 
     public void signOut(){
         auth.signOut();
-    }
-
-    private User toUser(FirebaseUser user){
-        return User.getInstance(user.getUid(),user.getDisplayName(),user.getEmail(),String.valueOf(user.getPhotoUrl()));
     }
 
 }

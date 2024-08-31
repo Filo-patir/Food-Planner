@@ -1,17 +1,22 @@
-package filo.mamdouh.kershhelper.features.welcomescreenfragments;
+package filo.mamdouh.kershhelper.features.welcome_screen_features;
 
-import android.credentials.CredentialManager;
+import android.credentials.Credential;
 import android.credentials.CredentialOption;
+import android.credentials.GetCredentialException;
 import android.credentials.GetCredentialRequest;
 import android.credentials.GetCredentialResponse;
 import android.os.Bundle;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
+import androidx.credentials.CredentialManager;
+import androidx.credentials.CredentialManagerCallback;
 import androidx.fragment.app.Fragment;
 import androidx.navigation.Navigation;
 
 
+import android.os.CancellationSignal;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -20,6 +25,8 @@ import android.widget.ImageButton;
 import android.widget.TextView;
 
 import com.google.android.libraries.identity.googleid.GetGoogleIdOption;
+
+import java.util.concurrent.Executor;
 
 import filo.mamdouh.kershhelper.HomeActivity;
 import filo.mamdouh.kershhelper.Navigator;
@@ -33,7 +40,7 @@ public class WelcomeFragment extends Fragment implements AuthContract.View{
     FragmentWelcomeScreenBinding binding;
     ImageButton googleLogin,facebookLogin;
     Button signupBtn;
-    TextView loginbtn,guestBtn;
+    TextView loginBtn,guestBtn;
     AuthPresenter presenter;
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -43,7 +50,7 @@ public class WelcomeFragment extends Fragment implements AuthContract.View{
     }
 
     @Override
-    public View onCreateView(LayoutInflater inflater, ViewGroup container,
+    public View onCreateView(@NonNull LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         binding = FragmentWelcomeScreenBinding.inflate(inflater, container, false);
         return binding.getRoot();
@@ -55,33 +62,27 @@ public class WelcomeFragment extends Fragment implements AuthContract.View{
         googleLogin = binding.googlebtn;
         facebookLogin = binding.facebookbtn;
         signupBtn = binding.welcomeSignup;
-        loginbtn = binding.welcomeLoginBtn;
+        loginBtn = binding.welcomeLoginBtn;
         guestBtn = binding.continueAsGuest;
-        signupBtn.setOnClickListener(l->{
-            Navigation.findNavController(view).navigate(R.id.action_welcomeFragment_to_signUpFragment);
-        });
-        loginbtn.setOnClickListener(l-> Navigation.findNavController(view).navigate(R.id.action_welcomeFragment_to_loginFragment));
+        signupBtn.setOnClickListener(l->
+            Navigation.findNavController(view).navigate(R.id.action_welcomeFragment_to_signUpFragment)
+        );
+        loginBtn.setOnClickListener(l-> Navigation.findNavController(view).navigate(R.id.action_welcomeFragment_to_loginFragment));
         googleLogin.setOnClickListener(l->{
             // * Deprecated & Dont know how to use the new Method
-//            if (android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.UPSIDE_DOWN_CAKE) {
-//                CredentialManager manager =  CredentialManager.;
+            if (android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.UPSIDE_DOWN_CAKE) {
+                Log.d("Filo", "Gooogle: ");
+//                CredentialManager manager = CredentialManager.create(requireContext());
 //                GetGoogleIdOption googleIdOption = new GetGoogleIdOption.Builder()
 //                        .setFilterByAuthorizedAccounts(true)
-//                        .setServerClientId("149599402004-97u8vv25errhlgja9li7vvrsh41vd6uq.apps.googleusercontent.com").build();
-//                Bundle data = new Bundle();
-//                GetCredentialRequest request = new GetCredentialRequest.Builder(googleIdOption.getRequestData())
-//                        .addCredentialOption(new CredentialOption.Builder("GMAIL",googleIdOption.getRequestData(), googleIdOption.getCandidateQueryData()).build())
+//                        .setServerClientId(getString(R.string.default_web_client_id))
 //                        .build();
-//                GetCredentialResponse response = ;
-//            }
+            }
 
         });
-        facebookLogin.setOnClickListener(l->{
-            presenter.facebookLogin();
-        });
+        facebookLogin.setOnClickListener(l-> presenter.facebookLogin());
         guestBtn.setOnClickListener(l->{
-            Navigator.toActivity(getContext(), HomeActivity.class);
-            getActivity().finish();
+            Navigator.toActivity(getContext(), new HomeActivity());
         });
         signupBtn.setOnClickListener(l-> Navigation.findNavController(view).navigate(R.id.action_welcomeFragment_to_signUpFragment));
     }
@@ -95,4 +96,5 @@ public class WelcomeFragment extends Fragment implements AuthContract.View{
     public void onSucess() {
 
     }
+
 }

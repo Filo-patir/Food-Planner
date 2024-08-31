@@ -24,6 +24,7 @@ import java.util.ArrayList;
 import filo.mamdouh.kershhelper.contracts.HomeContract;
 import filo.mamdouh.kershhelper.contracts.WeekSetter;
 import filo.mamdouh.kershhelper.datastorage.local.FileHandler;
+import filo.mamdouh.kershhelper.datastorage.local.SharedPrefrenceHandler;
 import filo.mamdouh.kershhelper.datastorage.network.RetrofitClient;
 import filo.mamdouh.kershhelper.datastorage.room.calendar.CalendarDataSourceImpl;
 import filo.mamdouh.kershhelper.datastorage.room.savedmeals.SavedMealsDataSourceImpl;
@@ -42,7 +43,9 @@ public class HomeActivity extends AppCompatActivity implements HomeContract.Tool
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_home);
-        presenter = new HomeActivityPresenter(this, Repostiry.getInstance(FileHandler.getInstance(this), SavedMealsDataSourceImpl.getInstance(this), CalendarDataSourceImpl.getInstance(this), RetrofitClient.getInstance(this)));
+        presenter = new HomeActivityPresenter(this, Repostiry.getInstance(FileHandler.getInstance(this),
+                SavedMealsDataSourceImpl.getInstance(this), CalendarDataSourceImpl.getInstance(this)
+                , RetrofitClient.getInstance(this), SharedPrefrenceHandler.getInstance(this)));
         presenter.getSavedIems();
         navigationView = findViewById(R.id.bottomNavigationView);
         mDrawerLayout =findViewById(R.id.HomeActivityLayout);
@@ -55,7 +58,7 @@ public class HomeActivity extends AppCompatActivity implements HomeContract.Tool
             @Override
             public void onDrawerClosed(View drawerView){
                 super.onDrawerClosed(drawerView);
-                //TODO
+
             }
         });
         callback = new OnBackPressedCallback(true) {

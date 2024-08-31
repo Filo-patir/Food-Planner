@@ -26,6 +26,7 @@ import filo.mamdouh.kershhelper.contracts.HomeContract;
 import filo.mamdouh.kershhelper.contracts.SearchItemContract;
 import filo.mamdouh.kershhelper.databinding.FragmentSearchItemsBinding;
 import filo.mamdouh.kershhelper.datastorage.local.FileHandler;
+import filo.mamdouh.kershhelper.datastorage.local.SharedPrefrenceHandler;
 import filo.mamdouh.kershhelper.datastorage.network.RetrofitClient;
 import filo.mamdouh.kershhelper.datastorage.room.calendar.CalendarDataSourceImpl;
 import filo.mamdouh.kershhelper.datastorage.room.savedmeals.SavedMealsDataSourceImpl;
@@ -47,7 +48,9 @@ public class SearchItemsFragment extends Fragment implements SearchItemContract.
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        presenter = new SearchItemsPresenter(this, Repostiry.getInstance(FileHandler.getInstance(getContext()), SavedMealsDataSourceImpl.getInstance(getContext()), CalendarDataSourceImpl.getInstance(getContext()), RetrofitClient.getInstance(getContext())));
+        presenter = new SearchItemsPresenter(this, Repostiry.getInstance(FileHandler.getInstance(getContext()),
+                SavedMealsDataSourceImpl.getInstance(getContext()), CalendarDataSourceImpl.getInstance(getContext())
+                , RetrofitClient.getInstance(getContext()), SharedPrefrenceHandler.getInstance(getContext())));
         toolBar = (HomeContract.ToolBar) getActivity();
         toolBar.updateToolBarStatus(View.GONE);
     }

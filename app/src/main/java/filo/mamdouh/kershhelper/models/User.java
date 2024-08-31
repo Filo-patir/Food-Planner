@@ -13,20 +13,13 @@ import okhttp3.Response;
 
 @Data
 public class User {
-    private String uid;
     private String username;
     private String email;
     private String img;
-    private static  User user = null;
-    private User(String uid, String username, String email, String img) {
-        this.uid = uid;
+    public User(String username, String email, String img) {
         this.username = username;
         this.email = email;
         this.img = img;
     }
-    public static User getInstance(String uid, String username, String email, String img)
-    {
-        if(user == null) user = new User(uid, username, email, img);
-        return user;
-    }
+    public User(){}
 }

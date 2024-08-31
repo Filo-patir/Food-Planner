@@ -13,9 +13,10 @@ import android.view.View;
 import android.view.ViewGroup;
 
 import filo.mamdouh.kershhelper.R;
+import filo.mamdouh.kershhelper.features.communicators.DrawerCommunicator;
 
 
-public class EditProfileFragment extends Fragment {
+public class EditProfileFragment extends Fragment implements DrawerCommunicator {
     private OnBackPressedCallback callback;
     View view;
     @Override
@@ -41,6 +42,7 @@ public class EditProfileFragment extends Fragment {
             }
         };
         requireActivity().getOnBackPressedDispatcher().addCallback(callback);
+
     }
 
     @Override
@@ -53,5 +55,10 @@ public class EditProfileFragment extends Fragment {
     public void onDestroy() {
         super.onDestroy();
         callback.remove();
+    }
+
+    @Override
+    public void toHomepage() {
+
     }
 }

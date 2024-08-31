@@ -55,10 +55,10 @@ public class HomePresenter {
             ArrayList<String> ids = new ArrayList<>();
             compositeDisposable.add(repo.getLocalDailyInspiration().subscribeOn(Schedulers.io()).subscribe(
                     ids::add, onError -> {
-                        Log.d("Filo", "1: " + onError.getMessage());
+                        Log.d("Filo", "58: " + onError.getMessage());
                         compositeDisposable.add(repo.getDailyInspiration().subscribeOn(Schedulers.io()).observeOn(AndroidSchedulers.mainThread())
                                 .subscribe(
-                                        this::updateUInSaveToFile, e -> Log.d("TAG", "getHomeItems: " + e.getMessage())
+                                        this::updateUInSaveToFile, e -> Log.d("Filo", "getHomeItems: 61" + e.getMessage())
                                 ));
                     }));
             return ids;
@@ -69,11 +69,11 @@ public class HomePresenter {
                     ArrayList<MealsItem> mealsItems = new ArrayList<>();
                     for (int i = 0 ; i<strings.size()-1 ; i++) {
                         compositeDisposable.add(
-                                repo.getMealByID(strings.get(i)).subscribe(mealsItems::add, e -> Log.d("Filo", "getHomeItems: "+e.getMessage()))
+                                repo.getMealByID(strings.get(i)).subscribe(mealsItems::add, e -> Log.d("Filo", "getHomeItems: 72"+e.getMessage()))
                         );
                     }
                     return mealsItems;
-                }).subscribe(this::updateUInSaveToFile, e -> Log.d("Filo", "getHomeItems: "+e.getMessage()))
+                }).subscribe(this::updateUInSaveToFile, e -> Log.d("Filo", "getHomeItems: 76"+e.getMessage()))
                 );
             }
             else{
@@ -81,14 +81,14 @@ public class HomePresenter {
                 compositeDisposable.add(
                         repo.getDailyInspiration().subscribeOn(Schedulers.io()).observeOn(AndroidSchedulers.mainThread())
                         .subscribe(
-                                this::updateUInSaveToFile, e -> Log.d("Filo", "getHomeItems: " + e.getMessage())
+                                this::updateUInSaveToFile, e -> Log.d("Filo", "84" + e.getMessage())
                         ));
             }
             },onError-> {
             Log.d("Filo", "2: "+onError.getMessage());
             compositeDisposable.add(repo.getDailyInspiration().subscribeOn(Schedulers.io()).observeOn(AndroidSchedulers.mainThread())
                     .subscribe(
-                            this::updateUInSaveToFile, e -> Log.d("Filo", "getHomeItems: " + e.getMessage())
+                            this::updateUInSaveToFile, e -> Log.d("Filo", "getHomeItems: 91" + e.getMessage())
                     ));
         }
         ));
@@ -122,14 +122,18 @@ public class HomePresenter {
     }
 
     public void onDestroy(){
-        //compositeDisposable.clear();
+        compositeDisposable.clear();
     }
 
     private void updateUInSaveToFile(ArrayList<MealsItem> meals){
         view.updateUI(new HomeFragmentRowData("Daily Inspiration", meals));
+        if(!meals.isEmpty()){
         ArrayList<String> saveids = new ArrayList<>();
         for (MealsItem meal : meals)  saveids.add(meal.getIdMeal());
         saveids.add(LocalDate.now().toString());
+        compositeDisposable.add(repo.removeFile("Daily_Inspiration")
+                .subscribeOn(Schedulers.io()).subscribe(o -> {}, e -> Log.d("Filo", "wtf: "+ e.toString())));
         compositeDisposable.add(repo.saveLocalDailyInspiration(saveids).subscribeOn(Schedulers.io()).subscribe(o -> {},e-> Log.d("Filo", "5: "+e.getMessage())));
-    }
+        }
+        }
 }

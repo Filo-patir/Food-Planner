@@ -1,4 +1,4 @@
-package filo.mamdouh.kershhelper.features.welcomescreenfragments;
+package filo.mamdouh.kershhelper.features.welcome_screen_features;
 
 import android.os.Bundle;
 
@@ -12,24 +12,22 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.EditText;
-import android.widget.ImageButton;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import filo.mamdouh.kershhelper.HomeActivity;
-import filo.mamdouh.kershhelper.Navigator;
+import com.google.firebase.FirebaseApp;
+
 import filo.mamdouh.kershhelper.R;
 import filo.mamdouh.kershhelper.contracts.AuthContract;
-import filo.mamdouh.kershhelper.databinding.FragmentLoginBinding;
+import filo.mamdouh.kershhelper.databinding.FragmentSignUpBinding;
 import filo.mamdouh.kershhelper.presenters.AuthPresenter;
 
-public class LoginFragment extends Fragment implements AuthContract.View {
-    FragmentLoginBinding binding;
+public class SignUpFragment extends Fragment implements AuthContract.View {
+    FragmentSignUpBinding binding;
     View view;
-    Button loginbtn;
-    ImageButton googleLoginBtn,facebookLoginBtn;
-    EditText emailtxt,passwordtxt;
-    TextView signupBtn;
+    EditText displayname,email,password,confirmpassword;
+    Button signupBtn;
+    TextView loginBtn;
     AuthPresenter presenter;
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -40,7 +38,7 @@ public class LoginFragment extends Fragment implements AuthContract.View {
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-        binding = FragmentLoginBinding.inflate(inflater, container, false);
+        binding = FragmentSignUpBinding.inflate(inflater, container, false);
         return binding.getRoot();
     }
 
@@ -48,16 +46,17 @@ public class LoginFragment extends Fragment implements AuthContract.View {
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
         this.view = view;
-        loginbtn = binding.loginBtn;
-        googleLoginBtn = binding.loginGooglebtn;
-        facebookLoginBtn = binding.loginFacebookBtn;
-        emailtxt = binding.loginEmail;
-        passwordtxt = binding.loginPassword;
-        signupBtn = binding.loginSignupBtn;
-        loginbtn.setOnClickListener(v -> {
-            presenter.onLogin(emailtxt.getText().toString(),passwordtxt.getText().toString());
+        FirebaseApp.initializeApp(requireContext());
+        displayname = binding.signUpName;
+        email = binding.signUpEmail;
+        password = binding.signUpPassword;
+        confirmpassword = binding.signUpConfirmpass;
+        signupBtn = binding.signupbtn;
+        loginBtn = binding.signupLoginBtn;
+        loginBtn.setOnClickListener(l-> Navigation.findNavController(view).navigate(R.id.action_signUpFragment_to_loginFragment));
+        signupBtn.setOnClickListener(l->{
+            presenter.onSignup(displayname.getText().toString(),email.getText().toString(),password.getText().toString());
         });
-        signupBtn.setOnClickListener(l -> Navigation.findNavController(view).navigate(R.id.action_loginFragment_to_signUpFragment));
     }
 
     @Override
@@ -67,8 +66,7 @@ public class LoginFragment extends Fragment implements AuthContract.View {
 
     @Override
     public void onSucess() {
-        Toast.makeText(getContext(), "Logged in Successfuly", Toast.LENGTH_SHORT).show();
-        Navigator.toActivity(getContext(), HomeActivity.class);
-        getActivity().finish();
+        Toast.makeText(getContext(), "Sign Up Succesfuly", Toast.LENGTH_SHORT).show();
+        Navigation.findNavController(view).navigate(R.id.action_signUpFragment_to_loginFragment);
     }
 }

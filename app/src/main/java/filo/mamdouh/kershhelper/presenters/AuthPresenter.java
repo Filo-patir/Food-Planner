@@ -1,22 +1,24 @@
 package filo.mamdouh.kershhelper.presenters;
 
 import filo.mamdouh.kershhelper.contracts.AuthContract;
+import filo.mamdouh.kershhelper.datastorage.firebase.FirebaseFireStoreDB;
 import filo.mamdouh.kershhelper.logic.auth.Authentication;
 import filo.mamdouh.kershhelper.models.Repostiry;
 import filo.mamdouh.kershhelper.models.User;
 
 public class AuthPresenter implements AuthContract.Presenter {
     private final AuthContract.View view;
-    private Repostiry repo;
-
+    private final FirebaseFireStoreDB db;
+    private User user;
     private final Authentication auth = new Authentication(this);
 
-    public AuthPresenter(AuthContract.View view, Repostiry repo){
-        this.repo = repo;
+    public AuthPresenter(AuthContract.View view){
         this.view = view;
+        db = FirebaseFireStoreDB.getInnstance();
     }
 
-    public void onSignup(String email,String password){
+    public void onSignup(String displayName,String email,String password){
+        user = new User(displayName,email,"");
         auth.signupAuth(email,password);
     }
 
@@ -43,7 +45,8 @@ public class AuthPresenter implements AuthContract.Presenter {
     }
 
     @Override
-    public void onSuccessSignup() {
+    public void onSuccessSignup(String uid) {
+        db.saveUser(uid,user.getUsername(),user.getEmail(),user.getImg());
         view.onSucess();
     }
 

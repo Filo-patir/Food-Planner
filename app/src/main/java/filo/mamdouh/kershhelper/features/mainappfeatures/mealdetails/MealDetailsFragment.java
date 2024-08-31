@@ -24,6 +24,7 @@ import filo.mamdouh.kershhelper.contracts.HomeContract;
 import filo.mamdouh.kershhelper.contracts.MealDetailsContract;
 import filo.mamdouh.kershhelper.databinding.FragmentMealDetailsBinding;
 import filo.mamdouh.kershhelper.datastorage.local.FileHandler;
+import filo.mamdouh.kershhelper.datastorage.local.SharedPrefrenceHandler;
 import filo.mamdouh.kershhelper.datastorage.network.RetrofitClient;
 import filo.mamdouh.kershhelper.datastorage.room.calendar.CalendarDataSourceImpl;
 import filo.mamdouh.kershhelper.datastorage.room.savedmeals.SavedMealsDataSourceImpl;
@@ -44,7 +45,9 @@ public class MealDetailsFragment extends Fragment implements MealDetailsContract
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        pressenter = new MealDetailsPressenter(this, Repostiry.getInstance(FileHandler.getInstance(getContext()), SavedMealsDataSourceImpl.getInstance(getContext()), CalendarDataSourceImpl.getInstance(getContext()), RetrofitClient.getInstance(getContext())));
+        pressenter = new MealDetailsPressenter(this, Repostiry.getInstance(FileHandler.getInstance(getContext()),
+                SavedMealsDataSourceImpl.getInstance(getContext()), CalendarDataSourceImpl.getInstance(getContext())
+                , RetrofitClient.getInstance(getContext()), SharedPrefrenceHandler.getInstance(getContext())));
         toolBar = (HomeContract.ToolBar) getActivity();
     }
 

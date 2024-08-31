@@ -14,7 +14,7 @@ public interface AuthContract {
 
                 void onFailLogin(String message);
 
-                void onSuccessSignup();
+                void onSuccessSignup(String userid);
 
                 void onFailSignup(String message);
         }

@@ -6,7 +6,7 @@
     app:startDestination="@id/welcomeFragment">
     <fragment
         android:id="@+id/welcomeFragment"
-        android:name="filo.mamdouh.kershhelper.features.welcomescreenfragments.WelcomeFragment"
+        android:name="filo.mamdouh.kershhelper.features.welcome_screen_features.WelcomeFragment"
         android:label="fragment_welcome_screen"
         tools:layout="@layout/fragment_welcome_screen">
         <action
@@ -20,7 +20,7 @@
     </fragment>
     <fragment
         android:id="@+id/loginFragment"
-        android:name="filo.mamdouh.kershhelper.features.welcomescreenfragments.LoginFragment"
+        android:name="filo.mamdouh.kershhelper.features.welcome_screen_features.LoginFragment"
         android:label="fragment_login"
         tools:layout="@layout/fragment_login">
         <action
@@ -30,7 +30,7 @@
     </fragment>
     <fragment
         android:id="@+id/signUpFragment"
-        android:name="filo.mamdouh.kershhelper.features.welcomescreenfragments.SignUpFragment"
+        android:name="filo.mamdouh.kershhelper.features.welcome_screen_features.SignUpFragment"
         android:label="fragment_sign_up"
         tools:layout="@layout/fragment_sign_up">
         <action

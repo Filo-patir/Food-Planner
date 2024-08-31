@@ -14,6 +14,7 @@ import io.reactivex.rxjava3.annotations.NonNull;
 import io.reactivex.rxjava3.core.Observable;
 import io.reactivex.rxjava3.core.ObservableEmitter;
 import io.reactivex.rxjava3.core.ObservableOnSubscribe;
+import io.reactivex.rxjava3.core.Scheduler;
 import io.reactivex.rxjava3.core.Single;
 import io.reactivex.rxjava3.schedulers.Schedulers;
 
@@ -73,13 +74,19 @@ public class FileHandler {
             return null;
         });
     }
-    public void removeFile(String name) {
-        Observable.fromCallable(() -> {
-            PrintStream fos = new PrintStream(context.openFileOutput(name,Context.MODE_PRIVATE));
-            Log.d("Filo", "removefile: ");
-            fos.print("");
-            fos.close();
-            return null;
+    public Observable<String> removeFile(String name) {
+        return Observable.create(emitter -> {
+            PrintStream fos = null;
+            try {
+                fos = new PrintStream(context.openFileOutput(name, Context.MODE_PRIVATE));
+                Log.d("Filo", "removefile: ");
+                fos.print("");
+                emitter.onNext("Sucess");
+            } catch (Exception e) {
+                emitter.onError(e);
+            }
+            if(fos != null)
+                fos.close();
         });
     }
 

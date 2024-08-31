@@ -20,6 +20,7 @@ import java.util.List;
 import filo.mamdouh.kershhelper.R;
 import filo.mamdouh.kershhelper.contracts.BookmarkContract;
 import filo.mamdouh.kershhelper.datastorage.local.FileHandler;
+import filo.mamdouh.kershhelper.datastorage.local.SharedPrefrenceHandler;
 import filo.mamdouh.kershhelper.datastorage.network.RetrofitClient;
 import filo.mamdouh.kershhelper.datastorage.room.calendar.CalendarDataSourceImpl;
 import filo.mamdouh.kershhelper.datastorage.room.savedmeals.SavedMealsDataSourceImpl;
@@ -38,7 +39,9 @@ public class BookmarkFragment extends Fragment implements BookmarkContract.View 
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        presenter = new BookmarkPresenter(this, Repostiry.getInstance(FileHandler.getInstance(getContext()), SavedMealsDataSourceImpl.getInstance(getContext()), CalendarDataSourceImpl.getInstance(getContext()), RetrofitClient.getInstance(getContext())));
+        presenter = new BookmarkPresenter(this, Repostiry.getInstance(FileHandler.getInstance(getContext()),
+                SavedMealsDataSourceImpl.getInstance(getContext()), CalendarDataSourceImpl.getInstance(getContext())
+                , RetrofitClient.getInstance(getContext()), SharedPrefrenceHandler.getInstance(getContext())));
         Log.d("TAG", "onCreate: Bookmark");
     }
 
