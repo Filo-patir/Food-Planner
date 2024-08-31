@@ -1,15 +1,7 @@
 package filo.mamdouh.kershhelper.models;
 
-import android.graphics.Bitmap;
-import android.graphics.BitmapFactory;
-
-import java.io.IOException;
-import java.io.InputStream;
 
 import lombok.Data;
-import okhttp3.OkHttpClient;
-import okhttp3.Request;
-import okhttp3.Response;
 
 @Data
 public class User {

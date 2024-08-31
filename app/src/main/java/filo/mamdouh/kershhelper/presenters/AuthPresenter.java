@@ -3,7 +3,6 @@ package filo.mamdouh.kershhelper.presenters;
 import filo.mamdouh.kershhelper.contracts.AuthContract;
 import filo.mamdouh.kershhelper.datastorage.firebase.FirebaseFireStoreDB;
 import filo.mamdouh.kershhelper.logic.auth.Authentication;
-import filo.mamdouh.kershhelper.models.Repostiry;
 import filo.mamdouh.kershhelper.models.User;
 
 public class AuthPresenter implements AuthContract.Presenter {
@@ -14,7 +13,7 @@ public class AuthPresenter implements AuthContract.Presenter {
 
     public AuthPresenter(AuthContract.View view){
         this.view = view;
-        db = FirebaseFireStoreDB.getInnstance();
+        db = FirebaseFireStoreDB.getInstance();
     }
 
     public void onSignup(String displayName,String email,String password){
@@ -35,19 +34,9 @@ public class AuthPresenter implements AuthContract.Presenter {
     }
 
     @Override
-    public void onSucessLogin(User user) {
-        view.onSucess();
-    }
-
-    @Override
-    public void onFailLogin(String message) {
-        view.onFailed(message);
-    }
-
-    @Override
     public void onSuccessSignup(String uid) {
         db.saveUser(uid,user.getUsername(),user.getEmail(),user.getImg());
-        view.onSucess();
+        view.onSuccess();
     }
 
     @Override

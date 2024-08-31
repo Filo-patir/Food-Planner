@@ -1,21 +1,12 @@
 package filo.mamdouh.kershhelper.features.welcome_screen_features;
 
-import android.credentials.Credential;
-import android.credentials.CredentialOption;
-import android.credentials.GetCredentialException;
-import android.credentials.GetCredentialRequest;
-import android.credentials.GetCredentialResponse;
+
 import android.os.Bundle;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
-import androidx.credentials.CredentialManager;
-import androidx.credentials.CredentialManagerCallback;
 import androidx.fragment.app.Fragment;
 import androidx.navigation.Navigation;
-
-
-import android.os.CancellationSignal;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -23,11 +14,6 @@ import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.ImageButton;
 import android.widget.TextView;
-
-import com.google.android.libraries.identity.googleid.GetGoogleIdOption;
-
-import java.util.concurrent.Executor;
-
 import filo.mamdouh.kershhelper.HomeActivity;
 import filo.mamdouh.kershhelper.Navigator;
 import filo.mamdouh.kershhelper.R;
@@ -93,7 +79,7 @@ public class WelcomeFragment extends Fragment implements AuthContract.View{
     }
 
     @Override
-    public void onSucess() {
+    public void onSuccess() {
 
     }
 

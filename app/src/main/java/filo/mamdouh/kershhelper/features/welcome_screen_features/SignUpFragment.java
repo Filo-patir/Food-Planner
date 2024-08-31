@@ -65,7 +65,7 @@ public class SignUpFragment extends Fragment implements AuthContract.View {
     }
 
     @Override
-    public void onSucess() {
+    public void onSuccess() {
         Toast.makeText(getContext(), "Sign Up Succesfuly", Toast.LENGTH_SHORT).show();
         Navigation.findNavController(view).navigate(R.id.action_signUpFragment_to_loginFragment);
     }

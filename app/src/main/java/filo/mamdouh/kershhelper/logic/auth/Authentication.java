@@ -24,7 +24,7 @@ public class Authentication {
 
     public Authentication(){
         auth = FirebaseAuth.getInstance();
-        db = FirebaseFireStoreDB.getInnstance();
+        db = FirebaseFireStoreDB.getInstance();
     }
     public Authentication(AuthContract.Presenter presenter){
         auth = FirebaseAuth.getInstance();
@@ -33,7 +33,7 @@ public class Authentication {
     public Authentication(LoginContract.Presenter presenter){
         auth = FirebaseAuth.getInstance();
         this.loginPresenter = presenter;
-        db = FirebaseFireStoreDB.getInnstance();
+        db = FirebaseFireStoreDB.getInstance();
     }
 
     public void getAccount(SplashScreenContract.Presenter listener){
