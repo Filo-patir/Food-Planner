@@ -75,7 +75,10 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:layout_gravity="start"
-        android:backgroundTint="@color/surface_varient_0op"
-        app:headerLayout="@layout/drawer_layout" />
+        android:backgroundTint="@color/surface_varient_0op" >
+        <include layout="@layout/drawer_layout"
+            android:id="@+id/headerLayout" />
+    </com.google.android.material.navigation.NavigationView>
+
 
 </androidx.drawerlayout.widget.DrawerLayout>

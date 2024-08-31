@@ -11,6 +11,7 @@ import android.widget.ImageButton;
 import android.widget.Toast;
 
 import androidx.activity.OnBackPressedCallback;
+import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.view.GravityCompat;
@@ -43,6 +44,7 @@ public class HomeActivity extends AppCompatActivity implements HomeContract.Tool
     private OnBackPressedCallback callback;
     private HomeActivityPresenter presenter;
     BottomNavigationView navigationView;
+    NavController drawerNavController;
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -59,13 +61,6 @@ public class HomeActivity extends AppCompatActivity implements HomeContract.Tool
             mDrawerLayout.openDrawer(GravityCompat.START)
         );
         checkLoginStatus();
-        mDrawerLayout.addDrawerListener(new DrawerLayout.SimpleDrawerListener() {
-            @Override
-            public void onDrawerClosed(View drawerView){
-                super.onDrawerClosed(drawerView);
-
-            }
-        });
         callback = new OnBackPressedCallback(true) {
             @Override
             public void handleOnBackPressed() {
@@ -77,12 +72,17 @@ public class HomeActivity extends AppCompatActivity implements HomeContract.Tool
                 }
             }
         };
+        drawerNavController = Navigation.findNavController(this , R.id.fragmentContainerView3);
         getOnBackPressedDispatcher().addCallback(this,callback);
-        bookMarkBtn.setOnClickListener(l->{
-            Navigation.findNavController(this,R.id.homeFragmentHost).navigate(R.id.action_global_bookmarkFragment);
-        });
+        bookMarkBtn.setOnClickListener(l-> Navigation.findNavController(this,R.id.homeFragmentHost).navigate(R.id.action_global_bookmarkFragment));
         NavController navController = Navigation.findNavController(this, R.id.homeFragmentHost);
         NavigationUI.setupWithNavController(navigationView, navController);
+        mDrawerLayout.addDrawerListener(new DrawerLayout.SimpleDrawerListener() {
+            @Override
+            public void onDrawerClosed(@NonNull View drawerView) {
+                drawerNavController.navigate(R.id.action_global_homeFragment);
+            }
+        });
     }
 
     @Override
