@@ -42,4 +42,9 @@ public class SavedMealsDataSourceImpl implements SavedMealsDataSource{
     public Flowable<MealsItem> getMealByID(String id) {
         return dao.getMealByID(id);
     }
+
+    @Override
+    public Completable clear() {
+        return dao.clear();
+    }
 }

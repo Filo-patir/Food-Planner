@@ -1,5 +1,6 @@
 package filo.mamdouh.kershhelper.features.mainappfeatures.home;
 
+import android.app.Activity;
 import android.content.Context;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -16,6 +17,7 @@ import java.util.HashMap;
 import java.util.List;
 
 import filo.mamdouh.kershhelper.R;
+import filo.mamdouh.kershhelper.datastorage.caching.Desserts;
 import filo.mamdouh.kershhelper.features.mainappfeatures.smallfoodcard.SmallCardAdapter;
 import filo.mamdouh.kershhelper.models.HomeFragmentRowData;
 import filo.mamdouh.kershhelper.features.mainappfeatures.mainfoodcard.FoodCardAdapter;
@@ -24,18 +26,23 @@ import filo.mamdouh.kershhelper.models.MealsItem;
 
 public class BaseRecyclerViewAdapter extends RecyclerView.Adapter<BaseRecyclerViewAdapter.BaseRecyclerViewHolder> {
     HashMap<String,List<MealsItem>> homeFragmentRowDataList;
-    Context context;
+    ArrayList<Desserts> desserts;
+    Activity context;
     OnItemClickListener listener;
-    private static ArrayList<String> keys = new ArrayList<>(List.of("Daily Inspiration","Saved Meals","Desserts","Recently Viewed","More You Might Like"));
-    public BaseRecyclerViewAdapter(Context context, OnItemClickListener listener){
+    private static final ArrayList<String> keys = new ArrayList<>(List.of("Daily Inspiration","Saved Meals","Desserts","Recently Viewed","More You Might Like"));
+    public BaseRecyclerViewAdapter(Activity context, OnItemClickListener listener){
         this.context = context;
         this.listener = listener;
         homeFragmentRowDataList = new HashMap<>();
+        desserts = new ArrayList<>();
     }
 
     public void setHomeFragmentRowDataList(HomeFragmentRowData item) {
         Log.d("TAG", "setHomeFragmentRowDataList: HERE");
-        homeFragmentRowDataList.put(item.getTitle(), item.getItem());
+        if (item.getDesserts().isEmpty()) {
+            homeFragmentRowDataList.put(item.getTitle(), item.getItem());
+        }
+        else desserts = item.getDesserts();
         notifyDataSetChanged();
     }
 
@@ -51,9 +58,16 @@ public class BaseRecyclerViewAdapter extends RecyclerView.Adapter<BaseRecyclerVi
         RecyclerView.RecycledViewPool viewPool = new RecyclerView.RecycledViewPool();
         holder.cardRecyclerView.setRecycledViewPool(viewPool);
         if (position<4) {
-            holder.title.setText(keys.get(position));
-            FoodCardAdapter foodCardAdapter = new FoodCardAdapter(homeFragmentRowDataList.get(keys.get(position)), context, listener);
-            holder.cardRecyclerView.setAdapter(foodCardAdapter);
+            if (position == 2 && !desserts.isEmpty()){
+                holder.title.setText(keys.get(position));
+                FoodCardAdapter foodCardAdapter = new FoodCardAdapter(desserts, context, listener);
+                holder.cardRecyclerView.setAdapter(foodCardAdapter);
+            }
+            else {
+                holder.title.setText(keys.get(position));
+                FoodCardAdapter foodCardAdapter = new FoodCardAdapter(homeFragmentRowDataList.get(keys.get(position)), context, listener);
+                holder.cardRecyclerView.setAdapter(foodCardAdapter);
+            }
         }
         else {
             holder.title.setText(keys.get(position));

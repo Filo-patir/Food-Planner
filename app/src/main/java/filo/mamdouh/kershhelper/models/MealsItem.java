@@ -66,6 +66,7 @@ public class MealsItem {
 	private String strMeasure20;
 	private String strSource;
 	private boolean isSaved = false;
+	private int quantity = 0;
 
 	public ArrayList<String> getIngredients() {
 		ArrayList<String> ingredients = new ArrayList<>();
@@ -105,5 +106,28 @@ public class MealsItem {
 			}
 		}
 		return measures;
+	}
+
+	public String getMeasureAndIngredients(){
+		StringBuilder result = new StringBuilder();
+		ArrayList<String> ingredients = getIngredients();
+		ArrayList<String> measures = getMeasures();
+		for (int i = 0; i < ingredients.size(); i++) {
+			if ((i+1)%2 == 0) result.append("\n");
+			result.append(measures.get(i)).append(" ").append(ingredients.get(i)).append("\t\t");
+		}
+		return result.toString();
+	}
+
+	public String getStrInstructions() {
+		StringBuilder instruction = new StringBuilder();
+		for (String line : strInstructions.split("[.]"))
+			instruction.append(line).append('.').append("\n");
+		return instruction.toString();
+	}
+
+	public String getStrYoutube() {
+		String youtubeID = strYoutube.substring(strYoutube.lastIndexOf("=") + 1);
+		return String.format("https://www.youtube.com/embed/%s", youtubeID);
 	}
 }

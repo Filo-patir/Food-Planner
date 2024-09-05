@@ -15,6 +15,11 @@ public class Client {
         }
         return instance;
     }
+
+    public static void clear(){
+        instance = null;
+    }
+
     public String getUserID(){
         return uid;
     }

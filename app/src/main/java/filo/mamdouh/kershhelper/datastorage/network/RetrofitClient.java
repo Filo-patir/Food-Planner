@@ -5,6 +5,7 @@ import android.util.Log;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.concurrent.TimeUnit;
 
 import filo.mamdouh.kershhelper.contracts.NetworkContract;
 import filo.mamdouh.kershhelper.logic.network.NetworkUtlis;
@@ -19,6 +20,7 @@ import io.reactivex.rxjava3.core.ObservableOnSubscribe;
 import io.reactivex.rxjava3.core.Single;
 import io.reactivex.rxjava3.schedulers.Schedulers;
 import okhttp3.Cache;
+import okhttp3.CacheControl;
 import okhttp3.OkHttpClient;
 import okhttp3.Request;
 import retrofit2.Retrofit;
@@ -38,9 +40,11 @@ public class RetrofitClient implements NetworkContract{
                 {
                     NetworkUtlis networkUtlis = new NetworkUtlis();
                     Request request = chain.request();
+                    CacheControl cacheControl = new CacheControl.Builder().immutable().maxAge(5, TimeUnit.MINUTES).build();
+                    CacheControl offlineCache = new CacheControl.Builder().onlyIfCached().maxStale(7, TimeUnit.DAYS).build();
                     if (networkUtlis.isNetworkAvailable(context))
-                     request = chain.request().newBuilder().header("Cache-Control","public, max-age"+5 ).build();
-                    else  request.newBuilder().header("Cache-Control", "public, only-if-cached, max-stale=" + 60 * 60 * 24 * 7).build();
+                     request = chain.request().newBuilder().cacheControl(cacheControl).build();
+                    else  request.newBuilder().cacheControl(offlineCache).build();
                     return chain.proceed(request);
                 })
                 .build();

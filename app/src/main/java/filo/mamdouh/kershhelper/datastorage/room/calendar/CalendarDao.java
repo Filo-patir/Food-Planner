@@ -26,4 +26,7 @@ public interface CalendarDao {
 
     @Delete
     Completable delete(Calendar calendar);
+
+    @Query("DELETE FROM calendar")
+    Completable clear();
 }

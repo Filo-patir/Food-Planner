@@ -1,9 +1,11 @@
 package filo.mamdouh.kershhelper.features.mainappfeatures.smallfoodcard;
 
+import android.app.Activity;
 import android.content.Context;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.ViewGroup;
+import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
@@ -16,23 +18,25 @@ import java.util.List;
 import filo.mamdouh.kershhelper.R;
 import filo.mamdouh.kershhelper.contracts.SearchItemContract;
 import filo.mamdouh.kershhelper.features.communicators.OnItemClickListener;
+import filo.mamdouh.kershhelper.features.dialogs.guestdialog.GuestDialog;
 import filo.mamdouh.kershhelper.features.mainappfeatures.home.Updater;
+import filo.mamdouh.kershhelper.models.Client;
 import filo.mamdouh.kershhelper.models.MealsItem;
 import filo.mamdouh.kershhelper.models.Repostiry;
 
 
 public class SmallCardAdapter extends RecyclerView.Adapter<SmallCardHolder> implements Updater {
     private List<MealsItem> items;
-    private Context context;
+    private Activity context;
     private OnItemClickListener listener;
     private SearchItemContract.Listener searchListener;
 
-    public SmallCardAdapter(List<MealsItem> items, Context context, OnItemClickListener listener) {
+    public SmallCardAdapter(List<MealsItem> items, Activity context, OnItemClickListener listener) {
         this.items = items;
         this.context = context;
         this.listener = listener;
     }
-    public SmallCardAdapter(Context context, SearchItemContract.Listener listener) {
+    public SmallCardAdapter(Activity context, SearchItemContract.Listener listener) {
         items = new ArrayList<>();
         this.context = context;
         this.searchListener = listener;
@@ -55,13 +59,29 @@ public class SmallCardAdapter extends RecyclerView.Adapter<SmallCardHolder> impl
         Log.d("Small List", "onBindViewHolder: "+position);
         MealsItem item = items.get(position);
         holder.mealName.setText(item.getStrMeal());
-        holder.ingredientsNumber.setText(item.getIngredients().size() + " Ingredients");
+        holder.ingredientsNumber.setText(String.format(context.getString(R.string.ingredients),item.getIngredients().size()));
         String imgUrl = Repostiry.getCOUNTERIES().get(item.getStrArea());
-        Glide.with(context).load(imgUrl).placeholder(R.drawable.unknown_flag_icon).into(holder.flag);
-        Glide.with(context).load(item.getStrMealThumb()).placeholder(R.drawable.ic_launcher_background).into(holder.mealImage);
-        holder.saveBtn.setOnClickListener(l->listener.saveItemListener(item,this));
+        Glide.with(context.getApplicationContext()).load(imgUrl).placeholder(R.drawable.unknown_flag_icon).into(holder.flag);
+        Glide.with(context.getApplicationContext()).load(item.getStrMealThumb()).placeholder(R.drawable.ic_launcher_background).into(holder.mealImage);
+        holder.saveBtn.setOnClickListener(l->{
+            if (Client.getInstance(null,null).getUserName().isEmpty()) {
+                new GuestDialog(context).showDialog();
+            }
+            else{
+                if (listener != null)
+                    listener.saveItemListener(item, this);
+                else
+                    searchListener.saveItemListener(item, this);
+            }
+        });
         if(item.isSaved()) holder.saveBtn.setImageResource(R.drawable.baseline_bookmark_24);
-        holder.itemView.setOnClickListener(l-> listener.onItemClick(item.getIdMeal(),item.isSaved()));
+        else holder.saveBtn.setImageResource(R.drawable.save_icon);
+        holder.itemView.setOnClickListener(l-> {
+            if(listener != null)
+                listener.onItemClick(item.getIdMeal(),item.isSaved());
+            else
+                searchListener.onItemClick(item.getIdMeal(),item.isSaved());
+        });
     }
 
     @Override
@@ -71,6 +91,7 @@ public class SmallCardAdapter extends RecyclerView.Adapter<SmallCardHolder> impl
 
     @Override
     public void updateUI() {
+        Toast.makeText(context, "Saved", Toast.LENGTH_SHORT).show();
         notifyDataSetChanged();
     }
 

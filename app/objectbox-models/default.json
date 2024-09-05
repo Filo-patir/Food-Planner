@@ -1,0 +1,62 @@
+{
+  "_note1": "KEEP THIS FILE! Check it into a version control system (VCS) like git.",
+  "_note2": "ObjectBox manages crucial IDs for your object model. See docs for details.",
+  "_note3": "If you have VCS merge conflicts, you must resolve them according to ObjectBox docs.",
+  "entities": [
+    {
+      "id": "1:6030797957785995145",
+      "lastPropertyId": "7:9024027928955553253",
+      "name": "Desserts",
+      "properties": [
+        {
+          "id": "1:4723149147370213742",
+          "name": "id",
+          "type": 6,
+          "flags": 1
+        },
+        {
+          "id": "2:142914890248284175",
+          "name": "idMeal",
+          "type": 9
+        },
+        {
+          "id": "3:8787001836394818881",
+          "name": "ingredientsCount",
+          "type": 5
+        },
+        {
+          "id": "4:5575587192006825134",
+          "name": "thumbnail",
+          "type": 9
+        },
+        {
+          "id": "5:815650039812056125",
+          "name": "name",
+          "type": 9
+        },
+        {
+          "id": "6:6923783286761978544",
+          "name": "areaFlag",
+          "type": 9
+        },
+        {
+          "id": "7:9024027928955553253",
+          "name": "isSaved",
+          "type": 1
+        }
+      ],
+      "relations": []
+    }
+  ],
+  "lastEntityId": "1:6030797957785995145",
+  "lastIndexId": "0:0",
+  "lastRelationId": "0:0",
+  "lastSequenceId": "0:0",
+  "modelVersion": 5,
+  "modelVersionParserMinimum": 5,
+  "retiredEntityUids": [],
+  "retiredIndexUids": [],
+  "retiredPropertyUids": [],
+  "retiredRelationUids": [],
+  "version": 1
+}

@@ -12,7 +12,7 @@ import io.reactivex.rxjava3.core.Flowable;
 import io.reactivex.rxjava3.schedulers.Schedulers;
 
 public class CalendarDataSourceImpl implements CalendarDataSource {
-    private CalendarDao dao;
+    private final CalendarDao dao;
     private static CalendarDataSourceImpl instance = null;
     private CalendarDataSourceImpl(Context context){
         AppDatabase db = AppDatabase.getInstance(context);
@@ -49,5 +49,10 @@ public class CalendarDataSourceImpl implements CalendarDataSource {
     @Override
     public Flowable<Calendar> getCalendarByID(String id) {
         return dao.getCalendar(id);
+    }
+
+    @Override
+    public Completable clear() {
+        return dao.clear();
     }
 }

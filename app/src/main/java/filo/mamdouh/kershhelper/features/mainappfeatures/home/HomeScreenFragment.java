@@ -17,6 +17,7 @@ import android.widget.Toast;
 import filo.mamdouh.kershhelper.R;
 import filo.mamdouh.kershhelper.contracts.HomeContract;
 import filo.mamdouh.kershhelper.databinding.FragmentHomeScreenBinding;
+import filo.mamdouh.kershhelper.datastorage.caching.Boxes;
 import filo.mamdouh.kershhelper.datastorage.local.FileHandler;
 import filo.mamdouh.kershhelper.datastorage.local.SharedPrefrenceHandler;
 import filo.mamdouh.kershhelper.datastorage.network.RetrofitClient;
@@ -25,6 +26,7 @@ import filo.mamdouh.kershhelper.datastorage.room.savedmeals.SavedMealsDataSource
 import filo.mamdouh.kershhelper.features.dialogs.addtocalendardialog.PlanDialog;
 import filo.mamdouh.kershhelper.features.mainappfeatures.home.presenter.HomePresenter;
 import filo.mamdouh.kershhelper.features.communicators.OnItemClickListener;
+import filo.mamdouh.kershhelper.models.CachingRepositry;
 import filo.mamdouh.kershhelper.models.HomeFragmentRowData;
 import filo.mamdouh.kershhelper.models.MealsItem;
 import filo.mamdouh.kershhelper.models.Repostiry;
@@ -55,14 +57,15 @@ public class HomeScreenFragment extends Fragment implements HomeContract.View , 
         this.view = view;
         presenter = new HomePresenter(this,Repostiry.getInstance(FileHandler.getInstance(getContext()),
                 SavedMealsDataSourceImpl.getInstance(getContext()), CalendarDataSourceImpl.getInstance(getContext())
-                , RetrofitClient.getInstance(getContext()), SharedPrefrenceHandler.getInstance(getContext())));
-        presenter.getHomeItems();
+                , RetrofitClient.getInstance(getContext()), SharedPrefrenceHandler.getInstance(getContext())), CachingRepositry.getInstance(Boxes.getInstance(getContext())));
         homeRecyclerView = binding.homeScreenRecycleView;
-        adapter = new BaseRecyclerViewAdapter(view.getContext(),this);
+        adapter = new BaseRecyclerViewAdapter(requireActivity(),this);
         homeRecyclerView.setAdapter(adapter);
+        presenter.getHomeItems();
     }
     @Override
     public void updateUI(HomeFragmentRowData item){
+        Log.d("Filo", "updateUI: " + String.valueOf(adapter == null));
         adapter.setHomeFragmentRowDataList(item);
     }
 
@@ -83,6 +86,11 @@ public class HomeScreenFragment extends Fragment implements HomeContract.View , 
     public void saveItemListener(MealsItem meal,Updater updater) {
         Log.d("TAG", "saveItemListener: HERE");
         presenter.saveMeal(meal,updater);
+    }
+
+    @Override
+    public void saveItemListener(String mealID, Updater updater) {
+        presenter.saveItemListener(mealID,updater);
     }
 
     @Override

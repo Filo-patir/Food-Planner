@@ -3,6 +3,7 @@ package filo.mamdouh.kershhelper.datastorage.local;
 import android.content.Context;
 import android.content.SharedPreferences;
 
+import io.reactivex.rxjava3.core.Completable;
 import io.reactivex.rxjava3.core.Observable;
 
 public class SharedPrefrenceHandler {
@@ -23,7 +24,7 @@ public class SharedPrefrenceHandler {
     public Observable<String> get(String key){
         return Observable.just(sharedPreferences.getString(key, ""));
     }
-    public void clear(){
-        sharedPreferences.edit().clear().apply();
+    public Completable clear(){
+        return Completable.fromAction(() -> sharedPreferences.edit().clear().apply());
     }
 }

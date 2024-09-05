@@ -52,10 +52,10 @@ public class Authentication {
 
     public void loginAuth(String email,String password){
         auth.signInWithEmailAndPassword(email,password).addOnCompleteListener(task -> {
-           if(task.isComplete()){
+           if(task.isSuccessful()){
                FirebaseUser currentUser = auth.getCurrentUser();
-               assert currentUser != null;
-               loginPresenter.onSuccess(currentUser.getUid(),db.getUser(currentUser.getUid()));
+               if(currentUser != null)
+                   loginPresenter.onSuccess(currentUser.getUid(),db.getUser(currentUser.getUid()));
            }
            else {
                loginPresenter.onFailure(Objects.requireNonNull(task.getException()).getMessage());

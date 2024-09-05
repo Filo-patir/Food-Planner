@@ -86,6 +86,11 @@ public class BookmarkFragment extends Fragment implements BookmarkContract.View 
     }
 
     @Override
+    public void saveItemListener(String mealID, Updater updater) {
+
+    }
+
+    @Override
     public void onItemClick(String mealID, boolean isSaved) {
         Bundle bundle = new Bundle();
         bundle.putString("mealID",mealID);

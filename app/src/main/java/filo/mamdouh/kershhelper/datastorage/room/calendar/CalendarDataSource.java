@@ -12,4 +12,5 @@ public interface CalendarDataSource {
     Flowable<Calendar> getCalendars();
     Flowable<List<Boolean>> getMealPlan(String id);
     Flowable<Calendar> getCalendarByID(String id);
+    Completable clear();
 }

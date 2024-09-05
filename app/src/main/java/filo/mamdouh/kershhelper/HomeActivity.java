@@ -74,7 +74,6 @@ public class HomeActivity extends AppCompatActivity implements HomeContract.Tool
         };
         drawerNavController = Navigation.findNavController(this , R.id.fragmentContainerView3);
         getOnBackPressedDispatcher().addCallback(this,callback);
-        bookMarkBtn.setOnClickListener(l-> Navigation.findNavController(this,R.id.homeFragmentHost).navigate(R.id.action_global_bookmarkFragment));
         NavController navController = Navigation.findNavController(this, R.id.homeFragmentHost);
         NavigationUI.setupWithNavController(navigationView, navController);
         mDrawerLayout.addDrawerListener(new DrawerLayout.SimpleDrawerListener() {
@@ -114,7 +113,7 @@ public class HomeActivity extends AppCompatActivity implements HomeContract.Tool
     public void checkLoginStatus(){
         Log.d("Filo", "checkLoginStatus: " + Client.getInstance(null,null));
         if (Client.getInstance(null,null).getUserName().isEmpty()){
-            // Find the button you want to modify
+            bookMarkBtn.setOnClickListener(l-> new GuestDialog(this).showDialog());
             MenuItem bookmarkBtn = navigationView.getMenu().findItem(R.id.bookmarkFragment);
             MenuItem calendarBtn = navigationView.getMenu().findItem(R.id.calendarFragment);
             MenuItem cartBtn = navigationView.getMenu().findItem(R.id.cartFragment);
@@ -131,5 +130,7 @@ public class HomeActivity extends AppCompatActivity implements HomeContract.Tool
                 return true;
             });
         }
+        else
+            bookMarkBtn.setOnClickListener(l-> Navigation.findNavController(this,R.id.homeFragmentHost).navigate(R.id.action_global_bookmarkFragment));
     }
 }

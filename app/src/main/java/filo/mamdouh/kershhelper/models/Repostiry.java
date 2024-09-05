@@ -1,11 +1,9 @@
 package filo.mamdouh.kershhelper.models;
 
 import android.util.Log;
-
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
-
 import filo.mamdouh.kershhelper.contracts.NetworkContract;
 import filo.mamdouh.kershhelper.datastorage.local.FileHandler;
 import filo.mamdouh.kershhelper.datastorage.local.SharedPrefrenceHandler;
@@ -30,42 +28,44 @@ public class Repostiry {
     @Getter
     private Flowable<List<MealsItem>> savedMeals;
     @Getter
-    private static final HashMap<String,String> COUNTERIES = new HashMap<>();
-    private static final ArrayList<String> AREA = new ArrayList<>(List.of("american" , "british" , "canadian" , "chinese" ,
-            "croatian" , "dutch" , "egyptian" , "filipino" , "french" , "greek" , "irish" , "italian" , "jamaican" , "japanese" , "kenyan" ,
-            "malaysian" , "mexican" , "moroccan" , "polish" , "portuguese" , "russian" , "spanish" ,"thai" , "tunisian" , "turkish" , "ukrainian" , "vietnamese" ));
+    private static final HashMap<String, String> COUNTERIES = new HashMap<>();
+    private static final ArrayList<String> AREA = new ArrayList<>(List.of("american", "british", "canadian", "chinese",
+            "croatian", "dutch", "egyptian", "filipino", "french", "greek", "irish", "italian", "jamaican", "japanese", "kenyan",
+            "malaysian", "mexican", "moroccan", "polish", "portuguese", "russian", "spanish", "thai", "tunisian", "turkish", "ukrainian", "vietnamese"));
     private static Repostiry repostiry = null;
+
     static {
-        COUNTERIES.put("American" , "https://www.worldometers.info/img/flags/us-flag.gif");
-        COUNTERIES.put("British" , "https://www.worldometers.info/img/flags/uk-flag.gif");
-        COUNTERIES.put("Canadian" , "https://www.worldometers.info/img/flags/ca-flag.gif");
-        COUNTERIES.put("Chinese" , "https://www.worldometers.info/img/flags/ch-flag.gif");
-        COUNTERIES.put("Croatian" , "https://www.worldometers.info/img/flags/hr-flag.gif");
-        COUNTERIES.put("Dutch" , "https://www.worldometers.info/img/flags/gm-flag.gif");
-        COUNTERIES.put("Egyptian" , "https://www.worldometers.info/img/flags/eg-flag.gif");
-        COUNTERIES.put("Filipino" , "https://www.worldometers.info/img/flags/rp-flag.gif");
-        COUNTERIES.put("French" , "https://www.worldometers.info/img/flags/fr-flag.gif");
-        COUNTERIES.put("Greek" , "https://www.worldometers.info/img/flags/gr-flag.gif");
-        COUNTERIES.put("Indian" ,"https://www.worldometers.info/img/flags/in-flag.gif");
-        COUNTERIES.put("Irish" , "https://www.worldometers.info/img/flags/iz-flag.gif");
-        COUNTERIES.put("Italian" , "https://www.worldometers.info/img/flags/it-flag.gif");
-        COUNTERIES.put("Jamaican" , "https://www.worldometers.info/img/flags/jm-flag.gif");
-        COUNTERIES.put("Japanese" , "https://www.worldometers.info/img/flags/ja-flag.gif");
-        COUNTERIES.put("Kenyan" , "https://www.worldometers.info/img/flags/ke-flag.gif");
-        COUNTERIES.put("Malaysian" , "https://www.worldometers.info/img/flags/my-flag.gif");
-        COUNTERIES.put("Mexican" , "https://www.worldometers.info/img/flags/mx-flag.gif");
-        COUNTERIES.put("Moroccan" , "https://www.worldometers.info/img/flags/mo-flag.gif");
-        COUNTERIES.put("Polish" , "https://www.worldometers.info/img/flags/pl-flag.gif");
-        COUNTERIES.put("Portuguese" , "https://www.worldometers.info/img/flags/po-flag.gif");
-        COUNTERIES.put("Russian" , "https://www.worldometers.info/img/flags/rs-flag.gif");
-        COUNTERIES.put("Spanish" ,"https://www.worldometers.info/img/flags/sp-flag.gif");
-        COUNTERIES.put("Thai" , "https://www.worldometers.info/img/flags/th-flag.gif");
-        COUNTERIES.put("Tunisian" , "https://www.worldometers.info/img/flags/ts-flag.gif");
-        COUNTERIES.put("Turkish" , "https://www.worldometers.info/img/flags/tu-flag.gif");
-        COUNTERIES.put("Ukrainian" , "https://www.worldometers.info/img/flags/up-flag.gif");
-        COUNTERIES.put("Vietnamese" , "https://www.worldometers.info/img/flags/vm-flag.gif");
+        COUNTERIES.put("American", "https://www.worldometers.info/img/flags/us-flag.gif");
+        COUNTERIES.put("British", "https://www.worldometers.info/img/flags/uk-flag.gif");
+        COUNTERIES.put("Canadian", "https://www.worldometers.info/img/flags/ca-flag.gif");
+        COUNTERIES.put("Chinese", "https://www.worldometers.info/img/flags/ch-flag.gif");
+        COUNTERIES.put("Croatian", "https://www.worldometers.info/img/flags/hr-flag.gif");
+        COUNTERIES.put("Dutch", "https://www.worldometers.info/img/flags/gm-flag.gif");
+        COUNTERIES.put("Egyptian", "https://www.worldometers.info/img/flags/eg-flag.gif");
+        COUNTERIES.put("Filipino", "https://www.worldometers.info/img/flags/rp-flag.gif");
+        COUNTERIES.put("French", "https://www.worldometers.info/img/flags/fr-flag.gif");
+        COUNTERIES.put("Greek", "https://www.worldometers.info/img/flags/gr-flag.gif");
+        COUNTERIES.put("Indian", "https://www.worldometers.info/img/flags/in-flag.gif");
+        COUNTERIES.put("Irish", "https://www.worldometers.info/img/flags/iz-flag.gif");
+        COUNTERIES.put("Italian", "https://www.worldometers.info/img/flags/it-flag.gif");
+        COUNTERIES.put("Jamaican", "https://www.worldometers.info/img/flags/jm-flag.gif");
+        COUNTERIES.put("Japanese", "https://www.worldometers.info/img/flags/ja-flag.gif");
+        COUNTERIES.put("Kenyan", "https://www.worldometers.info/img/flags/ke-flag.gif");
+        COUNTERIES.put("Malaysian", "https://www.worldometers.info/img/flags/my-flag.gif");
+        COUNTERIES.put("Mexican", "https://www.worldometers.info/img/flags/mx-flag.gif");
+        COUNTERIES.put("Moroccan", "https://www.worldometers.info/img/flags/mo-flag.gif");
+        COUNTERIES.put("Polish", "https://www.worldometers.info/img/flags/pl-flag.gif");
+        COUNTERIES.put("Portuguese", "https://www.worldometers.info/img/flags/po-flag.gif");
+        COUNTERIES.put("Russian", "https://www.worldometers.info/img/flags/rs-flag.gif");
+        COUNTERIES.put("Spanish", "https://www.worldometers.info/img/flags/sp-flag.gif");
+        COUNTERIES.put("Thai", "https://www.worldometers.info/img/flags/th-flag.gif");
+        COUNTERIES.put("Tunisian", "https://www.worldometers.info/img/flags/ts-flag.gif");
+        COUNTERIES.put("Turkish", "https://www.worldometers.info/img/flags/tu-flag.gif");
+        COUNTERIES.put("Ukrainian", "https://www.worldometers.info/img/flags/up-flag.gif");
+        COUNTERIES.put("Vietnamese", "https://www.worldometers.info/img/flags/vm-flag.gif");
     }
-    private Repostiry(FileHandler fileHandler, SavedMealsDataSource savedMealsDataSource, CalendarDataSource calendarDataSource , NetworkContract api, SharedPrefrenceHandler prefs){
+
+    private Repostiry(FileHandler fileHandler, SavedMealsDataSource savedMealsDataSource, CalendarDataSource calendarDataSource, NetworkContract api, SharedPrefrenceHandler prefs) {
         this.prefs = prefs;
         this.api = api;
         this.fileHandler = fileHandler;
@@ -78,31 +78,33 @@ public class Repostiry {
         return Observable.fromIterable(AREA);
     }
 
-    public static Repostiry getInstance(FileHandler fileHandler, SavedMealsDataSource savedMealsDataSource, CalendarDataSource calendarDataSource,NetworkContract api , SharedPrefrenceHandler prefs) {
-        if(repostiry==null) repostiry = new Repostiry(fileHandler, savedMealsDataSource,calendarDataSource,api,prefs);
+    public static Repostiry getInstance(FileHandler fileHandler, SavedMealsDataSource savedMealsDataSource, CalendarDataSource calendarDataSource,  NetworkContract api, SharedPrefrenceHandler prefs) {
+        if (repostiry == null)
+            repostiry = new Repostiry(fileHandler, savedMealsDataSource, calendarDataSource, api, prefs);
         return repostiry;
     }
-    public Single<ArrayList<MealsItem>> getDailyInspiration(){
+
+    public Single<ArrayList<MealsItem>> getDailyInspiration() {
 
         return api.getDailyInspiration();
     }
 
-    public Observable<String> getLocalDailyInspiration(){
+    public Observable<String> getLocalDailyInspiration() {
         Log.d("Filo", "getLocalDailyInspiration: AAAAAAAy");
         return fileHandler.readFile("Daily_Inspiration");
     }
 
-    public Observable<Object> saveLocalDailyInspiration(ArrayList<String> data){
+    public Observable<Object> saveLocalDailyInspiration(ArrayList<String> data) {
         Log.d("Filo", "saveLocalDailyInspiration: 96");
-        Log.d("Filo", "saveLocalDailyInspiration: "+data);
-        return fileHandler.writeFile("Daily_Inspiration",data);
+        Log.d("Filo", "saveLocalDailyInspiration: " + data);
+        return fileHandler.writeFile("Daily_Inspiration", data);
     }
 
-    public Observable removeFile(String name){
+    public Observable<String> removeFile(String name) {
         return fileHandler.removeFile(name);
     }
 
-    public Completable saveMeal(MealsItem meal){
+    public Completable saveMeal(MealsItem meal) {
         return savedMealsDataSource.insertMeal(meal);
     }
 
@@ -156,9 +158,10 @@ public class Repostiry {
     }
 
     public Observable<Object> saveRecentlyViewed(String id) {
-        return fileHandler.writeFile("Recently_Viewed",id);
+        return fileHandler.writeFile("Recently_Viewed", id);
     }
-    public Observable<String> getRecentlyViewed(){
+
+    public Observable<String> getRecentlyViewed() {
         return fileHandler.readFile("Recently_Viewed");
     }
 
@@ -178,13 +181,21 @@ public class Repostiry {
         return api.getMealByArea(area);
     }
 
-    public Observable<String> getLoginStatus(){
+    public Observable<String> getLoginStatus() {
         return prefs.get("uid");
     }
-    public void saveLogin(String uid){
-        prefs.save("uid",uid);
+
+    public void saveLogin(String uid) {
+        prefs.save("uid", uid);
     }
-    public void logout(){
-        prefs.clear();
+
+    public Observable<Completable> logout() {
+        return Observable.create(emitter ->{
+                        emitter.onNext(prefs.clear());
+                        emitter.onNext(savedMealsDataSource.clear());
+                        emitter.onNext(calendarDataSource.clear());
+                        emitter.onComplete();
+                }
+        );
     }
 }

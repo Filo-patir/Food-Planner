@@ -4,6 +4,7 @@ import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
 
+import androidx.activity.OnBackPressedCallback;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
@@ -12,6 +13,10 @@ import androidx.navigation.Navigation;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.webkit.WebChromeClient;
+import android.webkit.WebSettings;
+import android.webkit.WebView;
+import android.webkit.WebViewClient;
 import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.TextView;
@@ -29,7 +34,9 @@ import filo.mamdouh.kershhelper.datastorage.network.RetrofitClient;
 import filo.mamdouh.kershhelper.datastorage.room.calendar.CalendarDataSourceImpl;
 import filo.mamdouh.kershhelper.datastorage.room.savedmeals.SavedMealsDataSourceImpl;
 import filo.mamdouh.kershhelper.features.dialogs.addtocalendardialog.PlanDialog;
+import filo.mamdouh.kershhelper.features.dialogs.guestdialog.GuestDialog;
 import filo.mamdouh.kershhelper.features.mainappfeatures.mealdetails.presenter.MealDetailsPressenter;
+import filo.mamdouh.kershhelper.models.Client;
 import filo.mamdouh.kershhelper.models.MealsItem;
 import filo.mamdouh.kershhelper.models.Repostiry;
 
@@ -41,6 +48,8 @@ public class MealDetailsFragment extends Fragment implements MealDetailsContract
     String mealID;
     MealDetailsPressenter pressenter;
     HomeContract.ToolBar toolBar;
+    WebView youtubeVid;
+    OnBackPressedCallback callback;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -72,6 +81,7 @@ public class MealDetailsFragment extends Fragment implements MealDetailsContract
         mealImg = binding.detalisMainImage;
         areaFlag = binding.detailsFlag;
         backBtn = binding.detailsBackBtn;
+        youtubeVid = binding.youtoubeVid;
         Bundle bundle = getArguments();
         mealID = bundle.getString("mealID");
         pressenter.onViewCreated(mealID);
@@ -80,6 +90,13 @@ public class MealDetailsFragment extends Fragment implements MealDetailsContract
         }
         else pressenter.getMealByID(mealID);
         backBtn.setOnClickListener(v -> Navigation.findNavController(view).navigateUp());
+        callback = new OnBackPressedCallback(true) {
+            @Override
+            public void handleOnBackPressed() {
+                Navigation.findNavController(view).navigateUp();
+            }
+        };
+        requireActivity().getOnBackPressedDispatcher().addCallback(callback);
 
     }
 
@@ -88,13 +105,25 @@ public class MealDetailsFragment extends Fragment implements MealDetailsContract
         mealName.setText(meal.getStrMeal());
         category.setText(meal.getStrCategory());
         instruction.setText(meal.getStrInstructions());
-        detailsIngredients.setText(meal.getIngredients().toString());
-        Glide.with(getContext()).load(meal.getStrMealThumb()).placeholder(R.drawable.ic_launcher_background).into(mealImg);
-        Glide.with(getContext()).load(Repostiry.getCOUNTERIES().get(meal.getStrArea())).placeholder(R.drawable.unknown_flag_icon).into(areaFlag);
-        saveButton.setOnClickListener(l-> pressenter.onSaveButtonClick(meal));
+        detailsIngredients.setText(meal.getMeasureAndIngredients());
+        Glide.with(requireContext()).load(meal.getStrMealThumb()).placeholder(R.drawable.ic_launcher_background).into(mealImg);
+        Glide.with(requireContext()).load(Repostiry.getCOUNTERIES().get(meal.getStrArea())).placeholder(R.drawable.unknown_flag_icon).into(areaFlag);
+        youtubeVid.setWebViewClient(new WebViewClient());
+        youtubeVid.getSettings().setJavaScriptEnabled(true);
+        youtubeVid.loadUrl(meal.getStrYoutube());
+        saveButton.setOnClickListener(l-> {
+            if (Client.getInstance(null,null).getUserName().isEmpty())
+                new GuestDialog(requireActivity()).showDialog();
+            else
+                pressenter.onSaveButtonClick(meal);
+        });
         addToCalendarBtn.setOnClickListener(v -> {
-            PlanDialog dialog = new PlanDialog(getActivity(),meal.getIdMeal(),meal.getStrMeal());
-            dialog.showDialog();
+            if (Client.getInstance(null,null).getUserName().isEmpty())
+                new GuestDialog(requireActivity()).showDialog();
+            else {
+                PlanDialog dialog = new PlanDialog(getActivity(),meal.getIdMeal(),meal.getStrMeal());
+                dialog.showDialog();
+            }
         });
         srcBtn.setOnClickListener(v -> {
             Uri uri = Uri.parse(meal.getStrSource());
@@ -121,5 +150,6 @@ public class MealDetailsFragment extends Fragment implements MealDetailsContract
         super.onDestroy();
         toolBar.updateToolBarStatus(View.VISIBLE);
         pressenter.onDestroy();
+        callback.remove();
     }
 }

@@ -11,4 +11,5 @@ public interface SavedMealsDataSource {
     Completable deleteMeal(MealsItem meal);
     Flowable<List<MealsItem>> getSavedMeals();
     Flowable<MealsItem> getMealByID(String id);
+    Completable clear();
 }

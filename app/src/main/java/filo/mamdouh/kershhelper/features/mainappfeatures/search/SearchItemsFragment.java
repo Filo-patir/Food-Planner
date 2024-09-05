@@ -45,6 +45,7 @@ public class SearchItemsFragment extends Fragment implements SearchItemContract.
     EditText searchTxt;
     ImageView backBtn;
     private LocalDateTime lastTime=LocalDateTime.now();
+    View view;
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -65,10 +66,11 @@ public class SearchItemsFragment extends Fragment implements SearchItemContract.
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
+        this.view = view;
         searchRV = binding.searchRecyclerView;
         searchTxt = binding.searchMealsEditText;
         backBtn = binding.searchBackButton;
-        adapter = new SmallCardAdapter(getContext(),this);
+        adapter = new SmallCardAdapter(requireActivity(),this);
         GridLayoutManager gridLayoutManager = new GridLayoutManager(getContext(),2);
         searchRV.setAdapter(adapter);
         searchRV.setLayoutManager(gridLayoutManager);
@@ -92,8 +94,8 @@ public class SearchItemsFragment extends Fragment implements SearchItemContract.
 
             @Override
             public void onTextChanged(CharSequence s, int start, int before, int count) {
-                Log.d("File", "afterTextChanged: " + lastTime +" ,,"+ LocalDateTime.now());
-                if(LocalDateTime.now().isAfter(lastTime.plusSeconds(2))) {
+                Log.d("Filo", "afterTextChanged: " + lastTime +" ,,"+ LocalDateTime.now());
+                if(LocalDateTime.now().isAfter(lastTime.plusSeconds(1))) {
                     lastTime = LocalDateTime.now();
                     removeList();
                     presenter.searchByArea(searchTxt.getText().toString());
@@ -125,6 +127,14 @@ public class SearchItemsFragment extends Fragment implements SearchItemContract.
 
     @Override
     public void saveItemListener(MealsItem mealsItem, Updater updater) {
+        presenter.saveItemListener(mealsItem,updater);
+    }
 
+    @Override
+    public void onItemClick(String mealID, boolean isSaved) {
+        Bundle bundle = new Bundle();
+        bundle.putString("mealID",mealID);
+        bundle.putBoolean("isSaved",isSaved);
+        Navigation.findNavController(view).navigate(R.id.action_homeScreenFragment_to_mealDetailsFragment,bundle);
     }
 }

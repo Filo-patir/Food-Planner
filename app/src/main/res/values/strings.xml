@@ -104,10 +104,11 @@
     <string name="sunday">Sunday</string>
     <string name="monday">Monday</string>
     <string name="tuesday">Tuesday</string>
-    <string name="wednessday">Wednesday</string>
+    <string name="wednesday">Wednesday</string>
     <string name="thursday">Thursday</string>
     <string name="friday">Friday</string>
     <string name="cancel">Cancel</string>
     <string name="access_denied">Access Denied</string>
     <string name="guest_dialog_msg">Enjoy the full experience! Log in to unlock this feature.</string>
+    <string name="ingredients">%d Ingredients</string>
 </resources>

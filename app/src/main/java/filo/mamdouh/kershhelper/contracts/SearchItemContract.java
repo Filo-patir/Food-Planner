@@ -11,5 +11,6 @@ public interface SearchItemContract {
 
      interface Listener {
         void saveItemListener(MealsItem mealsItem, Updater updater);
+        void onItemClick(String mealID,boolean isSaved);
     }
 }
