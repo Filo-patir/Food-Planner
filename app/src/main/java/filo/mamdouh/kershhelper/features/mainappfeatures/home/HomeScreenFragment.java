@@ -1,18 +1,17 @@
 package filo.mamdouh.kershhelper.features.mainappfeatures.home;
 
 import android.os.Bundle;
+import android.util.Log;
+import android.view.LayoutInflater;
+import android.view.View;
+import android.view.ViewGroup;
+import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 import androidx.navigation.Navigation;
 import androidx.recyclerview.widget.RecyclerView;
-
-import android.util.Log;
-import android.view.LayoutInflater;
-import android.view.View;
-import android.view.ViewGroup;
-import android.widget.Toast;
 
 import filo.mamdouh.kershhelper.R;
 import filo.mamdouh.kershhelper.contracts.HomeContract;
@@ -23,10 +22,11 @@ import filo.mamdouh.kershhelper.datastorage.local.SharedPrefrenceHandler;
 import filo.mamdouh.kershhelper.datastorage.network.RetrofitClient;
 import filo.mamdouh.kershhelper.datastorage.room.calendar.CalendarDataSourceImpl;
 import filo.mamdouh.kershhelper.datastorage.room.savedmeals.SavedMealsDataSourceImpl;
+import filo.mamdouh.kershhelper.features.communicators.OnItemClickListener;
 import filo.mamdouh.kershhelper.features.dialogs.addtocalendardialog.PlanDialog;
 import filo.mamdouh.kershhelper.features.mainappfeatures.home.presenter.HomePresenter;
-import filo.mamdouh.kershhelper.features.communicators.OnItemClickListener;
 import filo.mamdouh.kershhelper.models.CachingRepositry;
+import filo.mamdouh.kershhelper.models.Desserts;
 import filo.mamdouh.kershhelper.models.HomeFragmentRowData;
 import filo.mamdouh.kershhelper.models.MealsItem;
 import filo.mamdouh.kershhelper.models.Repostiry;
@@ -65,7 +65,7 @@ public class HomeScreenFragment extends Fragment implements HomeContract.View , 
     }
     @Override
     public void updateUI(HomeFragmentRowData item){
-        Log.d("Filo", "updateUI: " + String.valueOf(adapter == null));
+        Log.d("Filo", "updateUI: 68   " +item.getTitle() );
         adapter.setHomeFragmentRowDataList(item);
     }
 
@@ -89,8 +89,8 @@ public class HomeScreenFragment extends Fragment implements HomeContract.View , 
     }
 
     @Override
-    public void saveItemListener(String mealID, Updater updater) {
-        presenter.saveItemListener(mealID,updater);
+    public void saveItemListener(Desserts meal, Updater updater) {
+        presenter.saveItemListener(meal,updater);
     }
 
     @Override

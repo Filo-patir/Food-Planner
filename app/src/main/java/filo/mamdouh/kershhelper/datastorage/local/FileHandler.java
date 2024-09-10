@@ -19,7 +19,7 @@ import io.reactivex.rxjava3.core.Single;
 import io.reactivex.rxjava3.schedulers.Schedulers;
 
 public class FileHandler {
-    private Context context;
+    private final Context context;
     private static FileHandler instance= null;
     private FileHandler(Context context){
         this.context = context;
@@ -31,28 +31,25 @@ public class FileHandler {
     }
 
     public Observable<String> readFile(String name) {
-        return Observable.create(new ObservableOnSubscribe<String>() {
-            @Override
-            public void subscribe(@NonNull ObservableEmitter<String> emitter) throws Throwable {
-                FileInputStream fis = context.openFileInput(name);
-                BufferedReader reader = new BufferedReader(new InputStreamReader(fis));
-                try
-                {
-                    String line;
-                    while ((line = reader.readLine()) != null) {
-                        try {
-                            emitter.onNext(line); // Emit each integer line
-                        } catch (NumberFormatException e) {
-                            // Handle lines that cannot be parsed as integers
-                            emitter.onError(new Exception("Error parsing line: " + line, e));
-                        }
+        return Observable.create(emitter -> {
+            FileInputStream fis = context.openFileInput(name);
+            BufferedReader reader = new BufferedReader(new InputStreamReader(fis));
+            try
+            {
+                String line;
+                while ((line = reader.readLine()) != null) {
+                    try {
+                        emitter.onNext(line); // Emit each integer line
+                    } catch (NumberFormatException e) {
+                        // Handle lines that cannot be parsed as integers
+                        emitter.onError(new Exception("Error parsing line: " + line, e));
                     }
-                    emitter.onComplete(); // Signal completion after reading all lines
-                } catch (IOException e) {
-                    emitter.onError(new RuntimeException(e)); // Emit error if file cannot be opened
                 }
-                    reader.close();
+                emitter.onComplete(); // Signal completion after reading all lines
+            } catch (IOException e) {
+                emitter.onError(new RuntimeException(e)); // Emit error if file cannot be opened
             }
+                reader.close();
         });
     }
 

@@ -2,18 +2,22 @@ package filo.mamdouh.kershhelper.features.welcome_screen_features;
 
 
 import android.os.Bundle;
-
-import androidx.annotation.NonNull;
-import androidx.annotation.Nullable;
-import androidx.fragment.app.Fragment;
-import androidx.navigation.Navigation;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.animation.Animation;
+import android.view.animation.AnimationUtils;
 import android.widget.Button;
 import android.widget.ImageButton;
 import android.widget.TextView;
+
+import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
+import androidx.constraintlayout.widget.Group;
+import androidx.fragment.app.Fragment;
+import androidx.navigation.Navigation;
+
 import filo.mamdouh.kershhelper.HomeActivity;
 import filo.mamdouh.kershhelper.Navigator;
 import filo.mamdouh.kershhelper.R;
@@ -47,6 +51,9 @@ public class WelcomeFragment extends Fragment implements AuthContract.View{
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
+        Animation animation = AnimationUtils.loadAnimation(getContext(), R.anim.slide_in);
+        Group group = binding.group;
+        group.startAnimation(animation);
         googleLogin = binding.googlebtn;
         facebookLogin = binding.facebookbtn;
         signupBtn = binding.welcomeSignup;
@@ -83,7 +90,6 @@ public class WelcomeFragment extends Fragment implements AuthContract.View{
 
     @Override
     public void onSuccess() {
-
     }
 
 }

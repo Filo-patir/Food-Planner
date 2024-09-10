@@ -1,8 +1,6 @@
 package filo.mamdouh.kershhelper.features.mainappfeatures.mainfoodcard;
 
 import android.app.Activity;
-import android.content.Context;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.ViewGroup;
 
@@ -15,12 +13,11 @@ import java.util.ArrayList;
 import java.util.List;
 
 import filo.mamdouh.kershhelper.R;
-import filo.mamdouh.kershhelper.datastorage.caching.Desserts;
+import filo.mamdouh.kershhelper.models.Desserts;
 import filo.mamdouh.kershhelper.features.communicators.OnItemClickListener;
 import filo.mamdouh.kershhelper.features.dialogs.guestdialog.GuestDialog;
 import filo.mamdouh.kershhelper.features.mainappfeatures.home.Updater;
 import filo.mamdouh.kershhelper.models.Client;
-import filo.mamdouh.kershhelper.models.HomeFragmentRowData;
 import filo.mamdouh.kershhelper.models.MealsItem;
 import filo.mamdouh.kershhelper.models.Repostiry;
 
@@ -98,7 +95,7 @@ public class FoodCardAdapter extends RecyclerView.Adapter<FoodCardHolder> implem
                 new GuestDialog(context).showDialog();
             }
             else
-                listener.saveItemListener(item.getIdMeal(), this);
+                listener.saveItemListener(item, this);
         });
         if(item.getIsSaved()) holder.saveBtn.setImageResource(R.drawable.baseline_bookmark_24);
         else holder.saveBtn.setImageResource(R.drawable.save_icon);

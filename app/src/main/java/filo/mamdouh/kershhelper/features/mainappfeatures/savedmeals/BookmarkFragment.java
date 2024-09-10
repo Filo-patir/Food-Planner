@@ -19,6 +19,7 @@ import java.util.List;
 
 import filo.mamdouh.kershhelper.R;
 import filo.mamdouh.kershhelper.contracts.BookmarkContract;
+import filo.mamdouh.kershhelper.models.Desserts;
 import filo.mamdouh.kershhelper.datastorage.local.FileHandler;
 import filo.mamdouh.kershhelper.datastorage.local.SharedPrefrenceHandler;
 import filo.mamdouh.kershhelper.datastorage.network.RetrofitClient;
@@ -86,7 +87,7 @@ public class BookmarkFragment extends Fragment implements BookmarkContract.View 
     }
 
     @Override
-    public void saveItemListener(String mealID, Updater updater) {
+    public void saveItemListener(Desserts meal, Updater updater) {
 
     }
 

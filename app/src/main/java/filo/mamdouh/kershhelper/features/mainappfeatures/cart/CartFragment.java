@@ -1,4 +1,4 @@
-package filo.mamdouh.kershhelper.features.mainappfeatures.cartfragment;
+package filo.mamdouh.kershhelper.features.mainappfeatures.cart;
 
 import android.os.Bundle;
 

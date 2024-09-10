@@ -1,4 +1,4 @@
-package filo.mamdouh.kershhelper.features.mainappfeatures.cartfragment;
+package filo.mamdouh.kershhelper.features.mainappfeatures.cart;
 
 import android.view.LayoutInflater;
 import android.view.View;
@@ -8,7 +8,6 @@ import android.widget.TextView;
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
-import java.util.ArrayList;
 import java.util.List;
 
 import filo.mamdouh.kershhelper.R;

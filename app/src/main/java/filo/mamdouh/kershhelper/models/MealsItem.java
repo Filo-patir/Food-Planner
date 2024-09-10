@@ -1,19 +1,18 @@
 package filo.mamdouh.kershhelper.models;
 
 import android.util.Log;
-
 import androidx.annotation.NonNull;
 import androidx.room.Entity;
 import androidx.room.PrimaryKey;
-
-import com.google.gson.annotations.SerializedName;
 import java.lang.reflect.Field;
 import java.util.ArrayList;
 
+import lombok.Data;
 import lombok.Getter;
 import lombok.Setter;
 
 @Getter @Setter
+@Data
 @Entity(tableName = "meals")
 public class MealsItem {
 	@PrimaryKey @NonNull

@@ -1,8 +1,6 @@
 package filo.mamdouh.kershhelper.features.mainappfeatures.home;
 
 import android.app.Activity;
-import android.content.Context;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -17,11 +15,11 @@ import java.util.HashMap;
 import java.util.List;
 
 import filo.mamdouh.kershhelper.R;
-import filo.mamdouh.kershhelper.datastorage.caching.Desserts;
-import filo.mamdouh.kershhelper.features.mainappfeatures.smallfoodcard.SmallCardAdapter;
-import filo.mamdouh.kershhelper.models.HomeFragmentRowData;
-import filo.mamdouh.kershhelper.features.mainappfeatures.mainfoodcard.FoodCardAdapter;
 import filo.mamdouh.kershhelper.features.communicators.OnItemClickListener;
+import filo.mamdouh.kershhelper.features.mainappfeatures.mainfoodcard.FoodCardAdapter;
+import filo.mamdouh.kershhelper.features.mainappfeatures.smallfoodcard.SmallCardAdapter;
+import filo.mamdouh.kershhelper.models.Desserts;
+import filo.mamdouh.kershhelper.models.HomeFragmentRowData;
 import filo.mamdouh.kershhelper.models.MealsItem;
 
 public class BaseRecyclerViewAdapter extends RecyclerView.Adapter<BaseRecyclerViewAdapter.BaseRecyclerViewHolder> {
@@ -29,6 +27,7 @@ public class BaseRecyclerViewAdapter extends RecyclerView.Adapter<BaseRecyclerVi
     ArrayList<Desserts> desserts;
     Activity context;
     OnItemClickListener listener;
+    private int counter= 0;
     private static final ArrayList<String> keys = new ArrayList<>(List.of("Daily Inspiration","Saved Meals","Desserts","Recently Viewed","More You Might Like"));
     public BaseRecyclerViewAdapter(Activity context, OnItemClickListener listener){
         this.context = context;
@@ -38,7 +37,7 @@ public class BaseRecyclerViewAdapter extends RecyclerView.Adapter<BaseRecyclerVi
     }
 
     public void setHomeFragmentRowDataList(HomeFragmentRowData item) {
-        Log.d("TAG", "setHomeFragmentRowDataList: HERE");
+        counter++;
         if (item.getDesserts().isEmpty()) {
             homeFragmentRowDataList.put(item.getTitle(), item.getItem());
         }
@@ -54,7 +53,6 @@ public class BaseRecyclerViewAdapter extends RecyclerView.Adapter<BaseRecyclerVi
 
     @Override
     public void onBindViewHolder(@NonNull BaseRecyclerViewHolder holder, int position) {
-        Log.d("TAG", "onBindViewHolder: Bind"+position);
         RecyclerView.RecycledViewPool viewPool = new RecyclerView.RecycledViewPool();
         holder.cardRecyclerView.setRecycledViewPool(viewPool);
         if (position<4) {
@@ -81,7 +79,7 @@ public class BaseRecyclerViewAdapter extends RecyclerView.Adapter<BaseRecyclerVi
 
     @Override
     public int getItemCount() {
-        return homeFragmentRowDataList.size();
+        return counter;
     }
 
     public static class BaseRecyclerViewHolder extends RecyclerView.ViewHolder{

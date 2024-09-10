@@ -1,4 +1,4 @@
-package filo.mamdouh.kershhelper.datastorage.caching;
+package filo.mamdouh.kershhelper.models;
 
 import androidx.annotation.NonNull;
 
@@ -6,9 +6,7 @@ import io.objectbox.annotation.Entity;
 import io.objectbox.annotation.Id;
 import lombok.AllArgsConstructor;
 import lombok.Data;
-import lombok.Getter;
 import lombok.RequiredArgsConstructor;
-import lombok.Setter;
 
 @Entity
 @Data

@@ -1,10 +1,9 @@
-package filo.mamdouh.kershhelper.features.mainappfeatures.cartfragment;
+package filo.mamdouh.kershhelper.features.mainappfeatures.cart;
 
 import android.content.Context;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.TextView;
 
@@ -17,7 +16,6 @@ import java.util.ArrayList;
 import java.util.List;
 
 import filo.mamdouh.kershhelper.R;
-import filo.mamdouh.kershhelper.features.mainappfeatures.home.Updater;
 import filo.mamdouh.kershhelper.models.MealsItem;
 
 public class CartItemAdapter extends RecyclerView.Adapter<CartItemAdapter.CartItemViewHolder> {

@@ -2,6 +2,7 @@ package filo.mamdouh.kershhelper.datastorage.caching;
 
 import android.content.Context;
 
+import filo.mamdouh.kershhelper.models.MyObjectBox;
 import io.objectbox.BoxStore;
 import lombok.Getter;
 
