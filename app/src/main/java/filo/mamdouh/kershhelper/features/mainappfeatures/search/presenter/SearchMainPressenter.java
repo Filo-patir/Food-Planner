@@ -6,16 +6,16 @@ import java.util.ArrayList;
 
 import filo.mamdouh.kershhelper.contracts.SearchContract;
 import filo.mamdouh.kershhelper.models.IngredientsRoot;
-import filo.mamdouh.kershhelper.models.Repostiry;
+import filo.mamdouh.kershhelper.models.Repository;
 import io.reactivex.rxjava3.android.schedulers.AndroidSchedulers;
 import io.reactivex.rxjava3.disposables.CompositeDisposable;
 import io.reactivex.rxjava3.schedulers.Schedulers;
 
 public class SearchMainPressenter {
-    private Repostiry repo;
+    private Repository repo;
     SearchContract.View view;
     CompositeDisposable compositeDisposable;
-    public SearchMainPressenter(SearchContract.View view, Repostiry repo){
+    public SearchMainPressenter(SearchContract.View view, Repository repo){
         this.repo = repo;
         this.view = view;
         compositeDisposable = new CompositeDisposable();

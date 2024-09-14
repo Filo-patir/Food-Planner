@@ -3,24 +3,21 @@ package filo.mamdouh.kershhelper.features.mainappfeatures.mealdetails;
 import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
-
-import androidx.activity.OnBackPressedCallback;
-import androidx.annotation.NonNull;
-import androidx.annotation.Nullable;
-import androidx.fragment.app.Fragment;
-import androidx.navigation.Navigation;
-
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.webkit.WebChromeClient;
-import android.webkit.WebSettings;
 import android.webkit.WebView;
 import android.webkit.WebViewClient;
 import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
+
+import androidx.activity.OnBackPressedCallback;
+import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
+import androidx.fragment.app.Fragment;
+import androidx.navigation.Navigation;
 
 import com.bumptech.glide.Glide;
 
@@ -31,14 +28,13 @@ import filo.mamdouh.kershhelper.databinding.FragmentMealDetailsBinding;
 import filo.mamdouh.kershhelper.datastorage.local.FileHandler;
 import filo.mamdouh.kershhelper.datastorage.local.SharedPrefrenceHandler;
 import filo.mamdouh.kershhelper.datastorage.network.RetrofitClient;
-import filo.mamdouh.kershhelper.datastorage.room.calendar.CalendarDataSourceImpl;
 import filo.mamdouh.kershhelper.datastorage.room.savedmeals.SavedMealsDataSourceImpl;
 import filo.mamdouh.kershhelper.features.dialogs.addtocalendardialog.PlanDialog;
 import filo.mamdouh.kershhelper.features.dialogs.guestdialog.GuestDialog;
 import filo.mamdouh.kershhelper.features.mainappfeatures.mealdetails.presenter.MealDetailsPressenter;
 import filo.mamdouh.kershhelper.models.Client;
 import filo.mamdouh.kershhelper.models.MealsItem;
-import filo.mamdouh.kershhelper.models.Repostiry;
+import filo.mamdouh.kershhelper.models.Repository;
 
 public class MealDetailsFragment extends Fragment implements MealDetailsContract.View {
     FragmentMealDetailsBinding binding;
@@ -47,17 +43,16 @@ public class MealDetailsFragment extends Fragment implements MealDetailsContract
     ImageView mealImg,areaFlag;
     String mealID;
     MealDetailsPressenter pressenter;
-    HomeContract.ToolBar toolBar;
+    HomeContract.Activity activity;
     WebView youtubeVid;
     OnBackPressedCallback callback;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        pressenter = new MealDetailsPressenter(this, Repostiry.getInstance(FileHandler.getInstance(getContext()),
-                SavedMealsDataSourceImpl.getInstance(getContext()), CalendarDataSourceImpl.getInstance(getContext())
-                , RetrofitClient.getInstance(getContext()), SharedPrefrenceHandler.getInstance(getContext())));
-        toolBar = (HomeContract.ToolBar) getActivity();
+        pressenter = new MealDetailsPressenter(this, Repository.getInstance(FileHandler.getInstance(getContext()),
+                SavedMealsDataSourceImpl.getInstance(getContext()), RetrofitClient.getInstance(getContext()), SharedPrefrenceHandler.getInstance(getContext())));
+        activity = (HomeContract.Activity) getActivity();
     }
 
     @Override
@@ -70,7 +65,7 @@ public class MealDetailsFragment extends Fragment implements MealDetailsContract
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
-        toolBar.updateToolBarStatus(View.GONE);
+        activity.updateToolBarStatus(View.GONE);
         detailsIngredients = binding.detailsIngredients;
         category = binding.detailsCategory;
         instruction = binding.detailsInstruction;
@@ -83,9 +78,9 @@ public class MealDetailsFragment extends Fragment implements MealDetailsContract
         backBtn = binding.detailsBackBtn;
         youtubeVid = binding.youtoubeVid;
         Bundle bundle = getArguments();
-        mealID = bundle.getString("mealID");
+        mealID = bundle != null ? bundle.getString("mealID") : null;
         pressenter.onViewCreated(mealID);
-        if (bundle.getBoolean("isSaved")){
+        if (bundle != null && bundle.getBoolean("isSaved")){
             pressenter.getSavedItem(mealID);
         }
         else pressenter.getMealByID(mealID);
@@ -107,7 +102,7 @@ public class MealDetailsFragment extends Fragment implements MealDetailsContract
         instruction.setText(meal.getStrInstructions());
         detailsIngredients.setText(meal.getMeasureAndIngredients());
         Glide.with(requireContext()).load(meal.getStrMealThumb()).placeholder(R.drawable.ic_launcher_background).into(mealImg);
-        Glide.with(requireContext()).load(Repostiry.getCOUNTERIES().get(meal.getStrArea())).placeholder(R.drawable.unknown_flag_icon).into(areaFlag);
+        Glide.with(requireContext()).load(Repository.getCOUNTERIES().get(meal.getStrArea())).placeholder(R.drawable.unknown_flag_icon).into(areaFlag);
         youtubeVid.setWebViewClient(new WebViewClient());
         youtubeVid.getSettings().setJavaScriptEnabled(true);
         youtubeVid.loadUrl(meal.getStrYoutube());
@@ -121,7 +116,7 @@ public class MealDetailsFragment extends Fragment implements MealDetailsContract
             if (Client.getInstance(null,null).getUserName().isEmpty())
                 new GuestDialog(requireActivity()).showDialog();
             else {
-                PlanDialog dialog = new PlanDialog(getActivity(),meal.getIdMeal(),meal.getStrMeal());
+                PlanDialog dialog = new PlanDialog(getActivity(),meal);
                 dialog.showDialog();
             }
         });
@@ -148,7 +143,7 @@ public class MealDetailsFragment extends Fragment implements MealDetailsContract
     @Override
     public void onDestroy() {
         super.onDestroy();
-        toolBar.updateToolBarStatus(View.VISIBLE);
+        activity.updateToolBarStatus(View.VISIBLE);
         pressenter.onDestroy();
         callback.remove();
     }

@@ -1,13 +1,12 @@
 package filo.mamdouh.kershhelper.models;
 
-import android.util.Log;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
+
 import filo.mamdouh.kershhelper.contracts.NetworkContract;
 import filo.mamdouh.kershhelper.datastorage.local.FileHandler;
 import filo.mamdouh.kershhelper.datastorage.local.SharedPrefrenceHandler;
-import filo.mamdouh.kershhelper.datastorage.room.calendar.CalendarDataSource;
 import filo.mamdouh.kershhelper.datastorage.room.savedmeals.SavedMealsDataSource;
 import io.reactivex.rxjava3.core.Completable;
 import io.reactivex.rxjava3.core.Flowable;
@@ -16,23 +15,22 @@ import io.reactivex.rxjava3.core.Single;
 import lombok.Getter;
 import lombok.Setter;
 
-public class Repostiry {
+public class Repository {
     @Getter
     @Setter
     private User user;
     private final NetworkContract api;
     private final FileHandler fileHandler;
     private final SavedMealsDataSource savedMealsDataSource;
-    private final CalendarDataSource calendarDataSource;
     private final SharedPrefrenceHandler prefs;
     @Getter
-    private Flowable<List<MealsItem>> savedMeals;
+    private final Flowable<List<MealsItem>> savedMeals;
     @Getter
     private static final HashMap<String, String> COUNTERIES = new HashMap<>();
     private static final ArrayList<String> AREA = new ArrayList<>(List.of("american", "british", "canadian", "chinese",
             "croatian", "dutch", "egyptian", "filipino", "french", "greek", "irish", "italian", "jamaican", "japanese", "kenyan",
             "malaysian", "mexican", "moroccan", "polish", "portuguese", "russian", "spanish", "thai", "tunisian", "turkish", "ukrainian", "vietnamese"));
-    private static Repostiry repostiry = null;
+    private static Repository repository = null;
 
     static {
         COUNTERIES.put("American", "https://www.worldometers.info/img/flags/us-flag.gif");
@@ -65,135 +63,99 @@ public class Repostiry {
         COUNTERIES.put("Vietnamese", "https://www.worldometers.info/img/flags/vm-flag.gif");
     }
 
-    private Repostiry(FileHandler fileHandler, SavedMealsDataSource savedMealsDataSource, CalendarDataSource calendarDataSource, NetworkContract api, SharedPrefrenceHandler prefs) {
+    private Repository(FileHandler fileHandler, SavedMealsDataSource savedMealsDataSource, NetworkContract api, SharedPrefrenceHandler prefs) {
         this.prefs = prefs;
         this.api = api;
         this.fileHandler = fileHandler;
         this.savedMealsDataSource = savedMealsDataSource;
-        this.calendarDataSource = calendarDataSource;
         savedMeals = savedMealsDataSource.getSavedMeals();
     }
 
     public static Observable<String> getAREA() {
         return Observable.fromIterable(AREA);
     }
-
-    public static Repostiry getInstance(FileHandler fileHandler, SavedMealsDataSource savedMealsDataSource, CalendarDataSource calendarDataSource,  NetworkContract api, SharedPrefrenceHandler prefs) {
-        if (repostiry == null)
-            repostiry = new Repostiry(fileHandler, savedMealsDataSource, calendarDataSource, api, prefs);
-        return repostiry;
+    public static Repository getInstance(FileHandler fileHandler, SavedMealsDataSource savedMealsDataSource, NetworkContract api, SharedPrefrenceHandler prefs) {
+        if (repository == null)
+            repository = new Repository(fileHandler, savedMealsDataSource , api, prefs);
+        return repository;
     }
 
-    public Single<ArrayList<MealsItem>> getDailyInspiration() {
 
-        return api.getDailyInspiration();
-    }
-
+    // * FILE METHODS
     public Observable<String> getLocalDailyInspiration() {
-        Log.d("Filo", "getLocalDailyInspiration: AAAAAAAy");
         return fileHandler.readFile("Daily_Inspiration");
     }
-
     public Observable<Object> saveLocalDailyInspiration(ArrayList<String> data) {
-        Log.d("Filo", "saveLocalDailyInspiration: 96");
-        Log.d("Filo", "saveLocalDailyInspiration: " + data);
         return fileHandler.writeFile("Daily_Inspiration", data);
     }
-
     public Observable<String> removeFile(String name) {
         return fileHandler.removeFile(name);
     }
 
+
+    //* API METHODS
+    public Single<ArrayList<MealsItem>> getDailyInspiration() {
+
+        return api.getDailyInspiration();
+    }
+    public Observable<List<MealsItem>> getDesserts() {
+        return api.getMealByCategory("Dessert");
+    }
+    public Single<ArrayList<MealsItem>> getMore() {
+        return api.getMore();
+    }
+    public Observable<MealsItem> getMealByID(String ids) {
+        return api.getMealByID(ids);
+    }
+    public Observable<List<IngredientsRoot.Ingredient>> getIngredients() {
+        return api.getIngredients();
+    }
+    public Observable<List<Categories.Category>> getCategories() {
+        return api.getCategories();
+    }
+    public Observable<MealsItem> searchByIngredients(String name) {
+        return api.getMealByIngredient(name);
+    }
+    public Observable<MealsItem> searchByMeal(String name) {
+        return api.getMealByName(name);
+    }
+    public Observable<Object> saveRecentlyViewed(String id) {
+        return fileHandler.writeFile("Recently_Viewed", id);
+    }
+    public Observable<String> getRecentlyViewed() {
+        return fileHandler.readFile("Recently_Viewed");
+    }
+    public Observable<MealsItem> searchByCategory(String category) {
+        return api.searchMealByCategory(category);
+    }
+    public Observable<MealsItem> searchByArea(String area) {
+        return api.getMealByArea(area);
+    }
+
+
+    //* Room Methods
+    public Flowable<MealsItem> getSavedMealByID(String id) {
+        return savedMealsDataSource.getMealByID(id);
+    }
+    public Flowable<MealsItem> getCalendar() {
+        return savedMealsDataSource.getCalendars();
+    }
     public Completable saveMeal(MealsItem meal) {
         return savedMealsDataSource.insertMeal(meal);
     }
 
 
-    public Observable<List<MealsItem>> getDesserts() {
-        return api.getMealByCategory("Dessert");
-    }
-
-    public Single<ArrayList<MealsItem>> getRandomMeals() {
-        return api.getRanomMeals();
-    }
-
-    public Single<ArrayList<MealsItem>> getMore() {
-        return api.getMore();
-    }
-
-    public Observable<String> recentlyViewed() {
-        return fileHandler.readFile("Recently_Viewed");
-    }
-
-    public Observable<MealsItem> getMealByID(String ids) {
-        return api.getMealByID(ids);
-    }
-
-    public Observable<List<IngredientsRoot.Ingredient>> getIngredients() {
-        return api.getIngredients();
-    }
-
-    public Observable<List<Categories.Category>> getCategories() {
-        return api.getCategories();
-    }
-
-    public Observable<MealsItem> searchByIngredients(String name) {
-        return api.getMealByIngredient(name);
-    }
-
-    public Observable<MealsItem> searchByMeal(String name) {
-        return api.getMealByName(name);
-    }
-
-    public Completable addToCalendar(Calendar calendar) {
-        return calendarDataSource.insertMeal(calendar);
-    }
-
-    public Flowable<List<Boolean>> getMealPlan(String id) {
-        return calendarDataSource.getMealPlan(id);
-    }
-
-    public Flowable<MealsItem> getSavedMealByID(String id) {
-        return savedMealsDataSource.getMealByID(id);
-    }
-
-    public Observable<Object> saveRecentlyViewed(String id) {
-        return fileHandler.writeFile("Recently_Viewed", id);
-    }
-
-    public Observable<String> getRecentlyViewed() {
-        return fileHandler.readFile("Recently_Viewed");
-    }
-
-    public Flowable<Calendar> getCalendar() {
-        return calendarDataSource.getCalendars();
-    }
-
-    public Flowable<Calendar> getCalendarByITD(String id) {
-        return calendarDataSource.getCalendarByID(id);
-    }
-
-    public Observable<MealsItem> searchByCategory(String category) {
-        return api.searchMealByCategory(category);
-    }
-
-    public Observable<MealsItem> searchByArea(String area) {
-        return api.getMealByArea(area);
-    }
-
+    //* Login Methods
     public Observable<String> getLoginStatus() {
         return prefs.get("uid");
     }
-
     public void saveLogin(String uid) {
         prefs.save("uid", uid);
     }
-
     public Observable<Completable> logout() {
         return Observable.create(emitter ->{
                         emitter.onNext(prefs.clear());
                         emitter.onNext(savedMealsDataSource.clear());
-                        emitter.onNext(calendarDataSource.clear());
                         emitter.onComplete();
                 }
         );

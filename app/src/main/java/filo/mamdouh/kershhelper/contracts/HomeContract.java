@@ -1,7 +1,5 @@
 package filo.mamdouh.kershhelper.contracts;
 
-import java.util.List;
-
 import filo.mamdouh.kershhelper.models.HomeFragmentRowData;
 
 public interface HomeContract {
@@ -9,8 +7,9 @@ public interface HomeContract {
         void updateUI(HomeFragmentRowData item);
         void onSave(String toast);
     }
-    interface ToolBar{
+    interface Activity {
         void updateSavedNumberI(int n);
         void updateToolBarStatus(int n);
+        void showToast(String text);
     }
 }

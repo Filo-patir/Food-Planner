@@ -18,22 +18,23 @@ import java.util.Objects;
 import filo.mamdouh.kershhelper.R;
 import filo.mamdouh.kershhelper.contracts.WeekSetter;
 import filo.mamdouh.kershhelper.features.communicators.Planner;
+import filo.mamdouh.kershhelper.models.DaysOfWeek;
+import filo.mamdouh.kershhelper.models.MealsItem;
 
 public class PlanDialog implements WeekSetter {
     private final Activity activity;
     private final Planner planner;
     private AlertDialog alertDialog;
     private CheckBox saturdayCB,sundayCB,mondayCB,tuesdayCB,wednesdayCB,thursdayCB,fridayCB;
-    private final String mealId,mealName;
+    private final MealsItem item;
 
-
-    public PlanDialog(Activity activity,String mealId,String mealName){
+    public PlanDialog(Activity activity,MealsItem item){
         this.activity = activity;
         planner = (Planner) activity;
-        this.mealId = mealId;
-        this.mealName = mealName;
-        planner.getSavedWeek(mealId,this);
+        this.item = item;
+        planner.getSavedWeek(item.getIdMeal(),this);
     }
+
     public void showDialog()
     {
         AlertDialog.Builder builder = new AlertDialog.Builder(activity);
@@ -53,55 +54,57 @@ public class PlanDialog implements WeekSetter {
         thursdayCB = view.findViewById(R.id.thursdayCB);
         fridayCB = view.findViewById(R.id.fridayCB);
         TextView mealNameView = view.findViewById(R.id.dialogMealName);
-        mealNameView.setText(mealName);
+        mealNameView.setText(item.getStrMeal());
 
         confirmButton.setOnClickListener(v -> {
-            ArrayList<String> data = getData();
-            if (isAllNonNull(data))
-                planner.showToast("Please Select a Day");
-            else {
-                planner.addToCalendar(mealId, data);
-                planner.showToast("Added Successfuly");
-                alertDialog.dismiss();
-            }
+            ArrayList<DaysOfWeek> data = getData();
+            planner.addToCalendar(item, data);
+            alertDialog.dismiss();
         });
         cancelButton.setOnClickListener(v -> alertDialog.dismiss());
 
     }
 
-    private ArrayList<String> getData(){
-        return new ArrayList<>(List.of(
-                saturdayCB.isChecked() ? "Saturday" : "",
-                sundayCB.isChecked() ? "Sunday" : "",
-                mondayCB.isChecked() ? "Monday" : "",
-                tuesdayCB.isChecked() ? "Tuesday" : "",
-                wednesdayCB.isChecked() ? "Wednesday" : "",
-                thursdayCB.isChecked() ? "Thursday" : "",
-                fridayCB.isChecked() ? "Friday" : ""
-        ));
+    private ArrayList<DaysOfWeek> getData(){
+        ArrayList<DaysOfWeek> days = new ArrayList<>();
+        if (saturdayCB.isChecked())
+            days.add(DaysOfWeek.SATURDAY);
+        if (sundayCB.isChecked())
+            days.add(DaysOfWeek.SUNDAY);
+        if (mondayCB.isChecked())
+            days.add(DaysOfWeek.MONDAY);
+        if (tuesdayCB.isChecked())
+            days.add(DaysOfWeek.TUESDAY);
+        if (wednesdayCB.isChecked())
+            days.add(DaysOfWeek.WEDNESDAY);
+        if (thursdayCB.isChecked())
+            days.add(DaysOfWeek.THURSDAY);
+        if (fridayCB.isChecked())
+            days.add(DaysOfWeek.FRIDAY);
+        Log.d("Filo", "getData: " + days);
+        return days;
     }
 
     @Override
-    public void setData(List<Boolean> savedWeek){
-        Log.d("Filo", "setData: "+savedWeek);
-         saturdayCB.setChecked(savedWeek.get(0));
-         sundayCB.setChecked(savedWeek.get(1));
-         mondayCB.setChecked(savedWeek.get(2));
-         tuesdayCB.setChecked(savedWeek.get(3));
-         wednesdayCB.setChecked(savedWeek.get(4));
-         thursdayCB.setChecked(savedWeek.get(5));
-         fridayCB.setChecked(savedWeek.get(6));
-    }
-
-    private boolean isAllNonNull(List<String> list) {
-        Log.d("Filo", "isAllNonNull: ");
-        for (String element : list) {
-            Log.d("Filo", "isAllNonNull: "+element);
-            if (!element.isEmpty()) {
-                return false;
+    public void setData(List<DaysOfWeek> savedWeek){
+        for(DaysOfWeek day : savedWeek){
+            switch (day){
+                case SATURDAY:
+                    saturdayCB.setChecked(true);
+                    break;
+                case SUNDAY:
+                    sundayCB.setChecked(true);
+                    break;
+                case MONDAY:
+                    mondayCB.setChecked(true);
+                    break;
+                case TUESDAY:
+                    tuesdayCB.setChecked(true);
+                    break;
+                case WEDNESDAY:
+                    wednesdayCB.setChecked(true);
             }
         }
-        return true;
     }
 }
 

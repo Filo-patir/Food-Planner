@@ -1,7 +1,6 @@
 package filo.mamdouh.kershhelper.features.mainappfeatures.calendar;
 
 import android.content.Context;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -10,49 +9,77 @@ import android.widget.TextView;
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
 import filo.mamdouh.kershhelper.R;
 import filo.mamdouh.kershhelper.contracts.CalendarContract;
+import filo.mamdouh.kershhelper.models.DaysOfWeek;
 import filo.mamdouh.kershhelper.models.MealsItem;
 
 public class BaseCalendarAdapter extends RecyclerView.Adapter<BaseCalendarAdapter.BaseCalendarHolder> {
-    public static final List<String> KEYS = List.of("Saturday","Sunday","Monday","Tuesday","Wednesday","Thursday","Friday");
-    Map<String, List<MealsItem>> calendarRowArrayList;
-    private Context context;
-    private CalendarContract.Listner listener;
+    Map<DaysOfWeek, List<MealsItem>> calendarRowArrayList;
+    private final Context context;
+    private final CalendarContract.Listener listener;
     ChildCalendarAdapter adapter;
-    public BaseCalendarAdapter( Context context, CalendarContract.Listner listener) {
+    public BaseCalendarAdapter( Context context, CalendarContract.Listener listener) {
         this.calendarRowArrayList = new HashMap<>();
         this.context = context;
         this.listener = listener;
     }
-    public void setCalendarRowArrayList(String key , List<MealsItem> item){
-        calendarRowArrayList.put(key,item);
+    public void setCalendarRowArrayList(DaysOfWeek key , MealsItem item){
+        calendarRowArrayList.computeIfAbsent(key, k -> new ArrayList<>());
+        calendarRowArrayList.get(key).add(item);
         notifyDataSetChanged();
     }
     @NonNull
     @Override
     public BaseCalendarHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
-        return new BaseCalendarHolder(LayoutInflater.from(parent.getContext()).inflate(R.layout.calendar_row_item,parent,false));
+        return new BaseCalendarHolder(LayoutInflater.from(parent.getContext()).inflate(R.layout.calendar_row_item, parent, false));
     }
 
     @Override
     public void onBindViewHolder(@NonNull BaseCalendarHolder holder, int position) {
-        Log.d("Filo", "onBindViewHolder: "+calendarRowArrayList.get(position));
-            holder.title.setText(KEYS.get(position));
-            adapter = new ChildCalendarAdapter(calendarRowArrayList.get(KEYS.get(position)),KEYS.get(position),context,listener);
-            holder.childRecyclerView.setAdapter(adapter);
+        switch (position){
+            case 0:
+                setDay(holder,DaysOfWeek.SUNDAY);
+                break;
+            case 1:
+                setDay(holder,DaysOfWeek.MONDAY);
+                break;
+            case 2:
+                setDay(holder,DaysOfWeek.TUESDAY);
+                break;
+            case 3:
+                setDay(holder,DaysOfWeek.WEDNESDAY);
+                break;
+                case 4:
+                setDay(holder,DaysOfWeek.THURSDAY);
+                break;
+                case 5:
+                setDay(holder,DaysOfWeek.FRIDAY);
+                break;
+                case 6:
+                setDay(holder,DaysOfWeek.SATURDAY);
+                break;
+                default:
+                break;
+        }
+    }
+    private void setDay(BaseCalendarHolder holder, DaysOfWeek days){
+        holder.title.setText(days.toString());
+        adapter = new ChildCalendarAdapter(calendarRowArrayList.get(days),days,context,listener);
+        holder.childRecyclerView.setAdapter(adapter);
     }
 
     @Override
     public int getItemCount() {
-        return calendarRowArrayList.size();
+        return 7;
     }
 
-    public class BaseCalendarHolder extends RecyclerView.ViewHolder {
+    public static class BaseCalendarHolder extends RecyclerView.ViewHolder {
         TextView title;
         RecyclerView childRecyclerView;
         public BaseCalendarHolder(@NonNull View itemView) {

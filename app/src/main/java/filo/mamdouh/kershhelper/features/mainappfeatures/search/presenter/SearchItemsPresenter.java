@@ -6,18 +6,16 @@ import android.util.Log;
 import filo.mamdouh.kershhelper.contracts.SearchItemContract;
 import filo.mamdouh.kershhelper.features.mainappfeatures.home.Updater;
 import filo.mamdouh.kershhelper.models.MealsItem;
-import filo.mamdouh.kershhelper.models.Repostiry;
+import filo.mamdouh.kershhelper.models.Repository;
 import io.reactivex.rxjava3.android.schedulers.AndroidSchedulers;
-import io.reactivex.rxjava3.core.Completable;
-import io.reactivex.rxjava3.core.Observable;
 import io.reactivex.rxjava3.disposables.CompositeDisposable;
 import io.reactivex.rxjava3.schedulers.Schedulers;
 
 public class SearchItemsPresenter {
-    private Repostiry repo;
+    private Repository repo;
     SearchItemContract.View view;
     CompositeDisposable compositeDisposable;
-    public SearchItemsPresenter(SearchItemContract.View view, Repostiry repo){
+    public SearchItemsPresenter(SearchItemContract.View view, Repository repo){
         this.repo = repo;
         this.view = view;
         compositeDisposable = new CompositeDisposable();

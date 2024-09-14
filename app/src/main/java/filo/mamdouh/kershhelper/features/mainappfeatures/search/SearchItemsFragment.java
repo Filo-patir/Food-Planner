@@ -1,14 +1,6 @@
 package filo.mamdouh.kershhelper.features.mainappfeatures.search;
 
 import android.os.Bundle;
-
-import androidx.annotation.NonNull;
-import androidx.annotation.Nullable;
-import androidx.fragment.app.Fragment;
-import androidx.navigation.Navigation;
-import androidx.recyclerview.widget.GridLayoutManager;
-import androidx.recyclerview.widget.RecyclerView;
-
 import android.text.Editable;
 import android.text.TextWatcher;
 import android.util.Log;
@@ -19,6 +11,13 @@ import android.view.inputmethod.InputMethodManager;
 import android.widget.EditText;
 import android.widget.ImageView;
 
+import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
+import androidx.fragment.app.Fragment;
+import androidx.navigation.Navigation;
+import androidx.recyclerview.widget.GridLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
+
 import java.time.LocalDateTime;
 
 import filo.mamdouh.kershhelper.R;
@@ -28,16 +27,15 @@ import filo.mamdouh.kershhelper.databinding.FragmentSearchItemsBinding;
 import filo.mamdouh.kershhelper.datastorage.local.FileHandler;
 import filo.mamdouh.kershhelper.datastorage.local.SharedPrefrenceHandler;
 import filo.mamdouh.kershhelper.datastorage.network.RetrofitClient;
-import filo.mamdouh.kershhelper.datastorage.room.calendar.CalendarDataSourceImpl;
 import filo.mamdouh.kershhelper.datastorage.room.savedmeals.SavedMealsDataSourceImpl;
 import filo.mamdouh.kershhelper.features.mainappfeatures.home.Updater;
 import filo.mamdouh.kershhelper.features.mainappfeatures.search.presenter.SearchItemsPresenter;
 import filo.mamdouh.kershhelper.features.mainappfeatures.smallfoodcard.SmallCardAdapter;
 import filo.mamdouh.kershhelper.models.MealsItem;
-import filo.mamdouh.kershhelper.models.Repostiry;
+import filo.mamdouh.kershhelper.models.Repository;
 
 public class SearchItemsFragment extends Fragment implements SearchItemContract.View , SearchItemContract.Listener {
-    HomeContract.ToolBar toolBar;
+    HomeContract.Activity activity;
     RecyclerView searchRV;
     SmallCardAdapter adapter;
     FragmentSearchItemsBinding binding;
@@ -49,11 +47,10 @@ public class SearchItemsFragment extends Fragment implements SearchItemContract.
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        presenter = new SearchItemsPresenter(this, Repostiry.getInstance(FileHandler.getInstance(getContext()),
-                SavedMealsDataSourceImpl.getInstance(getContext()), CalendarDataSourceImpl.getInstance(getContext())
-                , RetrofitClient.getInstance(getContext()), SharedPrefrenceHandler.getInstance(getContext())));
-        toolBar = (HomeContract.ToolBar) getActivity();
-        toolBar.updateToolBarStatus(View.GONE);
+        presenter = new SearchItemsPresenter(this, Repository.getInstance(FileHandler.getInstance(getContext()),
+                SavedMealsDataSourceImpl.getInstance(getContext()), RetrofitClient.getInstance(getContext()), SharedPrefrenceHandler.getInstance(getContext())));
+        activity = (HomeContract.Activity) getActivity();
+        activity.updateToolBarStatus(View.GONE);
     }
 
     @Override
@@ -112,7 +109,7 @@ public class SearchItemsFragment extends Fragment implements SearchItemContract.
     @Override
     public void onDestroy() {
         super.onDestroy();
-        toolBar.updateToolBarStatus(View.VISIBLE);
+        activity.updateToolBarStatus(View.VISIBLE);
     }
 
     @Override

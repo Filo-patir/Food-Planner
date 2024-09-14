@@ -29,15 +29,16 @@ import filo.mamdouh.kershhelper.contracts.WeekSetter;
 import filo.mamdouh.kershhelper.datastorage.local.FileHandler;
 import filo.mamdouh.kershhelper.datastorage.local.SharedPrefrenceHandler;
 import filo.mamdouh.kershhelper.datastorage.network.RetrofitClient;
-import filo.mamdouh.kershhelper.datastorage.room.calendar.CalendarDataSourceImpl;
 import filo.mamdouh.kershhelper.datastorage.room.savedmeals.SavedMealsDataSourceImpl;
 import filo.mamdouh.kershhelper.features.communicators.Planner;
 import filo.mamdouh.kershhelper.features.dialogs.guestdialog.GuestDialog;
 import filo.mamdouh.kershhelper.models.Client;
-import filo.mamdouh.kershhelper.models.Repostiry;
+import filo.mamdouh.kershhelper.models.DaysOfWeek;
+import filo.mamdouh.kershhelper.models.MealsItem;
+import filo.mamdouh.kershhelper.models.Repository;
 import filo.mamdouh.kershhelper.presenters.HomeActivityPresenter;
 
-public class HomeActivity extends AppCompatActivity implements HomeContract.ToolBar , Planner {
+public class HomeActivity extends AppCompatActivity implements HomeContract.Activity, Planner {
     private ImageButton drawer;
     private Button bookMarkBtn;
     private DrawerLayout mDrawerLayout;
@@ -49,10 +50,10 @@ public class HomeActivity extends AppCompatActivity implements HomeContract.Tool
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_home);
-        presenter = new HomeActivityPresenter(this, Repostiry.getInstance(FileHandler.getInstance(this),
-                SavedMealsDataSourceImpl.getInstance(this), CalendarDataSourceImpl.getInstance(this)
+        presenter = new HomeActivityPresenter(this, Repository.getInstance(FileHandler.getInstance(this),
+                SavedMealsDataSourceImpl.getInstance(this)
                 , RetrofitClient.getInstance(this), SharedPrefrenceHandler.getInstance(this)));
-        presenter.getSavedIems();
+        presenter.getSavedItems();
         navigationView = findViewById(R.id.bottomNavigationView);
         mDrawerLayout =findViewById(R.id.HomeActivityLayout);
         drawer = findViewById(R.id.profileButton);
@@ -96,8 +97,8 @@ public class HomeActivity extends AppCompatActivity implements HomeContract.Tool
     }
 
     @Override
-    public void addToCalendar(String id, ArrayList<String> data) {
-        presenter.addToCalendar(id,data);
+    public void addToCalendar(MealsItem item, ArrayList<DaysOfWeek> data) {
+        presenter.addToCalendar(item,data);
 
     }
 

@@ -2,6 +2,8 @@ package filo.mamdouh.kershhelper.contracts;
 
 import java.util.List;
 
+import filo.mamdouh.kershhelper.models.DaysOfWeek;
+
 public interface WeekSetter {
-    public void setData(List<Boolean> week);
+    void setData(List<DaysOfWeek> week);
 }

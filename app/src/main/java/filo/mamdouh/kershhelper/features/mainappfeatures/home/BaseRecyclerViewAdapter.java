@@ -27,7 +27,7 @@ public class BaseRecyclerViewAdapter extends RecyclerView.Adapter<BaseRecyclerVi
     ArrayList<Desserts> desserts;
     Activity context;
     OnItemClickListener listener;
-    private int counter= 0;
+    private int size = 0;
     private static final ArrayList<String> keys = new ArrayList<>(List.of("Daily Inspiration","Saved Meals","Desserts","Recently Viewed","More You Might Like"));
     public BaseRecyclerViewAdapter(Activity context, OnItemClickListener listener){
         this.context = context;
@@ -37,11 +37,11 @@ public class BaseRecyclerViewAdapter extends RecyclerView.Adapter<BaseRecyclerVi
     }
 
     public void setHomeFragmentRowDataList(HomeFragmentRowData item) {
-        counter++;
         if (item.getDesserts().isEmpty()) {
             homeFragmentRowDataList.put(item.getTitle(), item.getItem());
         }
         else desserts = item.getDesserts();
+        size++;
         notifyDataSetChanged();
     }
 
@@ -79,7 +79,7 @@ public class BaseRecyclerViewAdapter extends RecyclerView.Adapter<BaseRecyclerVi
 
     @Override
     public int getItemCount() {
-        return counter;
+        return size;
     }
 
     public static class BaseRecyclerViewHolder extends RecyclerView.ViewHolder{

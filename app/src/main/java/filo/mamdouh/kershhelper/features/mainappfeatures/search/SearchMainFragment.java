@@ -1,6 +1,12 @@
 package filo.mamdouh.kershhelper.features.mainappfeatures.search;
 
 import android.os.Bundle;
+import android.util.Log;
+import android.view.LayoutInflater;
+import android.view.View;
+import android.view.ViewGroup;
+import android.widget.Button;
+import android.widget.TextView;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
@@ -8,13 +14,6 @@ import androidx.fragment.app.Fragment;
 import androidx.navigation.Navigation;
 import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
-
-import android.util.Log;
-import android.view.LayoutInflater;
-import android.view.View;
-import android.view.ViewGroup;
-import android.widget.Button;
-import android.widget.TextView;
 
 import java.util.List;
 
@@ -24,12 +23,11 @@ import filo.mamdouh.kershhelper.databinding.FragmentSearchMainBinding;
 import filo.mamdouh.kershhelper.datastorage.local.FileHandler;
 import filo.mamdouh.kershhelper.datastorage.local.SharedPrefrenceHandler;
 import filo.mamdouh.kershhelper.datastorage.network.RetrofitClient;
-import filo.mamdouh.kershhelper.datastorage.room.calendar.CalendarDataSourceImpl;
 import filo.mamdouh.kershhelper.datastorage.room.savedmeals.SavedMealsDataSourceImpl;
 import filo.mamdouh.kershhelper.features.mainappfeatures.search.presenter.SearchMainPressenter;
 import filo.mamdouh.kershhelper.models.Categories;
 import filo.mamdouh.kershhelper.models.IngredientsRoot;
-import filo.mamdouh.kershhelper.models.Repostiry;
+import filo.mamdouh.kershhelper.models.Repository;
 
 public class SearchMainFragment extends Fragment implements SearchContract.View,SearchContract.Listener {
     Button searchBtn;
@@ -43,9 +41,8 @@ public class SearchMainFragment extends Fragment implements SearchContract.View,
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        searchMainPressenter = new SearchMainPressenter(this, Repostiry.getInstance(FileHandler.getInstance(getContext()),
-                SavedMealsDataSourceImpl.getInstance(getContext()), CalendarDataSourceImpl.getInstance(getContext())
-                , RetrofitClient.getInstance(getContext()), SharedPrefrenceHandler.getInstance(getContext())));
+        searchMainPressenter = new SearchMainPressenter(this, Repository.getInstance(FileHandler.getInstance(getContext()),
+                SavedMealsDataSourceImpl.getInstance(getContext()), RetrofitClient.getInstance(getContext()), SharedPrefrenceHandler.getInstance(getContext())));
         Log.d("TAG", "onCreate: Search");
     }
 

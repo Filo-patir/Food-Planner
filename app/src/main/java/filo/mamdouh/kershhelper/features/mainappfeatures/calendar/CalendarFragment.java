@@ -1,16 +1,15 @@
 package filo.mamdouh.kershhelper.features.mainappfeatures.calendar;
 
 import android.os.Bundle;
+import android.util.Log;
+import android.view.LayoutInflater;
+import android.view.View;
+import android.view.ViewGroup;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.RecyclerView;
-
-import android.util.Log;
-import android.view.LayoutInflater;
-import android.view.View;
-import android.view.ViewGroup;
 
 import java.util.ArrayList;
 
@@ -19,13 +18,13 @@ import filo.mamdouh.kershhelper.contracts.CalendarContract;
 import filo.mamdouh.kershhelper.datastorage.local.FileHandler;
 import filo.mamdouh.kershhelper.datastorage.local.SharedPrefrenceHandler;
 import filo.mamdouh.kershhelper.datastorage.network.RetrofitClient;
-import filo.mamdouh.kershhelper.datastorage.room.calendar.CalendarDataSourceImpl;
 import filo.mamdouh.kershhelper.datastorage.room.savedmeals.SavedMealsDataSourceImpl;
 import filo.mamdouh.kershhelper.features.mainappfeatures.calendar.presenter.CalendarPresenter;
+import filo.mamdouh.kershhelper.models.DaysOfWeek;
 import filo.mamdouh.kershhelper.models.MealsItem;
-import filo.mamdouh.kershhelper.models.Repostiry;
+import filo.mamdouh.kershhelper.models.Repository;
 
-public class CalendarFragment extends Fragment implements CalendarContract.View , CalendarContract.Listner {
+public class CalendarFragment extends Fragment implements CalendarContract.View , CalendarContract.Listener {
     CalendarPresenter presenter;
     RecyclerView recyclerView;
     BaseCalendarAdapter adapter;
@@ -33,9 +32,8 @@ public class CalendarFragment extends Fragment implements CalendarContract.View 
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         Log.d("TAG", "onCreate: Calendar");
-        presenter = new CalendarPresenter(Repostiry.getInstance(FileHandler.getInstance(getContext()),
-                SavedMealsDataSourceImpl.getInstance(getContext()), CalendarDataSourceImpl.getInstance(getContext())
-                , RetrofitClient.getInstance(getContext()), SharedPrefrenceHandler.getInstance(getContext())),this);
+        presenter = new CalendarPresenter(Repository.getInstance(FileHandler.getInstance(getContext()),
+                SavedMealsDataSourceImpl.getInstance(getContext()), RetrofitClient.getInstance(getContext()), SharedPrefrenceHandler.getInstance(getContext())),this);
     }
 
     @Override
@@ -55,7 +53,7 @@ public class CalendarFragment extends Fragment implements CalendarContract.View 
     }
 
     @Override
-    public void updateUI(String key, ArrayList<MealsItem> item) {
+    public void updateUI(DaysOfWeek key, MealsItem item) {
         adapter.setCalendarRowArrayList(key,item);
     }
 
@@ -65,7 +63,7 @@ public class CalendarFragment extends Fragment implements CalendarContract.View 
     }
 
     @Override
-    public void removeItemListener(String day,MealsItem mealsItem) {
+    public void removeItemListener(DaysOfWeek day, MealsItem mealsItem) {
         presenter.removeItem(day,mealsItem);
     }
 }

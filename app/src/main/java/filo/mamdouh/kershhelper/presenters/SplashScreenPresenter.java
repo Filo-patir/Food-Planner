@@ -9,7 +9,7 @@ import filo.mamdouh.kershhelper.WelcomeActivity;
 import filo.mamdouh.kershhelper.contracts.SplashScreenContract;
 import filo.mamdouh.kershhelper.logic.auth.Authentication;
 import filo.mamdouh.kershhelper.models.Client;
-import filo.mamdouh.kershhelper.models.Repostiry;
+import filo.mamdouh.kershhelper.models.Repository;
 import filo.mamdouh.kershhelper.models.User;
 import io.reactivex.rxjava3.android.schedulers.AndroidSchedulers;
 import io.reactivex.rxjava3.core.Observable;
@@ -17,11 +17,11 @@ import io.reactivex.rxjava3.disposables.CompositeDisposable;
 import io.reactivex.rxjava3.schedulers.Schedulers;
 
 public class SplashScreenPresenter implements SplashScreenContract.Presenter{
-    private final Repostiry repo;
+    private final Repository repo;
     private final SplashScreenContract.View view;
     Authentication auth;
     CompositeDisposable compositeDisposable;
-    public SplashScreenPresenter(SplashScreenContract.View view ,Repostiry repo)
+    public SplashScreenPresenter(SplashScreenContract.View view , Repository repo)
     {
         Log.d("Filo", "SplashScreenPresenter: A");
         this.view = view;

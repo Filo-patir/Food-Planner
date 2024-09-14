@@ -12,9 +12,8 @@ import filo.mamdouh.kershhelper.contracts.SplashScreenContract;
 import filo.mamdouh.kershhelper.datastorage.local.FileHandler;
 import filo.mamdouh.kershhelper.datastorage.local.SharedPrefrenceHandler;
 import filo.mamdouh.kershhelper.datastorage.network.RetrofitClient;
-import filo.mamdouh.kershhelper.datastorage.room.calendar.CalendarDataSourceImpl;
 import filo.mamdouh.kershhelper.datastorage.room.savedmeals.SavedMealsDataSourceImpl;
-import filo.mamdouh.kershhelper.models.Repostiry;
+import filo.mamdouh.kershhelper.models.Repository;
 import filo.mamdouh.kershhelper.presenters.SplashScreenPresenter;
 
 public class MainActivity extends AppCompatActivity implements SplashScreenContract.View {
@@ -27,9 +26,8 @@ public class MainActivity extends AppCompatActivity implements SplashScreenContr
         window.setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN, WindowManager.LayoutParams.FLAG_FULLSCREEN);
         window.getDecorView().setSystemUiVisibility(View.SYSTEM_UI_FLAG_LAYOUT_STABLE | View.SYSTEM_UI_FLAG_LAYOUT_FULLSCREEN  | View.SYSTEM_UI_FLAG_FULLSCREEN);
         setContentView(R.layout.splash_screen);
-        presenter = new SplashScreenPresenter(this, Repostiry.getInstance(FileHandler.getInstance(this),
-                SavedMealsDataSourceImpl.getInstance(this), CalendarDataSourceImpl.getInstance(this)
-                , RetrofitClient.getInstance(this), SharedPrefrenceHandler.getInstance(this)));
+        presenter = new SplashScreenPresenter(this, Repository.getInstance(FileHandler.getInstance(this),
+                SavedMealsDataSourceImpl.getInstance(this), RetrofitClient.getInstance(this), SharedPrefrenceHandler.getInstance(this)));
     }
 
 

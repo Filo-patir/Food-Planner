@@ -3,18 +3,17 @@ package filo.mamdouh.kershhelper.features.mainappfeatures.savedmeals.presenter;
 import android.util.Log;
 
 import filo.mamdouh.kershhelper.contracts.BookmarkContract;
-import filo.mamdouh.kershhelper.contracts.HomeContract;
 import filo.mamdouh.kershhelper.models.MealsItem;
-import filo.mamdouh.kershhelper.models.Repostiry;
+import filo.mamdouh.kershhelper.models.Repository;
 import io.reactivex.rxjava3.android.schedulers.AndroidSchedulers;
 import io.reactivex.rxjava3.disposables.CompositeDisposable;
 import io.reactivex.rxjava3.schedulers.Schedulers;
 
 public class BookmarkPresenter {
-    private Repostiry repo;
+    private Repository repo;
     BookmarkContract.View view;
     CompositeDisposable compositeDisposable;
-    public BookmarkPresenter(BookmarkContract.View view,Repostiry repo){
+    public BookmarkPresenter(BookmarkContract.View view, Repository repo){
         this.repo = repo;
         this.view = view;
         compositeDisposable = new CompositeDisposable();

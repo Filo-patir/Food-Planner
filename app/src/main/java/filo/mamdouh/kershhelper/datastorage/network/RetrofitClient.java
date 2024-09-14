@@ -13,11 +13,9 @@ import filo.mamdouh.kershhelper.models.Categories;
 import filo.mamdouh.kershhelper.models.IngredientsRoot;
 import filo.mamdouh.kershhelper.models.Meals;
 import filo.mamdouh.kershhelper.models.MealsItem;
-import io.reactivex.rxjava3.annotations.NonNull;
 import io.reactivex.rxjava3.core.Observable;
-import io.reactivex.rxjava3.core.ObservableEmitter;
-import io.reactivex.rxjava3.core.ObservableOnSubscribe;
 import io.reactivex.rxjava3.core.Single;
+import io.reactivex.rxjava3.disposables.CompositeDisposable;
 import io.reactivex.rxjava3.schedulers.Schedulers;
 import okhttp3.Cache;
 import okhttp3.CacheControl;
@@ -30,8 +28,7 @@ import retrofit2.converter.gson.GsonConverterFactory;
 public class RetrofitClient implements NetworkContract{
     final int CACHESIZE = 5*1024*1024;
     private static final String BASE_URL = "https://www.themealdb.com/api/json/v1/1/";
-    private final Retrofit retrofit;
-    private APIService apiService;
+    private final APIService apiService;
     private static RetrofitClient instance = null;
 
     private RetrofitClient(Context context){
@@ -48,7 +45,7 @@ public class RetrofitClient implements NetworkContract{
                     return chain.proceed(request);
                 })
                 .build();
-        retrofit = new Retrofit.Builder()
+        Retrofit retrofit = new Retrofit.Builder()
                 .baseUrl(BASE_URL)
                 .addConverterFactory(GsonConverterFactory.create())
                 .client(okHttpClient)
@@ -70,24 +67,26 @@ public class RetrofitClient implements NetworkContract{
 
     @Override
     public Observable<MealsItem> searchMealByCategory(String category) {
-        return Observable.create(emitter -> apiService.getMealByCategory(category).map(Meals::getMeals).subscribeOn(Schedulers.io()).subscribe(
+        CompositeDisposable disposable = new CompositeDisposable();
+        return Observable.create(emitter -> disposable.add(apiService.getMealByCategory(category).map(Meals::getMeals).subscribeOn(Schedulers.io()).subscribe(
                 onNext -> {
                     for (MealsItem meal : onNext)
-                        apiService.getMealByID(meal.getIdMeal()).map(Meals::getMeals).subscribeOn(Schedulers.io()).subscribe(
-                                item -> emitter.onNext(item.get(0))
-                        );
+                        disposable.add(apiService.getMealByID(meal.getIdMeal()).map(Meals::getMeals).subscribeOn(Schedulers.io()).subscribe(
+                                item -> emitter.onNext(item.get(0)), emitter::onError , disposable::clear
+                        ));
                 }, emitter::onError
-        ));
+        )));
     }
 
     @Override
     public Observable<MealsItem> getMealByName(String name) {
-        return Observable.create(emitter -> apiService.getMealByName(name).map(Meals::getMeals).subscribeOn(Schedulers.io()).subscribe(
+        CompositeDisposable disposable = new CompositeDisposable();
+        return Observable.create(emitter -> disposable.add(apiService.getMealByName(name).map(Meals::getMeals).subscribeOn(Schedulers.io()).subscribe(
                                 onNext -> {
                                     for (MealsItem meal : onNext)
                                         emitter.onNext(meal);
-                                }, emitter::onError
-        ));
+                                }, emitter::onError , disposable::clear
+        )));
     }
 
     @Override
@@ -115,36 +114,28 @@ public class RetrofitClient implements NetworkContract{
 
     @Override
     public Observable<MealsItem> getMealByIngredient(String ingredient) {
-        return Observable.create(new ObservableOnSubscribe<MealsItem>() {
-            @Override
-            public void subscribe(@NonNull ObservableEmitter<MealsItem> emitter) {
-                apiService.getMealByIngredient(ingredient).subscribeOn(Schedulers.io()).map(Meals::getMeals).subscribe(
-                        mealsItems -> {
-                            for (MealsItem meal : mealsItems)
-                                apiService.getMealByID(meal.getIdMeal()).map(Meals::getMeals).subscribeOn(Schedulers.io()).subscribe(
-                                        onNext -> emitter.onNext(onNext.get(0)), emitter::onError
-                                );
-                        }
-                );
-            }
-        });
+        CompositeDisposable disposable = new CompositeDisposable();
+        return Observable.create(emitter -> disposable.add(apiService.getMealByIngredient(ingredient).subscribeOn(Schedulers.io()).map(Meals::getMeals).subscribe(
+                mealsItems -> {
+                    for (MealsItem meal : mealsItems)
+                        disposable.add(apiService.getMealByID(meal.getIdMeal()).map(Meals::getMeals).subscribeOn(Schedulers.io()).subscribe(
+                                onNext -> emitter.onNext(onNext.get(0)), emitter::onError , disposable::clear
+                        ));
+                }
+        )));
     }
 
     @Override
     public Observable<MealsItem> getMealByArea(String area) {
-        return Observable.create(new ObservableOnSubscribe<MealsItem>() {
-            @Override
-            public void subscribe(@NonNull ObservableEmitter<MealsItem> emitter) {
-                apiService.getMealByArea(area).subscribeOn(Schedulers.io()).map(Meals::getMeals).subscribe(
-                        mealsItems -> {
-                            for (MealsItem meal : mealsItems)
-                                apiService.getMealByID(meal.getIdMeal()).map(Meals::getMeals).subscribeOn(Schedulers.io()).subscribe(
-                                        onNext -> emitter.onNext(onNext.get(0)), emitter::onError
-                                );
-                        }
-                );
-            }
-        });
+        CompositeDisposable disposable = new CompositeDisposable();
+        return Observable.create(emitter -> disposable.add(apiService.getMealByArea(area).subscribeOn(Schedulers.io()).map(Meals::getMeals).subscribe(
+                mealsItems -> {
+                    for (MealsItem meal : mealsItems)
+                        disposable.add(apiService.getMealByID(meal.getIdMeal()).map(Meals::getMeals).subscribeOn(Schedulers.io()).subscribe(
+                                onNext -> emitter.onNext(onNext.get(0)), emitter::onError , disposable::clear
+                        ));
+                }
+        )));
     }
 
 

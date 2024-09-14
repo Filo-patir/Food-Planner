@@ -3,19 +3,19 @@ package filo.mamdouh.kershhelper.features.welcome_screen_features.presenters;
 import filo.mamdouh.kershhelper.contracts.LoginContract;
 import filo.mamdouh.kershhelper.logic.auth.Authentication;
 import filo.mamdouh.kershhelper.models.Client;
-import filo.mamdouh.kershhelper.models.Repostiry;
+import filo.mamdouh.kershhelper.models.Repository;
 import filo.mamdouh.kershhelper.models.User;
 import io.reactivex.rxjava3.core.Observable;
 import io.reactivex.rxjava3.disposables.CompositeDisposable;
 import io.reactivex.rxjava3.schedulers.Schedulers;
 
 public class LoginPresenter implements LoginContract.Presenter {
-    private final Repostiry repo;
+    private final Repository repo;
     private final LoginContract.View view;
     private final CompositeDisposable compositeDisposable;
     private Authentication authentication;
 
-    public LoginPresenter(LoginContract.View view, Repostiry repo) {
+    public LoginPresenter(LoginContract.View view, Repository repo) {
         this.repo = repo;
         this.view = view;
         compositeDisposable = new CompositeDisposable();

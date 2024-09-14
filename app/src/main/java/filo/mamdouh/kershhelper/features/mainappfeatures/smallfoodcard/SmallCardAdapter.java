@@ -1,7 +1,6 @@
 package filo.mamdouh.kershhelper.features.mainappfeatures.smallfoodcard;
 
 import android.app.Activity;
-import android.content.Context;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.ViewGroup;
@@ -22,17 +21,21 @@ import filo.mamdouh.kershhelper.features.dialogs.guestdialog.GuestDialog;
 import filo.mamdouh.kershhelper.features.mainappfeatures.home.Updater;
 import filo.mamdouh.kershhelper.models.Client;
 import filo.mamdouh.kershhelper.models.MealsItem;
-import filo.mamdouh.kershhelper.models.Repostiry;
+import filo.mamdouh.kershhelper.models.Repository;
 
 
 public class SmallCardAdapter extends RecyclerView.Adapter<SmallCardHolder> implements Updater {
     private List<MealsItem> items;
-    private Activity context;
+    private final Activity context;
     private OnItemClickListener listener;
     private SearchItemContract.Listener searchListener;
 
     public SmallCardAdapter(List<MealsItem> items, Activity context, OnItemClickListener listener) {
-        this.items = items;
+        Log.d("Filo", "SmallCardAdapter: "+items);
+        if (items == null)
+            this.items = new ArrayList<>();
+        else
+            this.items = items;
         this.context = context;
         this.listener = listener;
     }
@@ -45,9 +48,6 @@ public class SmallCardAdapter extends RecyclerView.Adapter<SmallCardHolder> impl
     @NonNull
     @Override
     public SmallCardHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
-        SmallCardHolder smallCardHolder = new SmallCardHolder(LayoutInflater.from(parent.getContext()).inflate(R.layout.small_card_item,
-                parent, false));
-        Log.d("Small List holder", "onBindViewHolder: "+smallCardHolder.getAdapterPosition());
         return new SmallCardHolder(LayoutInflater.from(parent.getContext()).inflate(R.layout.small_card_item,
                 parent, false));
     }
@@ -56,11 +56,10 @@ public class SmallCardAdapter extends RecyclerView.Adapter<SmallCardHolder> impl
     @Override
     public void onBindViewHolder(@NonNull SmallCardHolder holder, int position)
     {
-        Log.d("Small List", "onBindViewHolder: "+position);
         MealsItem item = items.get(position);
         holder.mealName.setText(item.getStrMeal());
         holder.ingredientsNumber.setText(String.format(context.getString(R.string.ingredients),item.getIngredients().size()));
-        String imgUrl = Repostiry.getCOUNTERIES().get(item.getStrArea());
+        String imgUrl = Repository.getCOUNTERIES().get(item.getStrArea());
         Glide.with(context.getApplicationContext()).load(imgUrl).placeholder(R.drawable.unknown_flag_icon).into(holder.flag);
         Glide.with(context.getApplicationContext()).load(item.getStrMealThumb()).placeholder(R.drawable.ic_launcher_background).into(holder.mealImage);
         holder.saveBtn.setOnClickListener(l->{

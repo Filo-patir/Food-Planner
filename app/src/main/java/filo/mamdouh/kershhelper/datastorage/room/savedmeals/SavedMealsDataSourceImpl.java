@@ -39,6 +39,11 @@ public class SavedMealsDataSourceImpl implements SavedMealsDataSource{
     }
 
     @Override
+    public Flowable<MealsItem> getCalendars() {
+        return dao.getCalendars();
+    }
+
+    @Override
     public Flowable<MealsItem> getMealByID(String id) {
         return dao.getMealByID(id);
     }

@@ -4,17 +4,17 @@ import android.util.Log;
 
 import filo.mamdouh.kershhelper.contracts.MealDetailsContract;
 import filo.mamdouh.kershhelper.models.MealsItem;
-import filo.mamdouh.kershhelper.models.Repostiry;
+import filo.mamdouh.kershhelper.models.Repository;
 import io.reactivex.rxjava3.android.schedulers.AndroidSchedulers;
 import io.reactivex.rxjava3.disposables.CompositeDisposable;
 import io.reactivex.rxjava3.schedulers.Schedulers;
 
 public class MealDetailsPressenter {
-    private Repostiry repo;
+    private Repository repo;
     MealDetailsContract.View view;
     CompositeDisposable compositeDisposable;
 
-    public MealDetailsPressenter(MealDetailsContract.View view, Repostiry repo){
+    public MealDetailsPressenter(MealDetailsContract.View view, Repository repo){
         this.repo = repo;
         this.view = view;
         compositeDisposable = new CompositeDisposable();

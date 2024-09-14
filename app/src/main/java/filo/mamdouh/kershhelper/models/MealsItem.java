@@ -1,12 +1,16 @@
 package filo.mamdouh.kershhelper.models;
 
 import android.util.Log;
+
 import androidx.annotation.NonNull;
 import androidx.room.Entity;
 import androidx.room.PrimaryKey;
+import androidx.room.TypeConverters;
+
 import java.lang.reflect.Field;
 import java.util.ArrayList;
 
+import filo.mamdouh.kershhelper.logic.typeconverter.EnumTypeConverter;
 import lombok.Data;
 import lombok.Getter;
 import lombok.Setter;
@@ -66,7 +70,8 @@ public class MealsItem {
 	private String strSource;
 	private boolean isSaved = false;
 	private int quantity = 0;
-
+	@TypeConverters(EnumTypeConverter.class)
+	private ArrayList<DaysOfWeek> daysOfWeeks;
 	public ArrayList<String> getIngredients() {
 		ArrayList<String> ingredients = new ArrayList<>();
 		Field[] fields = this.getClass().getDeclaredFields();
@@ -128,5 +133,9 @@ public class MealsItem {
 	public String getStrYoutube() {
 		String youtubeID = strYoutube.substring(strYoutube.lastIndexOf("=") + 1);
 		return String.format("https://www.youtube.com/embed/%s", youtubeID);
+	}
+
+	public void removeDay(DaysOfWeek day){
+		daysOfWeeks.remove(day);
 	}
 }

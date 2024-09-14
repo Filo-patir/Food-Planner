@@ -1,6 +1,10 @@
 package filo.mamdouh.kershhelper.features.mainappfeatures.savedmeals;
 
 import android.os.Bundle;
+import android.view.LayoutInflater;
+import android.view.View;
+import android.view.ViewGroup;
+import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
@@ -9,28 +13,21 @@ import androidx.navigation.Navigation;
 import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
-import android.util.Log;
-import android.view.LayoutInflater;
-import android.view.View;
-import android.view.ViewGroup;
-import android.widget.Toast;
-
 import java.util.List;
 
 import filo.mamdouh.kershhelper.R;
 import filo.mamdouh.kershhelper.contracts.BookmarkContract;
-import filo.mamdouh.kershhelper.models.Desserts;
 import filo.mamdouh.kershhelper.datastorage.local.FileHandler;
 import filo.mamdouh.kershhelper.datastorage.local.SharedPrefrenceHandler;
 import filo.mamdouh.kershhelper.datastorage.network.RetrofitClient;
-import filo.mamdouh.kershhelper.datastorage.room.calendar.CalendarDataSourceImpl;
 import filo.mamdouh.kershhelper.datastorage.room.savedmeals.SavedMealsDataSourceImpl;
 import filo.mamdouh.kershhelper.features.communicators.OnItemClickListener;
 import filo.mamdouh.kershhelper.features.dialogs.addtocalendardialog.PlanDialog;
 import filo.mamdouh.kershhelper.features.mainappfeatures.home.Updater;
 import filo.mamdouh.kershhelper.features.mainappfeatures.savedmeals.presenter.BookmarkPresenter;
+import filo.mamdouh.kershhelper.models.Desserts;
 import filo.mamdouh.kershhelper.models.MealsItem;
-import filo.mamdouh.kershhelper.models.Repostiry;
+import filo.mamdouh.kershhelper.models.Repository;
 
 public class BookmarkFragment extends Fragment implements BookmarkContract.View , OnItemClickListener {
     RecyclerView bookmarkRV;
@@ -40,14 +37,13 @@ public class BookmarkFragment extends Fragment implements BookmarkContract.View 
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        presenter = new BookmarkPresenter(this, Repostiry.getInstance(FileHandler.getInstance(getContext()),
-                SavedMealsDataSourceImpl.getInstance(getContext()), CalendarDataSourceImpl.getInstance(getContext())
-                , RetrofitClient.getInstance(getContext()), SharedPrefrenceHandler.getInstance(getContext())));
-        Log.d("TAG", "onCreate: Bookmark");
+        presenter = new BookmarkPresenter(this, Repository.getInstance(FileHandler.getInstance(getContext()),
+                SavedMealsDataSourceImpl.getInstance(getContext()), RetrofitClient.getInstance(getContext()),
+                SharedPrefrenceHandler.getInstance(getContext())));
     }
 
     @Override
-    public View onCreateView(LayoutInflater inflater, ViewGroup container,
+    public View onCreateView(@NonNull LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         return LayoutInflater.from(getContext()).inflate(R.layout.fragment_bookmark,container,false);
     }
@@ -58,7 +54,7 @@ public class BookmarkFragment extends Fragment implements BookmarkContract.View 
         this.view = view;
         bookmarkRV = view.findViewById(R.id.bookmarkRV);
         presenter.getSavedMeals();
-        adapter = new SavedMealsAdapter(getContext(),this);
+        adapter = new SavedMealsAdapter(requireActivity(),this);
         GridLayoutManager layoutManager = new GridLayoutManager(getContext(),2);
         bookmarkRV.setAdapter(adapter);
         bookmarkRV.setLayoutManager(layoutManager);
@@ -76,9 +72,14 @@ public class BookmarkFragment extends Fragment implements BookmarkContract.View 
     }
 
     @Override
-    public void addToCalendarListener(String mealID,String mealName) {
-        PlanDialog dialog = new PlanDialog(getActivity(),mealID,mealName);
+    public void addToCalendarListener(MealsItem meal) {
+        PlanDialog dialog = new PlanDialog(getActivity(),meal);
         dialog.showDialog();
+    }
+
+    @Override
+    public void addToCalendarListener(Desserts desserts) {
+        //TODO
     }
 
     @Override

@@ -20,7 +20,6 @@ import filo.mamdouh.kershhelper.datastorage.caching.Boxes;
 import filo.mamdouh.kershhelper.datastorage.local.FileHandler;
 import filo.mamdouh.kershhelper.datastorage.local.SharedPrefrenceHandler;
 import filo.mamdouh.kershhelper.datastorage.network.RetrofitClient;
-import filo.mamdouh.kershhelper.datastorage.room.calendar.CalendarDataSourceImpl;
 import filo.mamdouh.kershhelper.datastorage.room.savedmeals.SavedMealsDataSourceImpl;
 import filo.mamdouh.kershhelper.features.communicators.OnItemClickListener;
 import filo.mamdouh.kershhelper.features.dialogs.addtocalendardialog.PlanDialog;
@@ -29,7 +28,7 @@ import filo.mamdouh.kershhelper.models.CachingRepositry;
 import filo.mamdouh.kershhelper.models.Desserts;
 import filo.mamdouh.kershhelper.models.HomeFragmentRowData;
 import filo.mamdouh.kershhelper.models.MealsItem;
-import filo.mamdouh.kershhelper.models.Repostiry;
+import filo.mamdouh.kershhelper.models.Repository;
 
 
 public class HomeScreenFragment extends Fragment implements HomeContract.View , OnItemClickListener {
@@ -45,7 +44,7 @@ public class HomeScreenFragment extends Fragment implements HomeContract.View , 
     }
 
     @Override
-    public View onCreateView(LayoutInflater inflater, ViewGroup container,
+    public View onCreateView(@NonNull LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         binding =FragmentHomeScreenBinding.inflate(inflater,container, false);
         return binding.getRoot();
@@ -55,8 +54,8 @@ public class HomeScreenFragment extends Fragment implements HomeContract.View , 
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
         this.view = view;
-        presenter = new HomePresenter(this,Repostiry.getInstance(FileHandler.getInstance(getContext()),
-                SavedMealsDataSourceImpl.getInstance(getContext()), CalendarDataSourceImpl.getInstance(getContext())
+        presenter = new HomePresenter(this, Repository.getInstance(FileHandler.getInstance(getContext()),
+                SavedMealsDataSourceImpl.getInstance(getContext())
                 , RetrofitClient.getInstance(getContext()), SharedPrefrenceHandler.getInstance(getContext())), CachingRepositry.getInstance(Boxes.getInstance(getContext())));
         homeRecyclerView = binding.homeScreenRecycleView;
         adapter = new BaseRecyclerViewAdapter(requireActivity(),this);
@@ -76,9 +75,14 @@ public class HomeScreenFragment extends Fragment implements HomeContract.View , 
 
 
     @Override
-    public void addToCalendarListener(String mealID,String mealName) {
-        PlanDialog dialog = new PlanDialog(getActivity(),mealID,mealName);
+    public void addToCalendarListener(MealsItem meal) {
+        PlanDialog dialog = new PlanDialog(getActivity(),meal);
         dialog.showDialog();
+    }
+
+    @Override
+    public void addToCalendarListener(Desserts desserts) {
+        //TODO
     }
 
 
@@ -101,10 +105,5 @@ public class HomeScreenFragment extends Fragment implements HomeContract.View , 
         Navigation.findNavController(view).navigate(R.id.action_homeScreenFragment_to_mealDetailsFragment,bundle);
     }
 
-    @Override
-    public void onDestroy() {
-        super.onDestroy();
-        Log.d("Filo", "onDestroy: ");
-        presenter.onDestroy();
-    }
+
 }

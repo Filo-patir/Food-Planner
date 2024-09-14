@@ -5,8 +5,9 @@ import filo.mamdouh.kershhelper.features.mainappfeatures.home.Updater;
 import filo.mamdouh.kershhelper.models.MealsItem;
 
 public interface OnItemClickListener {
-    void addToCalendarListener(String mealID,String mealName);
+    void addToCalendarListener(MealsItem meal);
+    void addToCalendarListener(Desserts desserts);
     void saveItemListener(MealsItem mealsItem, Updater updater);
-    void saveItemListener(Desserts mealID, Updater updater);
+    void saveItemListener(Desserts desserts, Updater updater);
     void onItemClick(String mealID,boolean isSaved);
 }
