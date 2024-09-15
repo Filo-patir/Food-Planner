@@ -9,7 +9,6 @@ import android.widget.TextView;
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
-import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -29,9 +28,8 @@ public class BaseCalendarAdapter extends RecyclerView.Adapter<BaseCalendarAdapte
         this.context = context;
         this.listener = listener;
     }
-    public void setCalendarRowArrayList(DaysOfWeek key , MealsItem item){
-        calendarRowArrayList.computeIfAbsent(key, k -> new ArrayList<>());
-        calendarRowArrayList.get(key).add(item);
+    public void setCalendarRowArrayList(DaysOfWeek key , List<MealsItem> item){
+        calendarRowArrayList.put(key,item);
         notifyDataSetChanged();
     }
     @NonNull

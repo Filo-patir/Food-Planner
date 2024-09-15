@@ -21,7 +21,7 @@ public interface MealDAO {
     @Delete
     Completable delete(MealsItem meal);
     @Query("SELECT * FROM meals WHERE daysOfWeeks IS NOT NULL")
-    Flowable<MealsItem> getCalendars();
+    Flowable<List<MealsItem>> getCalendars();
     @Query("SELECT * FROM meals WHERE idMeal = :id")
     Flowable<MealsItem> getMealByID(String id);
     @Query("DELETE FROM meals")

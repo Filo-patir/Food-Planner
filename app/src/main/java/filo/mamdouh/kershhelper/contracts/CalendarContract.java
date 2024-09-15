@@ -1,5 +1,7 @@
 package filo.mamdouh.kershhelper.contracts;
 
+import java.util.List;
+
 import filo.mamdouh.kershhelper.models.DaysOfWeek;
 import filo.mamdouh.kershhelper.models.MealsItem;
 
@@ -9,6 +11,6 @@ public interface CalendarContract {
         void removeItemListener(DaysOfWeek day, MealsItem mealsItem);
     }
     interface View{
-        void updateUI(DaysOfWeek key, MealsItem item);
+        void updateUI(DaysOfWeek key, List<MealsItem> item);
     }
 }

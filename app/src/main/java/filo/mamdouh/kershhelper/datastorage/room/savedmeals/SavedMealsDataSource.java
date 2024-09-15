@@ -10,7 +10,7 @@ public interface SavedMealsDataSource {
     Completable insertMeal(MealsItem meal);
     Completable deleteMeal(MealsItem meal);
     Flowable<List<MealsItem>> getSavedMeals();
-    Flowable<MealsItem> getCalendars();
+    Flowable<List<MealsItem>> getCalendars();
     Flowable<MealsItem> getMealByID(String id);
     Completable clear();
 }

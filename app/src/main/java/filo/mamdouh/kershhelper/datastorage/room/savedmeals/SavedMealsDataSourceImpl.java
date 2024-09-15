@@ -39,7 +39,7 @@ public class SavedMealsDataSourceImpl implements SavedMealsDataSource{
     }
 
     @Override
-    public Flowable<MealsItem> getCalendars() {
+    public Flowable<List<MealsItem>> getCalendars() {
         return dao.getCalendars();
     }
 

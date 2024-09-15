@@ -11,7 +11,7 @@ import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.RecyclerView;
 
-import java.util.ArrayList;
+import java.util.List;
 
 import filo.mamdouh.kershhelper.R;
 import filo.mamdouh.kershhelper.contracts.CalendarContract;
@@ -53,7 +53,7 @@ public class CalendarFragment extends Fragment implements CalendarContract.View 
     }
 
     @Override
-    public void updateUI(DaysOfWeek key, MealsItem item) {
+    public void updateUI(DaysOfWeek key, List<MealsItem> item) {
         adapter.setCalendarRowArrayList(key,item);
     }
 

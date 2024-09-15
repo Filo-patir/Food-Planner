@@ -137,7 +137,7 @@ public class Repository {
     public Flowable<MealsItem> getSavedMealByID(String id) {
         return savedMealsDataSource.getMealByID(id);
     }
-    public Flowable<MealsItem> getCalendar() {
+    public Flowable<List<MealsItem>> getCalendar() {
         return savedMealsDataSource.getCalendars();
     }
     public Completable saveMeal(MealsItem meal) {
