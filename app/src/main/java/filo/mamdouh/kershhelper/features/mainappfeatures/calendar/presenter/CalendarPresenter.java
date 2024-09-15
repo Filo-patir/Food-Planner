@@ -82,7 +82,7 @@ public class CalendarPresenter {
     public void removeItem(DaysOfWeek day, MealsItem mealsItem) {
         CompositeDisposable disposable = new CompositeDisposable();
         mealsItem.removeDay(day);
-        disposable.add(repo.saveMeal(mealsItem).subscribeOn(Schedulers.io()).observeOn(AndroidSchedulers.mainThread()).subscribe(() -> {}, e -> Log.d("Filo", "removeItem: "+e.getMessage()), disposable));
+        disposable.add(repo.saveMeal(mealsItem).subscribeOn(Schedulers.io()).observeOn(AndroidSchedulers.mainThread()).subscribe(this::getCalendar, e -> Log.d("Filo", "removeItem: "+e.getMessage()), disposable));
     }
 
 }
