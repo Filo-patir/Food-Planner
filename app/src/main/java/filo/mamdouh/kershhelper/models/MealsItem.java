@@ -79,7 +79,6 @@ public class MealsItem {
 		for (Field field : fields) {
 			if (field.getName().startsWith("strIngredient")) {
 				try {
-					field.setAccessible(true);
 					String value = (String) field.get(this);
 					if (value != null && !value.isEmpty()) {
 						ingredients.add(value);
@@ -95,11 +94,9 @@ public class MealsItem {
 	public ArrayList<String> getMeasures() {
 		ArrayList<String> measures = new ArrayList<>();
 		Field[] fields = this.getClass().getDeclaredFields();
-
 		for (Field field : fields) {
 			if (field.getName().startsWith("strMeasure")) {
 				try {
-					field.setAccessible(true);
 					String value = (String) field.get(this);
 					if (value != null && !value.isEmpty()) {
 						measures.add(value);
